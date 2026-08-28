@@ -1,0 +1,15 @@
+{
+  "unlocked_by_default": true,
+  "exclusive_root": true,
+  "starting_points": 0,
+  "spent_points_limit": 999,
+  "title": "Ascendant Skills",
+  "description": "Clases de combate, rango y tanque.",
+  "icon": {
+    "type": "item",
+    "data": {
+      "item": "minecraft:netherite_chestplate"
+    }
+  },
+  "background": "minecraft:textures/gui/advancements/backgrounds/adventure.png"
+}

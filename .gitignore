@@ -1,0 +1,29 @@
+# Gradle / Java build output
+.gradle/
+build/
+**/.gradle/
+**/build/
+
+# Minecraft run directories
+run/
+**/run/
+runs/
+**/runs/
+
+# Local IDE files
+.idea/
+.vscode/
+*.iml
+
+# Generated scratch files
+tmp/
+neoforge_mdk_tmp/
+
+# Local third-party jars used for compileOnly development.
+# Copy Puffish Skills here locally when building:
+# ascendant_skills_mod/libs/puffish_skills-0.18.3-1.21-neoforge.jar
+ascendant_skills_mod/libs/*.jar
+
+# Built mod jars should be published as releases, not committed.
+*.jar
+!ascendant_skills_mod/gradle/wrapper/gradle-wrapper.jar

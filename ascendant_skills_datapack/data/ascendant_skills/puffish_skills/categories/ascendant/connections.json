@@ -1,0 +1,57 @@
+{
+  "normal": {
+    "bidirectional": [
+      ["inicio", "combate"],
+      ["combate", "cazador"],
+      ["combate", "combatiente"],
+      ["combate", "bastion"],
+      ["combatiente", "vanguardia"],
+      ["vanguardia", "coraza_de_acero"],
+      ["coraza_de_acero", "danzante_de_acero"],
+      ["coraza_de_acero", "verdugo"],
+      ["danzante_de_acero", "inamovible"],
+      ["verdugo", "inamovible"],
+      ["inamovible", "veterano_de_guerra"],
+      ["inamovible", "berserker"],
+      ["inamovible", "juggernaut"],
+      ["juggernaut", "conquistador"],
+      ["conquistador", "senor_de_la_guerra"],
+
+      ["cazador", "punteria"],
+      ["punteria", "ojo_certero"],
+      ["punteria", "tiro_rapido"],
+      ["ojo_certero", "francotirador"],
+      ["tiro_rapido", "aljaba_ligera"],
+      ["francotirador", "perforador"],
+      ["aljaba_ligera", "escaramuzador"],
+      ["perforador", "deadeye"],
+      ["escaramuzador", "barrage"],
+      ["deadeye", "maestro_tirador"],
+      ["barrage", "maestro_tirador"],
+
+      ["bastion", "muralla"],
+      ["muralla", "fortaleza"],
+      ["muralla", "guardaespaldas"],
+      ["fortaleza", "coloso"],
+      ["guardaespaldas", "provocador"],
+      ["coloso", "regenerador"],
+      ["coloso", "bastion_absoluto"],
+      ["provocador", "invencible"],
+      ["provocador", "bastion_absoluto"],
+      ["bastion_absoluto", "titan"]
+    ]
+  },
+  "exclusive": {
+    "bidirectional": [
+      ["combatiente", "cazador"],
+      ["combatiente", "bastion"],
+      ["cazador", "bastion"],
+      ["danzante_de_acero", "verdugo"],
+      ["berserker", "juggernaut"],
+      ["ojo_certero", "tiro_rapido"],
+      ["francotirador", "aljaba_ligera"],
+      ["perforador", "escaramuzador"],
+      ["fortaleza", "guardaespaldas"]
+    ]
+  }
+}
