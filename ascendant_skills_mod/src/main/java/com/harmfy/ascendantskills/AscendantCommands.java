@@ -77,7 +77,13 @@ public final class AscendantCommands {
                         .then(Commands.literal("sync")
                                 .executes(ctx -> puffishSync(ctx.getSource())))
                         .then(Commands.literal("status")
-                                .executes(ctx -> puffishStatus(ctx.getSource())))));
+                                .executes(ctx -> puffishStatus(ctx.getSource()))))
+                .then(Commands.literal("config")
+                        .requires(source -> source.hasPermission(2))
+                        .then(Commands.literal("reload")
+                                .executes(ctx -> configReload(ctx.getSource())))
+                        .then(Commands.literal("path")
+                                .executes(ctx -> configPath(ctx.getSource())))));
     }
 
     private static int partyInvite(CommandSourceStack source, ServerPlayer target) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
@@ -168,6 +174,18 @@ public final class AscendantCommands {
     private static int puffishStatus(CommandSourceStack source) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
         ServerPlayer player = source.getPlayerOrException();
         source.sendSuccess(() -> Component.literal(PuffishBridge.status(player)), false);
+        return 1;
+    }
+
+    private static int configReload(CommandSourceStack source) {
+        AscendantConfig.loadOrCreate();
+        source.getServer().getPlayerList().getPlayers().forEach(PuffishBridge::syncPoints);
+        source.sendSuccess(() -> Component.literal("Ascendant Skills config recargada."), true);
+        return 1;
+    }
+
+    private static int configPath(CommandSourceStack source) {
+        source.sendSuccess(() -> Component.literal("Config: " + AscendantConfig.configDirForDisplay()), false);
         return 1;
     }
 }

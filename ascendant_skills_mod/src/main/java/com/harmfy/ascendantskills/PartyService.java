@@ -7,8 +7,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 public final class PartyService {
-    public static final int MAX_PARTY_SIZE = 4;
-
     private PartyService() {
     }
 
@@ -28,8 +26,8 @@ public final class PartyService {
         }
 
         AscendantData.Party party = data.createParty(inviter.getUUID());
-        if (party.members.size() >= MAX_PARTY_SIZE) {
-            inviter.sendSystemMessage(Component.literal("La party ya esta llena. Maximo " + MAX_PARTY_SIZE + " jugadores."));
+        if (party.members.size() >= AscendantConfig.maxPartySize()) {
+            inviter.sendSystemMessage(Component.literal("La party ya esta llena. Maximo " + AscendantConfig.maxPartySize() + " jugadores."));
             return false;
         }
 
@@ -51,7 +49,7 @@ public final class PartyService {
             player.sendSystemMessage(Component.literal("No tienes invitaciones pendientes."));
             return false;
         }
-        if (party.members.size() >= MAX_PARTY_SIZE) {
+        if (party.members.size() >= AscendantConfig.maxPartySize()) {
             player.sendSystemMessage(Component.literal("Esa party ya esta llena."));
             return false;
         }
@@ -91,7 +89,7 @@ public final class PartyService {
         if (party == null) {
             return "No estas en una party.";
         }
-        return "Party " + party.id + " [" + party.members.size() + "/" + MAX_PARTY_SIZE + "]: " +
+        return "Party " + party.id + " [" + party.members.size() + "/" + AscendantConfig.maxPartySize() + "]: " +
                 party.members.stream()
                         .map(uuid -> name(viewer, uuid) + (uuid.equals(party.leader) ? " (lider)" : ""))
                         .collect(Collectors.joining(", "));

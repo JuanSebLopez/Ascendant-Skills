@@ -13,9 +13,13 @@ public final class AscendantSkills {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public AscendantSkills(IEventBus modEventBus) {
+        AscendantConfig.loadOrCreate();
+
         NeoForge.EVENT_BUS.addListener(AscendantCommands::register);
         NeoForge.EVENT_BUS.addListener(BossTracker::onLivingDamage);
         NeoForge.EVENT_BUS.addListener(BossTracker::onLivingDeath);
+        NeoForge.EVENT_BUS.addListener(CriticalControl::onLivingIncomingDamage);
+        NeoForge.EVENT_BUS.addListener(CriticalControl::onProjectileImpact);
         NeoForge.EVENT_BUS.addListener(PuffishBridge::onPlayerLogin);
         NeoForge.EVENT_BUS.addListener(PuffishBridge::onPlayerTick);
 

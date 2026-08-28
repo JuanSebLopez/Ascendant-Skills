@@ -17,6 +17,35 @@ It currently contains:
 - Boss participation is tracked by damage in the last 5 minutes.
 - If parties participate, the party with most damage wins boss credit.
 - If no valid party participates, the top 3 solo damage dealers get credit.
+- Skill requirements are loaded from `config/ascendant_skills/requirements.json`.
+- Gameplay toggles are loaded from `config/ascendant_skills/gameplay.json`.
+- Vanilla jump criticals and fully charged bow critical arrows are disabled by default.
+
+## Config
+
+The mod creates these files when the game starts:
+
+```text
+<minecraft-profile>/config/ascendant_skills/requirements.json
+<minecraft-profile>/config/ascendant_skills/gameplay.json
+```
+
+`requirements.json` is a direct `skill_id -> requirement` map:
+
+```json
+{
+  "cazador": {
+    "levels": 1,
+    "boss": "mowziesmobs:naga"
+  },
+  "combatiente": {
+    "levels": 1,
+    "boss": "mowziesmobs:umvuthi"
+  }
+}
+```
+
+Use `"boss": null` or omit a skill to make it level-only. Unknown skills default to `1` level.
 
 ## Commands
 
@@ -40,6 +69,9 @@ It currently contains:
 /ascendant_skills puffish open
 /ascendant_skills puffish sync
 /ascendant_skills puffish status
+
+/ascendant_skills config reload
+/ascendant_skills config path
 ```
 
 ## Building

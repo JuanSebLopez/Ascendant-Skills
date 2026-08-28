@@ -19,17 +19,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 public final class BossTracker {
-    private static final long CREDIT_WINDOW_TICKS = 5L * 60L * 20L;
-    private static final Set<String> BOSSES = Set.of(
-            "mowziesmobs:ferrous_wroughtnaut",
-            "cataclysm:netherite_monstrosity",
-            "bosses_of_mass_destruction:void_blossom",
-            "cataclysm:ignis",
-            "cataclysm:scylla",
-            "cataclysm:maledictus",
-            "cataclysm:the_leviathan",
-            "minecraft:ender_dragon"
-    );
     private static final Map<UUID, BossFightLog> FIGHTS = new HashMap<>();
 
     private BossTracker() {
@@ -37,7 +26,7 @@ public final class BossTracker {
 
     public static void onLivingDamage(LivingDamageEvent.Post event) {
         String bossId = entityId(event.getEntity());
-        if (!BOSSES.contains(bossId)) {
+        if (!AscendantConfig.bossIds().contains(bossId)) {
             return;
         }
         Entity attacker = event.getSource().getEntity();
@@ -50,7 +39,7 @@ public final class BossTracker {
 
     public static void onLivingDeath(LivingDeathEvent event) {
         String bossId = entityId(event.getEntity());
-        if (!BOSSES.contains(bossId)) {
+        if (!AscendantConfig.bossIds().contains(bossId)) {
             return;
         }
 
@@ -63,7 +52,7 @@ public final class BossTracker {
             return;
         }
 
-        long minTick = event.getEntity().level().getGameTime() - CREDIT_WINDOW_TICKS;
+        long minTick = event.getEntity().level().getGameTime() - AscendantConfig.bossCreditWindowTicks();
         List<DamageEntry> recent = fight.entries.stream()
                 .filter(entry -> entry.tick >= minTick && entry.amount > 0)
                 .toList();
@@ -102,7 +91,7 @@ public final class BossTracker {
 
         List<UUID> topSoloPlayers = playerDamage.entrySet().stream()
                 .sorted(Map.Entry.<UUID, Double>comparingByValue(Comparator.reverseOrder()))
-                .limit(3)
+                .limit(AscendantConfig.maxSoloBossCreditPlayers())
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toCollection(ArrayList::new));
         unlock(server, topSoloPlayers, bossId);

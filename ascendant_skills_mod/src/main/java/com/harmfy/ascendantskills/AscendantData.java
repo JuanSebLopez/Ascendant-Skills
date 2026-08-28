@@ -228,7 +228,7 @@ public final class AscendantData extends SavedData {
         }
 
         public boolean isValidForBossCredit() {
-            return members.size() >= 2 && members.size() <= 4;
+            return members.size() >= AscendantConfig.minPartySize() && members.size() <= AscendantConfig.maxPartySize();
         }
     }
 
