@@ -2,40 +2,78 @@
   "inicio": {
     "title": "INICIO",
     "description": "Punto inicial del arbol de habilidades.",
-    "icon": { "type": "item", "data": { "item": "minecraft:compass" } },
-    "frame": { "type": "advancement", "data": { "frame": "task" } },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:compass"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "task"
+      }
+    },
     "cost": 1,
     "rewards": [
       {
         "type": "puffish_skills:tag",
-        "data": { "tag": "ascendant_inicio" }
+        "data": {
+          "tag": "ascendant_inicio"
+        }
       }
-    ]
+    ],
+    "extra_description": "Costo: 1 nivel de XP. Perk: ascendant_skills:inicio."
   },
   "combate": {
     "title": "COMBATE",
     "description": "Desbloquea las ramas de combate: Rango, Melee y Tanque.",
-    "icon": { "type": "item", "data": { "item": "cataclysm:the_incinerator" } },
-    "frame": { "type": "advancement", "data": { "frame": "task" } },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "cataclysm:the_incinerator"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "task"
+      }
+    },
     "cost": 1,
     "rewards": [
       {
         "type": "puffish_skills:tag",
-        "data": { "tag": "ascendant_branch_combate" }
+        "data": {
+          "tag": "ascendant_branch_combate"
+        }
       }
-    ]
+    ],
+    "extra_description": "Costo: 1 nivel de XP. Perk: ascendant_skills:combate."
   },
   "combatiente": {
     "title": "Combatiente",
     "description": "Selecciona la clase Combate. +5% global DMG, +5% global AS, +1 HP.",
-    "extra_description": "La bonificacion de dano y AS queda marcada por tag para Ascendant Skills.",
-    "icon": { "type": "item", "data": { "item": "minecraft:iron_sword" } },
-    "frame": { "type": "advancement", "data": { "frame": "task" } },
+    "extra_description": "Costo: 1 nivel de XP. Requisito: mowziesmobs:umvuthi. La bonificacion de dano y AS queda marcada por tag para Ascendant Skills. Perk: ascendant_skills:combatiente.",
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:iron_sword"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "task"
+      }
+    },
     "cost": 1,
     "rewards": [
       {
         "type": "puffish_skills:tag",
-        "data": { "tag": "ascendant_class_combatiente" }
+        "data": {
+          "tag": "ascendant_class_combatiente"
+        }
       },
       {
         "type": "puffish_skills:attribute",
@@ -50,14 +88,26 @@
   "vanguardia": {
     "title": "Vanguardia",
     "description": "+5% melee dmg, +5% AS melee, +5% knockback resist.",
-    "extra_description": "Subclase melee. Sin requisito de logro.",
-    "icon": { "type": "item", "data": { "item": "minecraft:netherite_sword" } },
-    "frame": { "type": "advancement", "data": { "frame": "goal" } },
+    "extra_description": "Costo: 1 nivel de XP. Subclase melee. Sin requisito de logro. Perk: ascendant_skills:vanguardia.",
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:netherite_sword"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "goal"
+      }
+    },
     "cost": 1,
     "rewards": [
       {
         "type": "puffish_skills:tag",
-        "data": { "tag": "ascendant_melee_vanguardia" }
+        "data": {
+          "tag": "ascendant_melee_vanguardia"
+        }
       },
       {
         "type": "puffish_skills:attribute",
@@ -72,14 +122,26 @@
   "coraza_de_acero": {
     "title": "Coraza de Acero",
     "description": "+0.5 toughness, +1 armor, +1 HP.",
-    "extra_description": "Requisito futuro: participar en matar a Umvuthi.",
-    "icon": { "type": "item", "data": { "item": "minecraft:iron_chestplate" } },
-    "frame": { "type": "advancement", "data": { "frame": "goal" } },
+    "extra_description": "Costo: 1 nivel de XP. Requisito: mowziesmobs:umvuthi. Perk: ascendant_skills:coraza_de_acero.",
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:iron_chestplate"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "goal"
+      }
+    },
     "cost": 1,
     "rewards": [
       {
         "type": "puffish_skills:tag",
-        "data": { "tag": "ascendant_melee_coraza_de_acero" }
+        "data": {
+          "tag": "ascendant_melee_coraza_de_acero"
+        }
       },
       {
         "type": "puffish_skills:attribute",
@@ -110,14 +172,26 @@
   "danzante_de_acero": {
     "title": "Danzante de Acero",
     "description": "+0.25 melee reach, +5% move speed, +15% sweep dmg.",
-    "extra_description": "Combo de acero: cada ataque aumenta 2% AS, max 10%; pierde 1 carga cada 3 seg sin golpear.",
-    "icon": { "type": "item", "data": { "item": "minecraft:golden_sword" } },
-    "frame": { "type": "advancement", "data": { "frame": "goal" } },
+    "extra_description": "Costo: 1 nivel de XP. Combo de acero: cada ataque aumenta 2% AS, max 10%; pierde 1 carga cada 3 seg sin golpear. Perk: ascendant_skills:danzante_de_acero.",
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:golden_sword"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "goal"
+      }
+    },
     "cost": 1,
     "rewards": [
       {
         "type": "puffish_skills:tag",
-        "data": { "tag": "ascendant_melee_danzante_de_acero" }
+        "data": {
+          "tag": "ascendant_melee_danzante_de_acero"
+        }
       },
       {
         "type": "puffish_skills:attribute",
@@ -132,31 +206,52 @@
   "verdugo": {
     "title": "Verdugo",
     "description": "+10% crit dmg, +5% prob crit.",
-    "extra_description": "Ojo Critico: el proximo ataque inflige +15% melee dmg si el enemigo esta bajo 25% HP. CD 10 seg; se reinicia si lo matas.",
-    "icon": { "type": "item", "data": { "item": "minecraft:netherite_axe" } },
-    "frame": { "type": "advancement", "data": { "frame": "goal" } },
+    "extra_description": "Costo: 1 nivel de XP. Ojo Critico: el proximo ataque inflige +15% melee dmg si el enemigo esta bajo 25% HP. CD 10 seg; se reinicia si lo matas. Perk: ascendant_skills:verdugo.",
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:netherite_axe"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "goal"
+      }
+    },
     "cost": 1,
     "rewards": [
       {
         "type": "puffish_skills:tag",
-        "data": { "tag": "ascendant_melee_verdugo" }
+        "data": {
+          "tag": "ascendant_melee_verdugo"
+        }
       }
     ]
   },
   "inamovible": {
     "title": "Inamovible",
     "description": "+5% global resist, +10% knockback resist.",
-    "extra_description": "Requisito futuro: participar en matar al Netherite Monstrosity.",
+    "extra_description": "Costo: 1 nivel de XP. Requisito: cataclysm:netherite_monstrosity. Perk: ascendant_skills:inamovible.",
     "icon": {
       "type": "item",
-      "data": { "item": "minecraft:netherite_chestplate" }
+      "data": {
+        "item": "minecraft:netherite_chestplate"
+      }
     },
-    "frame": { "type": "advancement", "data": { "frame": "challenge" } },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "challenge"
+      }
+    },
     "cost": 1,
     "rewards": [
       {
         "type": "puffish_skills:tag",
-        "data": { "tag": "ascendant_melee_inamovible" }
+        "data": {
+          "tag": "ascendant_melee_inamovible"
+        }
       },
       {
         "type": "puffish_skills:attribute",
@@ -171,14 +266,26 @@
   "veterano_de_guerra": {
     "title": "Veterano de Guerra",
     "description": "+5% melee dmg, +1 HP.",
-    "extra_description": "Los enemigos golpeados tienen -5% dmg contra ti durante 3 seg.",
-    "icon": { "type": "item", "data": { "item": "minecraft:shield" } },
-    "frame": { "type": "advancement", "data": { "frame": "goal" } },
+    "extra_description": "Costo: 1 nivel de XP. Los enemigos golpeados tienen -5% dmg contra ti durante 3 seg. Perk: ascendant_skills:veterano_de_guerra.",
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:shield"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "goal"
+      }
+    },
     "cost": 1,
     "rewards": [
       {
         "type": "puffish_skills:tag",
-        "data": { "tag": "ascendant_melee_veterano_de_guerra" }
+        "data": {
+          "tag": "ascendant_melee_veterano_de_guerra"
+        }
       },
       {
         "type": "puffish_skills:attribute",
@@ -193,14 +300,26 @@
   "berserker": {
     "title": "Berserker",
     "description": "+4% life steal, +2% AS, +1 dmg con espada/hacha, -2 armor.",
-    "extra_description": "Berserker: bajo 20% de vida, +15% melee dmg, +12% AS y +6% life steal.",
-    "icon": { "type": "item", "data": { "item": "minecraft:diamond_axe" } },
-    "frame": { "type": "advancement", "data": { "frame": "goal" } },
+    "extra_description": "Costo: 1 nivel de XP. Berserker: bajo 20% de vida, +15% melee dmg, +12% AS y +6% life steal. Perk: ascendant_skills:berserker.",
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:diamond_axe"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "goal"
+      }
+    },
     "cost": 1,
     "rewards": [
       {
         "type": "puffish_skills:tag",
-        "data": { "tag": "ascendant_melee_berserker" }
+        "data": {
+          "tag": "ascendant_melee_berserker"
+        }
       },
       {
         "type": "puffish_skills:attribute",
@@ -215,17 +334,26 @@
   "juggernaut": {
     "title": "Juggernaut",
     "description": "-5% melee dmg, +2 armor, +5% melee resist.",
-    "extra_description": "Al recibir melee DMG obtienes 5 seg de inmunidad al knockback melee. CD 15 seg.",
+    "extra_description": "Costo: 1 nivel de XP. Al recibir melee DMG obtienes 5 seg de inmunidad al knockback melee. CD 15 seg. Perk: ascendant_skills:juggernaut.",
     "icon": {
       "type": "item",
-      "data": { "item": "minecraft:netherite_chestplate" }
+      "data": {
+        "item": "minecraft:netherite_chestplate"
+      }
     },
-    "frame": { "type": "advancement", "data": { "frame": "goal" } },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "goal"
+      }
+    },
     "cost": 1,
     "rewards": [
       {
         "type": "puffish_skills:tag",
-        "data": { "tag": "ascendant_melee_juggernaut" }
+        "data": {
+          "tag": "ascendant_melee_juggernaut"
+        }
       },
       {
         "type": "puffish_skills:attribute",
@@ -240,14 +368,26 @@
   "conquistador": {
     "title": "Conquistador",
     "description": "+5% armor shred, +1 HP, +3% melee resist.",
-    "extra_description": "Requisito futuro: participar en matar a Maledictus. Al matar mob hostil: +2% melee dmg 5 seg, max 5 stacks.",
-    "icon": { "type": "item", "data": { "item": "minecraft:netherite_sword" } },
-    "frame": { "type": "advancement", "data": { "frame": "challenge" } },
+    "extra_description": "Costo: 1 nivel de XP. Requisito: cataclysm:maledictus. Al matar mob hostil: +2% melee dmg 5 seg, max 5 stacks. Perk: ascendant_skills:conquistador.",
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:netherite_sword"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "challenge"
+      }
+    },
     "cost": 1,
     "rewards": [
       {
         "type": "puffish_skills:tag",
-        "data": { "tag": "ascendant_melee_conquistador" }
+        "data": {
+          "tag": "ascendant_melee_conquistador"
+        }
       },
       {
         "type": "puffish_skills:attribute",
@@ -262,14 +402,26 @@
   "senor_de_la_guerra": {
     "title": "Senor de la Guerra",
     "description": "+10% melee damage, +5% AS, +10% healing received, +1 HP.",
-    "extra_description": "Requisito futuro: participar en matar al Ender Dragon. Aura de dominio: -5% dano recibido por enemigos cercanos.",
-    "icon": { "type": "item", "data": { "item": "minecraft:dragon_head" } },
-    "frame": { "type": "advancement", "data": { "frame": "challenge" } },
+    "extra_description": "Costo: 1 nivel de XP. Requisito: minecraft:warden. Aura de dominio: -5% dano recibido por enemigos cercanos. Perk: ascendant_skills:senor_de_la_guerra.",
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:dragon_head"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "challenge"
+      }
+    },
     "cost": 1,
     "rewards": [
       {
         "type": "puffish_skills:tag",
-        "data": { "tag": "ascendant_melee_senor_de_la_guerra" }
+        "data": {
+          "tag": "ascendant_melee_senor_de_la_guerra"
+        }
       },
       {
         "type": "puffish_skills:attribute",
@@ -281,18 +433,29 @@
       }
     ]
   },
-
   "cazador": {
     "title": "Cazador",
     "description": "Selecciona la clase Rango. +5% projectile damage, +3% prob crit, +5% move speed.",
-    "extra_description": "AS Ranged = velocidad de tensado/apuntado con arco y recarga de ballesta.",
-    "icon": { "type": "item", "data": { "item": "minecraft:bow" } },
-    "frame": { "type": "advancement", "data": { "frame": "task" } },
+    "extra_description": "Costo: 1 nivel de XP. Requisito: mowziesmobs:naga. AS Ranged = velocidad de tensado/apuntado con arco y recarga de ballesta. Perk: ascendant_skills:cazador.",
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:bow"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "task"
+      }
+    },
     "cost": 1,
     "rewards": [
       {
         "type": "puffish_skills:tag",
-        "data": { "tag": "ascendant_class_cazador" }
+        "data": {
+          "tag": "ascendant_class_cazador"
+        }
       },
       {
         "type": "puffish_skills:attribute",
@@ -307,96 +470,182 @@
   "punteria": {
     "title": "Punteria",
     "description": "+5% projectile damage, +10% projectile velocity.",
-    "extra_description": "Requisito futuro: participar en matar a Naga.",
-    "icon": { "type": "item", "data": { "item": "minecraft:arrow" } },
-    "frame": { "type": "advancement", "data": { "frame": "goal" } },
+    "extra_description": "Costo: 1 nivel de XP. Perk: ascendant_skills:punteria.",
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:arrow"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "goal"
+      }
+    },
     "cost": 1,
     "rewards": [
       {
         "type": "puffish_skills:tag",
-        "data": { "tag": "ascendant_range_punteria" }
+        "data": {
+          "tag": "ascendant_range_punteria"
+        }
       }
     ]
   },
   "ojo_certero": {
     "title": "Ojo Certero",
     "description": "+10% crit damage, +5% prob crit, -5% AS Ranged.",
-    "icon": { "type": "item", "data": { "item": "minecraft:spyglass" } },
-    "frame": { "type": "advancement", "data": { "frame": "goal" } },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:spyglass"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "goal"
+      }
+    },
     "cost": 1,
     "rewards": [
       {
         "type": "puffish_skills:tag",
-        "data": { "tag": "ascendant_range_ojo_certero" }
+        "data": {
+          "tag": "ascendant_range_ojo_certero"
+        }
       }
-    ]
+    ],
+    "extra_description": "Costo: 1 nivel de XP. Perk: ascendant_skills:ojo_certero."
   },
   "tiro_rapido": {
     "title": "Tiro Rapido",
     "description": "+10% AS Ranged, +10% move speed al apuntar, -5% prob crit.",
-    "icon": { "type": "item", "data": { "item": "minecraft:crossbow" } },
-    "frame": { "type": "advancement", "data": { "frame": "goal" } },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:crossbow"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "goal"
+      }
+    },
     "cost": 1,
     "rewards": [
       {
         "type": "puffish_skills:tag",
-        "data": { "tag": "ascendant_range_tiro_rapido" }
+        "data": {
+          "tag": "ascendant_range_tiro_rapido"
+        }
       }
-    ]
+    ],
+    "extra_description": "Costo: 1 nivel de XP. Perk: ascendant_skills:tiro_rapido."
   },
   "francotirador": {
     "title": "Francotirador",
     "description": "Dano adicional por distancia del proyectil, min 30 bloques, max +20%. Bajo 15 bloques: -5% dano.",
-    "extra_description": "Requisito futuro: participar en matar a Ignis.",
-    "icon": { "type": "item", "data": { "item": "minecraft:spectral_arrow" } },
-    "frame": { "type": "advancement", "data": { "frame": "challenge" } },
+    "extra_description": "Costo: 1 nivel de XP. Requisito: cataclysm:ignis. Perk: ascendant_skills:francotirador.",
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:spectral_arrow"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "challenge"
+      }
+    },
     "cost": 1,
     "rewards": [
       {
         "type": "puffish_skills:tag",
-        "data": { "tag": "ascendant_range_francotirador" }
+        "data": {
+          "tag": "ascendant_range_francotirador"
+        }
       }
     ]
   },
   "aljaba_ligera": {
     "title": "Aljaba Ligera",
     "description": "+10% projectile velocity, +5% prob de no consumir ammo, -5% armor projectile shred.",
-    "extra_description": "Requisito futuro: participar en matar a Void Blossom.",
-    "icon": { "type": "item", "data": { "item": "supplementaries:quiver" } },
-    "frame": { "type": "advancement", "data": { "frame": "challenge" } },
+    "extra_description": "Costo: 1 nivel de XP. Requisito: bosses_of_mass_destruction:void_blossom. Perk: ascendant_skills:aljaba_ligera.",
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "supplementaries:quiver"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "challenge"
+      }
+    },
     "cost": 1,
     "rewards": [
       {
         "type": "puffish_skills:tag",
-        "data": { "tag": "ascendant_range_aljaba_ligera" }
+        "data": {
+          "tag": "ascendant_range_aljaba_ligera"
+        }
       }
     ]
   },
   "perforador": {
     "title": "Perforador",
     "description": "+5% projectile damage, +5% armor projectile shred.",
-    "extra_description": "10% prob de atravesar a un objetivo; si el item tiene perforacion, suma 1 nivel. CD 10 seg.",
-    "icon": { "type": "item", "data": { "item": "minecraft:crossbow" } },
-    "frame": { "type": "advancement", "data": { "frame": "goal" } },
+    "extra_description": "Costo: 1 nivel de XP. 10% prob de atravesar a un objetivo; si el item tiene perforacion, suma 1 nivel. CD 10 seg. Perk: ascendant_skills:perforador.",
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:crossbow"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "goal"
+      }
+    },
     "cost": 1,
     "rewards": [
       {
         "type": "puffish_skills:tag",
-        "data": { "tag": "ascendant_range_perforador" }
+        "data": {
+          "tag": "ascendant_range_perforador"
+        }
       }
     ]
   },
   "escaramuzador": {
     "title": "Escaramuzador",
     "description": "+10% AS Ranged, +5% move speed, -5% crit dmg.",
-    "extra_description": "Tras moverte 10 bloques sin disparar, el siguiente disparo gana +10% dano.",
-    "icon": { "type": "item", "data": { "item": "minecraft:leather_boots" } },
-    "frame": { "type": "advancement", "data": { "frame": "goal" } },
+    "extra_description": "Costo: 1 nivel de XP. Tras moverte 10 bloques sin disparar, el siguiente disparo gana +10% dano. Perk: ascendant_skills:escaramuzador.",
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:leather_boots"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "goal"
+      }
+    },
     "cost": 1,
     "rewards": [
       {
         "type": "puffish_skills:tag",
-        "data": { "tag": "ascendant_range_escaramuzador" }
+        "data": {
+          "tag": "ascendant_range_escaramuzador"
+        }
       },
       {
         "type": "puffish_skills:attribute",
@@ -411,42 +660,78 @@
   "deadeye": {
     "title": "Deadeye",
     "description": "Impactos a larga distancia, min 30 bloques: +10% crit chance y +20% crit dmg.",
-    "extra_description": "Requisito futuro: participar en matar a Scylla.",
-    "icon": { "type": "item", "data": { "item": "minecraft:target" } },
-    "frame": { "type": "advancement", "data": { "frame": "challenge" } },
+    "extra_description": "Costo: 1 nivel de XP. Requisito: cataclysm:scylla. Perk: ascendant_skills:deadeye.",
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:target"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "challenge"
+      }
+    },
     "cost": 1,
     "rewards": [
       {
         "type": "puffish_skills:tag",
-        "data": { "tag": "ascendant_range_deadeye" }
+        "data": {
+          "tag": "ascendant_range_deadeye"
+        }
       }
     ]
   },
   "barrage": {
     "title": "Barrage",
     "description": "Cada 4 impactos consecutivos activa un disparo critico asegurado.",
-    "extra_description": "Requisito futuro: participar en matar al Leviathan.",
-    "icon": { "type": "item", "data": { "item": "minecraft:firework_rocket" } },
-    "frame": { "type": "advancement", "data": { "frame": "challenge" } },
+    "extra_description": "Costo: 1 nivel de XP. Requisito: cataclysm:the_leviathan. Perk: ascendant_skills:barrage.",
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:firework_rocket"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "challenge"
+      }
+    },
     "cost": 1,
     "rewards": [
       {
         "type": "puffish_skills:tag",
-        "data": { "tag": "ascendant_range_barrage" }
+        "data": {
+          "tag": "ascendant_range_barrage"
+        }
       }
     ]
   },
   "maestro_tirador": {
     "title": "Maestro Tirador",
     "description": "+10% ranged damage, +20% crit damage, +5% armor shred, +2 HP.",
-    "extra_description": "Requisito futuro: participar en matar al Ender Dragon. Disparo perfecto: apuntar/cargar 5 seg da +25% dano e ignora 10% armor. CD 15 seg.",
-    "icon": { "type": "item", "data": { "item": "minecraft:dragon_head" } },
-    "frame": { "type": "advancement", "data": { "frame": "challenge" } },
+    "extra_description": "Costo: 1 nivel de XP. Requisito: minecraft:ender_dragon. Disparo perfecto: apuntar/cargar 5 seg da +25% dano e ignora 10% armor. CD 15 seg. Perk: ascendant_skills:maestro_tirador.",
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:dragon_head"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "challenge"
+      }
+    },
     "cost": 1,
     "rewards": [
       {
         "type": "puffish_skills:tag",
-        "data": { "tag": "ascendant_range_maestro_tirador" }
+        "data": {
+          "tag": "ascendant_range_maestro_tirador"
+        }
       },
       {
         "type": "puffish_skills:attribute",
@@ -458,17 +743,28 @@
       }
     ]
   },
-
   "bastion": {
     "title": "Bastion",
     "description": "Selecciona la clase Tanque. +5% global resist, +3 HP, -5% move speed.",
-    "icon": { "type": "item", "data": { "item": "minecraft:shield" } },
-    "frame": { "type": "advancement", "data": { "frame": "task" } },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:shield"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "task"
+      }
+    },
     "cost": 1,
     "rewards": [
       {
         "type": "puffish_skills:tag",
-        "data": { "tag": "ascendant_class_bastion" }
+        "data": {
+          "tag": "ascendant_class_bastion"
+        }
       },
       {
         "type": "puffish_skills:attribute",
@@ -486,20 +782,35 @@
           "operation": "multiply_total"
         }
       }
-    ]
+    ],
+    "extra_description": "Costo: 1 nivel de XP. Perk: ascendant_skills:bastion."
   },
   "muralla": {
     "title": "Muralla",
     "description": "+1 armor, +0.5 toughness, +10% knockback resist.",
-    "extra_description": "Requisito futuro: participar en matar a Ferrous Wroughtnaut. Royal Guard: agachado y bloqueando, el escudo cubre 100% de angulos, -40% move speed. CD propio 20 seg.",
-    "icon": { "type": "item", "data": { "item": "shieldexp:iron_shield" } },
-    "frame": { "type": "advancement", "data": { "frame": "challenge" } },
+    "extra_description": "Costo: 1 nivel de XP. Requisito: mowziesmobs:ferrous_wroughtnaut. Royal Guard: agachado y bloqueando, el escudo cubre 100% de angulos, -40% move speed. CD propio 20 seg. Perk: ascendant_skills:muralla.",
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "shieldexp:iron_shield"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "challenge"
+      }
+    },
     "cost": 1,
-    "required_mods": ["shieldexp"],
+    "required_mods": [
+      "shieldexp"
+    ],
     "rewards": [
       {
         "type": "puffish_skills:tag",
-        "data": { "tag": "ascendant_tank_muralla" }
+        "data": {
+          "tag": "ascendant_tank_muralla"
+        }
       },
       {
         "type": "puffish_skills:attribute",
@@ -530,17 +841,26 @@
   "fortaleza": {
     "title": "Fortaleza",
     "description": "+3 HP, +2 armor, +10% melee resist, -5% move speed.",
-    "extra_description": "Piel de acero: cada golpe melee recibido aumenta tu melee resist en 1%, max 5%. Se pierde tras 5 seg sin recibir golpe melee.",
+    "extra_description": "Costo: 1 nivel de XP. Piel de acero: cada golpe melee recibido aumenta tu melee resist en 1%, max 5%. Se pierde tras 5 seg sin recibir golpe melee. Perk: ascendant_skills:fortaleza.",
     "icon": {
       "type": "item",
-      "data": { "item": "minecraft:netherite_chestplate" }
+      "data": {
+        "item": "minecraft:netherite_chestplate"
+      }
     },
-    "frame": { "type": "advancement", "data": { "frame": "goal" } },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "goal"
+      }
+    },
     "cost": 1,
     "rewards": [
       {
         "type": "puffish_skills:tag",
-        "data": { "tag": "ascendant_tank_fortaleza" }
+        "data": {
+          "tag": "ascendant_tank_fortaleza"
+        }
       },
       {
         "type": "puffish_skills:attribute",
@@ -571,14 +891,26 @@
   "guardaespaldas": {
     "title": "Guardaespaldas",
     "description": "+1 HP, +10% global resist mientras haya aliados cerca.",
-    "extra_description": "Intercepcion: 20% de probabilidad de interceptar ataques a aliados cercanos. Ese ataque recibe 20% global resist. Radio 10 bloques, CD 15 seg.",
-    "icon": { "type": "item", "data": { "item": "minecraft:shield" } },
-    "frame": { "type": "advancement", "data": { "frame": "goal" } },
+    "extra_description": "Costo: 1 nivel de XP. Intercepcion: 20% de probabilidad de interceptar ataques a aliados cercanos. Ese ataque recibe 20% global resist. Radio 10 bloques, CD 15 seg. Perk: ascendant_skills:guardaespaldas.",
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:shield"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "goal"
+      }
+    },
     "cost": 1,
     "rewards": [
       {
         "type": "puffish_skills:tag",
-        "data": { "tag": "ascendant_tank_guardaespaldas" }
+        "data": {
+          "tag": "ascendant_tank_guardaespaldas"
+        }
       },
       {
         "type": "puffish_skills:attribute",
@@ -593,14 +925,26 @@
   "coloso": {
     "title": "Coloso",
     "description": "+4 HP, +1 toughness, +10% explosion resist, -5% move speed.",
-    "extra_description": "Requisito futuro: participar en matar al Netherite Monstrosity. Anclado: reduce 60% el knockback.",
-    "icon": { "type": "item", "data": { "item": "minecraft:netherite_block" } },
-    "frame": { "type": "advancement", "data": { "frame": "challenge" } },
+    "extra_description": "Costo: 1 nivel de XP. Requisito: cataclysm:netherite_monstrosity. Anclado: reduce 60% el knockback. Perk: ascendant_skills:coloso.",
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:netherite_block"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "challenge"
+      }
+    },
     "cost": 1,
     "rewards": [
       {
         "type": "puffish_skills:tag",
-        "data": { "tag": "ascendant_tank_coloso" }
+        "data": {
+          "tag": "ascendant_tank_coloso"
+        }
       },
       {
         "type": "puffish_skills:attribute",
@@ -631,45 +975,78 @@
   "provocador": {
     "title": "Provocador",
     "description": "+15% aggro reach, +10% melee resist.",
-    "extra_description": "Requisito futuro: participar en matar a Void Blossom. Desafio: enemigos cercanos hacen -10% dano a tus aliados y reciben +5% dano de tus aliados. Radio 5 bloques.",
-    "icon": { "type": "item", "data": { "item": "minecraft:bell" } },
-    "frame": { "type": "advancement", "data": { "frame": "challenge" } },
+    "extra_description": "Costo: 1 nivel de XP. Requisito: bosses_of_mass_destruction:void_blossom. Desafio: enemigos cercanos hacen -10% dano a tus aliados y reciben +5% dano de tus aliados. Radio 5 bloques. Perk: ascendant_skills:provocador.",
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:bell"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "challenge"
+      }
+    },
     "cost": 1,
     "rewards": [
       {
         "type": "puffish_skills:tag",
-        "data": { "tag": "ascendant_tank_provocador" }
+        "data": {
+          "tag": "ascendant_tank_provocador"
+        }
       }
     ]
   },
   "regenerador": {
     "title": "Regenerador",
     "description": "+10% regen natural, +10% healing received, -5% melee dmg.",
-    "extra_description": "Segundo Aliento: al bajar de 30% HP max, te curas 15% HP max. CD 20 seg.",
+    "extra_description": "Costo: 1 nivel de XP. Segundo Aliento: al bajar de 30% HP max, te curas 15% HP max. CD 20 seg. Perk: ascendant_skills:regenerador.",
     "icon": {
       "type": "effect",
-      "data": { "effect": "minecraft:regeneration" }
+      "data": {
+        "effect": "minecraft:regeneration"
+      }
     },
-    "frame": { "type": "advancement", "data": { "frame": "goal" } },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "goal"
+      }
+    },
     "cost": 1,
     "rewards": [
       {
         "type": "puffish_skills:tag",
-        "data": { "tag": "ascendant_tank_regenerador" }
+        "data": {
+          "tag": "ascendant_tank_regenerador"
+        }
       }
     ]
   },
   "invencible": {
     "title": "Invencible",
     "description": "+4 HP, +5% global resist, -10% regen natural.",
-    "extra_description": "Ultimo Bastion: al bajar de 20% HP, por 5 seg ganas +20% resist melee y distancia. CD 60 seg.",
-    "icon": { "type": "effect", "data": { "effect": "minecraft:resistance" } },
-    "frame": { "type": "advancement", "data": { "frame": "goal" } },
+    "extra_description": "Costo: 1 nivel de XP. Ultimo Bastion: al bajar de 20% HP, por 5 seg ganas +20% resist melee y distancia. CD 60 seg. Perk: ascendant_skills:invencible.",
+    "icon": {
+      "type": "effect",
+      "data": {
+        "effect": "minecraft:resistance"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "goal"
+      }
+    },
     "cost": 1,
     "rewards": [
       {
         "type": "puffish_skills:tag",
-        "data": { "tag": "ascendant_tank_invencible" }
+        "data": {
+          "tag": "ascendant_tank_invencible"
+        }
       },
       {
         "type": "puffish_skills:attribute",
@@ -684,18 +1061,29 @@
   "bastion_absoluto": {
     "title": "Bastion Absoluto",
     "description": "+1 armor, +10% size, +15% elemental resist.",
-    "extra_description": "Requisito futuro: participar en matar a Scylla. Ultima Linea: cuando se rompa tu guardia, empuja enemigos cercanos y reduce cooldown del escudo 50%. CD 20 seg.",
+    "extra_description": "Costo: 1 nivel de XP. Requisito: cataclysm:scylla. Ultima Linea: cuando se rompa tu guardia, empuja enemigos cercanos y reduce cooldown del escudo 50%. CD 20 seg. Perk: ascendant_skills:bastion_absoluto.",
     "icon": {
       "type": "item",
-      "data": { "item": "shieldexp:netherite_shield" }
+      "data": {
+        "item": "shieldexp:netherite_shield"
+      }
     },
-    "frame": { "type": "advancement", "data": { "frame": "challenge" } },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "challenge"
+      }
+    },
     "cost": 1,
-    "required_mods": ["shieldexp"],
+    "required_mods": [
+      "shieldexp"
+    ],
     "rewards": [
       {
         "type": "puffish_skills:tag",
-        "data": { "tag": "ascendant_tank_bastion_absoluto" }
+        "data": {
+          "tag": "ascendant_tank_bastion_absoluto"
+        }
       },
       {
         "type": "puffish_skills:attribute",
@@ -718,14 +1106,26 @@
   "titan": {
     "title": "Titan",
     "description": "+6 HP, +1 armor, +0.5 toughness, +5% global resist.",
-    "extra_description": "Requisito futuro: participar en matar al Ender Dragon. Aura del Titan: aliados cercanos +10% global resist y enemigos -10% move speed. Radio 10 bloques.",
-    "icon": { "type": "item", "data": { "item": "minecraft:dragon_head" } },
-    "frame": { "type": "advancement", "data": { "frame": "challenge" } },
+    "extra_description": "Costo: 1 nivel de XP. Requisito: minecraft:wither. Aura del Titan: aliados cercanos +10% global resist y enemigos -10% move speed. Radio 10 bloques. Perk: ascendant_skills:titan.",
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:dragon_head"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "challenge"
+      }
+    },
     "cost": 1,
     "rewards": [
       {
         "type": "puffish_skills:tag",
-        "data": { "tag": "ascendant_tank_titan" }
+        "data": {
+          "tag": "ascendant_tank_titan"
+        }
       },
       {
         "type": "puffish_skills:attribute",

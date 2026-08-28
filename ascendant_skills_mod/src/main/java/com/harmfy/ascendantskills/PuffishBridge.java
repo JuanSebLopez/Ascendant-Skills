@@ -12,6 +12,7 @@ import net.puffish.skillsmod.api.SkillsAPI;
 
 public final class PuffishBridge {
     private static final ResourceLocation CATEGORY_ID = ResourceLocation.fromNamespaceAndPath(AscendantSkills.MOD_ID, "ascendant");
+    private static final ResourceLocation POINT_SOURCE = ResourceLocation.fromNamespaceAndPath("puffish_skills", "commands");
 
     private PuffishBridge() {
     }
@@ -50,7 +51,10 @@ public final class PuffishBridge {
         }
         SkillsAPI.getCategory(CATEGORY_ID).ifPresent(category -> {
             int visibleTotal = Math.max(0, player.experienceLevel) + category.getSpentPoints(player);
-            category.setExtraPoints(player, visibleTotal);
+            int delta = visibleTotal - category.getPointsTotal(player);
+            if (delta != 0) {
+                category.addPointsSilently(player, POINT_SOURCE, delta);
+            }
         });
     }
 

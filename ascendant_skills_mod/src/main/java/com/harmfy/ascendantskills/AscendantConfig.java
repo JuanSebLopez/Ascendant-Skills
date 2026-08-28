@@ -58,6 +58,16 @@ public final class AscendantConfig {
                 .collect(Collectors.toUnmodifiableSet());
     }
 
+    public static Set<String> skillIds() {
+        return Set.copyOf(requirements.keySet());
+    }
+
+    public static Set<String> perkIds() {
+        return requirements.keySet().stream()
+                .map(skillId -> AscendantSkills.MOD_ID + ":" + skillId)
+                .collect(Collectors.toUnmodifiableSet());
+    }
+
     public static boolean disableVanillaJumpCriticals() {
         return gameplay.disableVanillaJumpCriticals;
     }

@@ -120,6 +120,12 @@ public final class AscendantData extends SavedData {
         setDirty();
     }
 
+    public void clearInvite(UUID invitee) {
+        if (invitations.remove(invitee) != null) {
+            setDirty();
+        }
+    }
+
     public Optional<Party> consumeInvite(UUID invitee) {
         UUID partyId = invitations.remove(invitee);
         setDirty();
@@ -148,6 +154,24 @@ public final class AscendantData extends SavedData {
             }
             parties.remove(party.id);
         }
+        setDirty();
+    }
+
+    public boolean disbandPartyOf(UUID player) {
+        Party party = partyOf(player).orElse(null);
+        if (party == null) {
+            return false;
+        }
+        disbandParty(party);
+        return true;
+    }
+
+    public void disbandParty(Party party) {
+        for (UUID member : new ArrayList<>(party.members)) {
+            playerParty.remove(member);
+        }
+        parties.remove(party.id);
+        invitations.values().removeIf(party.id::equals);
         setDirty();
     }
 

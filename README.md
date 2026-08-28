@@ -10,7 +10,7 @@ It currently contains:
 ## Current MVP
 
 - Skill costs are treated as whole Minecraft XP levels.
-- Puffish points are synchronized from the player's current XP level.
+- Puffish points are synchronized silently from the player's current XP level.
 - When a Puffish skill unlocks, the mod validates level and boss requirements.
 - Valid unlocks consume XP levels and grant an internal perk id.
 - Invalid unlocks are locked again and the player receives a message.
@@ -54,6 +54,10 @@ Use `"boss": null` or omit a skill to make it level-only. Unknown skills default
 /ascendant_skills party accept
 /ascendant_skills party leave
 /ascendant_skills party info
+/ascendant_skills party admin invite <leader> <target>
+/ascendant_skills party admin join <leader> <target>
+/ascendant_skills party admin kick <player>
+/ascendant_skills party admin disband <player>
 
 /ascendant_skills boss unlock <player> <boss_id>
 /ascendant_skills boss clear <player> <boss_id>
