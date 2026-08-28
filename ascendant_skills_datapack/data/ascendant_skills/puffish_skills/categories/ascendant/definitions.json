@@ -23,7 +23,27 @@
         }
       }
     ],
-    "extra_description": "Costo: 1 nivel de XP. Perk: ascendant_skills:inicio."
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "1 nivel de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Bonificaciones pasivas del nodo.",
+          "color": "gray"
+        }
+      ]
+    }
   },
   "combate": {
     "title": "COMBATE",
@@ -49,12 +69,60 @@
         }
       }
     ],
-    "extra_description": "Costo: 1 nivel de XP. Perk: ascendant_skills:combate."
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "1 nivel de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Bonificaciones pasivas del nodo.",
+          "color": "gray"
+        }
+      ]
+    }
   },
   "combatiente": {
     "title": "Combatiente",
     "description": "Selecciona la clase Combate. +5% global DMG, +5% global AS, +1 HP.",
-    "extra_description": "Costo: 1 nivel de XP. Requisito: mowziesmobs:umvuthi. La bonificacion de dano y AS queda marcada por tag para Ascendant Skills. Perk: ascendant_skills:combatiente.",
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "1 nivel de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "mowziesmobs:umvuthi\n",
+          "color": "light_purple"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "La bonificacion de dano y AS queda marcada por tag para Ascendant Skills.",
+          "color": "gray"
+        }
+      ]
+    },
     "icon": {
       "type": "item",
       "data": {
@@ -88,7 +156,27 @@
   "vanguardia": {
     "title": "Vanguardia",
     "description": "+5% melee dmg, +5% AS melee, +5% knockback resist.",
-    "extra_description": "Costo: 1 nivel de XP. Subclase melee. Sin requisito de logro. Perk: ascendant_skills:vanguardia.",
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "1 nivel de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Subclase melee. Sin requisito de logro.",
+          "color": "gray"
+        }
+      ]
+    },
     "icon": {
       "type": "item",
       "data": {
@@ -122,7 +210,35 @@
   "coraza_de_acero": {
     "title": "Coraza de Acero",
     "description": "+0.5 toughness, +1 armor, +1 HP.",
-    "extra_description": "Costo: 1 nivel de XP. Requisito: mowziesmobs:umvuthi. Perk: ascendant_skills:coraza_de_acero.",
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "1 nivel de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "mowziesmobs:umvuthi\n",
+          "color": "light_purple"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Bonificaciones pasivas del nodo.",
+          "color": "gray"
+        }
+      ]
+    },
     "icon": {
       "type": "item",
       "data": {
@@ -172,7 +288,27 @@
   "danzante_de_acero": {
     "title": "Danzante de Acero",
     "description": "+0.25 melee reach, +5% move speed, +15% sweep dmg.",
-    "extra_description": "Costo: 1 nivel de XP. Combo de acero: cada ataque aumenta 2% AS, max 10%; pierde 1 carga cada 3 seg sin golpear. Perk: ascendant_skills:danzante_de_acero.",
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "1 nivel de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Combo de acero: cada ataque aumenta 2% AS, max 10%; pierde 1 carga cada 3 seg sin golpear.",
+          "color": "gray"
+        }
+      ]
+    },
     "icon": {
       "type": "item",
       "data": {
@@ -206,7 +342,27 @@
   "verdugo": {
     "title": "Verdugo",
     "description": "+10% crit dmg, +5% prob crit.",
-    "extra_description": "Costo: 1 nivel de XP. Ojo Critico: el proximo ataque inflige +15% melee dmg si el enemigo esta bajo 25% HP. CD 10 seg; se reinicia si lo matas. Perk: ascendant_skills:verdugo.",
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "1 nivel de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Ojo Critico: el proximo ataque inflige +15% melee dmg si el enemigo esta bajo 25% HP. CD 10 seg; se reinicia si lo matas.",
+          "color": "gray"
+        }
+      ]
+    },
     "icon": {
       "type": "item",
       "data": {
@@ -232,7 +388,35 @@
   "inamovible": {
     "title": "Inamovible",
     "description": "+5% global resist, +10% knockback resist.",
-    "extra_description": "Costo: 1 nivel de XP. Requisito: cataclysm:netherite_monstrosity. Perk: ascendant_skills:inamovible.",
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "1 nivel de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "cataclysm:netherite_monstrosity\n",
+          "color": "light_purple"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Bonificaciones pasivas del nodo.",
+          "color": "gray"
+        }
+      ]
+    },
     "icon": {
       "type": "item",
       "data": {
@@ -266,7 +450,27 @@
   "veterano_de_guerra": {
     "title": "Veterano de Guerra",
     "description": "+5% melee dmg, +1 HP.",
-    "extra_description": "Costo: 1 nivel de XP. Los enemigos golpeados tienen -5% dmg contra ti durante 3 seg. Perk: ascendant_skills:veterano_de_guerra.",
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "1 nivel de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Los enemigos golpeados tienen -5% dmg contra ti durante 3 seg.",
+          "color": "gray"
+        }
+      ]
+    },
     "icon": {
       "type": "item",
       "data": {
@@ -300,7 +504,27 @@
   "berserker": {
     "title": "Berserker",
     "description": "+4% life steal, +2% AS, +1 dmg con espada/hacha, -2 armor.",
-    "extra_description": "Costo: 1 nivel de XP. Berserker: bajo 20% de vida, +15% melee dmg, +12% AS y +6% life steal. Perk: ascendant_skills:berserker.",
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "1 nivel de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Berserker: bajo 20% de vida, +15% melee dmg, +12% AS y +6% life steal.",
+          "color": "gray"
+        }
+      ]
+    },
     "icon": {
       "type": "item",
       "data": {
@@ -334,7 +558,27 @@
   "juggernaut": {
     "title": "Juggernaut",
     "description": "-5% melee dmg, +2 armor, +5% melee resist.",
-    "extra_description": "Costo: 1 nivel de XP. Al recibir melee DMG obtienes 5 seg de inmunidad al knockback melee. CD 15 seg. Perk: ascendant_skills:juggernaut.",
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "1 nivel de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Al recibir melee DMG obtienes 5 seg de inmunidad al knockback melee. CD 15 seg.",
+          "color": "gray"
+        }
+      ]
+    },
     "icon": {
       "type": "item",
       "data": {
@@ -368,7 +612,35 @@
   "conquistador": {
     "title": "Conquistador",
     "description": "+5% armor shred, +1 HP, +3% melee resist.",
-    "extra_description": "Costo: 1 nivel de XP. Requisito: cataclysm:maledictus. Al matar mob hostil: +2% melee dmg 5 seg, max 5 stacks. Perk: ascendant_skills:conquistador.",
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "1 nivel de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "cataclysm:maledictus\n",
+          "color": "light_purple"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Al matar mob hostil: +2% melee dmg 5 seg, max 5 stacks.",
+          "color": "gray"
+        }
+      ]
+    },
     "icon": {
       "type": "item",
       "data": {
@@ -402,7 +674,35 @@
   "senor_de_la_guerra": {
     "title": "Senor de la Guerra",
     "description": "+10% melee damage, +5% AS, +10% healing received, +1 HP.",
-    "extra_description": "Costo: 1 nivel de XP. Requisito: minecraft:warden. Aura de dominio: -5% dano recibido por enemigos cercanos. Perk: ascendant_skills:senor_de_la_guerra.",
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "1 nivel de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "minecraft:warden\n",
+          "color": "light_purple"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Aura de dominio: -5% dano recibido por enemigos cercanos.",
+          "color": "gray"
+        }
+      ]
+    },
     "icon": {
       "type": "item",
       "data": {
@@ -436,7 +736,35 @@
   "cazador": {
     "title": "Cazador",
     "description": "Selecciona la clase Rango. +5% projectile damage, +3% prob crit, +5% move speed.",
-    "extra_description": "Costo: 1 nivel de XP. Requisito: mowziesmobs:naga. AS Ranged = velocidad de tensado/apuntado con arco y recarga de ballesta. Perk: ascendant_skills:cazador.",
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "1 nivel de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "mowziesmobs:naga\n",
+          "color": "light_purple"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "AS Ranged = velocidad de tensado/apuntado con arco y recarga de ballesta.",
+          "color": "gray"
+        }
+      ]
+    },
     "icon": {
       "type": "item",
       "data": {
@@ -470,7 +798,27 @@
   "punteria": {
     "title": "Punteria",
     "description": "+5% projectile damage, +10% projectile velocity.",
-    "extra_description": "Costo: 1 nivel de XP. Perk: ascendant_skills:punteria.",
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "1 nivel de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Bonificaciones pasivas del nodo.",
+          "color": "gray"
+        }
+      ]
+    },
     "icon": {
       "type": "item",
       "data": {
@@ -517,7 +865,27 @@
         }
       }
     ],
-    "extra_description": "Costo: 1 nivel de XP. Perk: ascendant_skills:ojo_certero."
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "1 nivel de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Bonificaciones pasivas del nodo.",
+          "color": "gray"
+        }
+      ]
+    }
   },
   "tiro_rapido": {
     "title": "Tiro Rapido",
@@ -543,12 +911,60 @@
         }
       }
     ],
-    "extra_description": "Costo: 1 nivel de XP. Perk: ascendant_skills:tiro_rapido."
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "1 nivel de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Bonificaciones pasivas del nodo.",
+          "color": "gray"
+        }
+      ]
+    }
   },
   "francotirador": {
     "title": "Francotirador",
     "description": "Dano adicional por distancia del proyectil, min 30 bloques, max +20%. Bajo 15 bloques: -5% dano.",
-    "extra_description": "Costo: 1 nivel de XP. Requisito: cataclysm:ignis. Perk: ascendant_skills:francotirador.",
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "1 nivel de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "cataclysm:ignis\n",
+          "color": "light_purple"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Bonificaciones pasivas del nodo.",
+          "color": "gray"
+        }
+      ]
+    },
     "icon": {
       "type": "item",
       "data": {
@@ -574,7 +990,35 @@
   "aljaba_ligera": {
     "title": "Aljaba Ligera",
     "description": "+10% projectile velocity, +5% prob de no consumir ammo, -5% armor projectile shred.",
-    "extra_description": "Costo: 1 nivel de XP. Requisito: bosses_of_mass_destruction:void_blossom. Perk: ascendant_skills:aljaba_ligera.",
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "1 nivel de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "bosses_of_mass_destruction:void_blossom\n",
+          "color": "light_purple"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Bonificaciones pasivas del nodo.",
+          "color": "gray"
+        }
+      ]
+    },
     "icon": {
       "type": "item",
       "data": {
@@ -600,7 +1044,27 @@
   "perforador": {
     "title": "Perforador",
     "description": "+5% projectile damage, +5% armor projectile shred.",
-    "extra_description": "Costo: 1 nivel de XP. 10% prob de atravesar a un objetivo; si el item tiene perforacion, suma 1 nivel. CD 10 seg. Perk: ascendant_skills:perforador.",
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "1 nivel de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "10% prob de atravesar a un objetivo; si el item tiene perforacion, suma 1 nivel. CD 10 seg.",
+          "color": "gray"
+        }
+      ]
+    },
     "icon": {
       "type": "item",
       "data": {
@@ -626,7 +1090,27 @@
   "escaramuzador": {
     "title": "Escaramuzador",
     "description": "+10% AS Ranged, +5% move speed, -5% crit dmg.",
-    "extra_description": "Costo: 1 nivel de XP. Tras moverte 10 bloques sin disparar, el siguiente disparo gana +10% dano. Perk: ascendant_skills:escaramuzador.",
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "1 nivel de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Tras moverte 10 bloques sin disparar, el siguiente disparo gana +10% dano.",
+          "color": "gray"
+        }
+      ]
+    },
     "icon": {
       "type": "item",
       "data": {
@@ -660,7 +1144,35 @@
   "deadeye": {
     "title": "Deadeye",
     "description": "Impactos a larga distancia, min 30 bloques: +10% crit chance y +20% crit dmg.",
-    "extra_description": "Costo: 1 nivel de XP. Requisito: cataclysm:scylla. Perk: ascendant_skills:deadeye.",
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "1 nivel de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "cataclysm:scylla\n",
+          "color": "light_purple"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Bonificaciones pasivas del nodo.",
+          "color": "gray"
+        }
+      ]
+    },
     "icon": {
       "type": "item",
       "data": {
@@ -686,7 +1198,35 @@
   "barrage": {
     "title": "Barrage",
     "description": "Cada 4 impactos consecutivos activa un disparo critico asegurado.",
-    "extra_description": "Costo: 1 nivel de XP. Requisito: cataclysm:the_leviathan. Perk: ascendant_skills:barrage.",
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "1 nivel de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "cataclysm:the_leviathan\n",
+          "color": "light_purple"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Bonificaciones pasivas del nodo.",
+          "color": "gray"
+        }
+      ]
+    },
     "icon": {
       "type": "item",
       "data": {
@@ -712,7 +1252,35 @@
   "maestro_tirador": {
     "title": "Maestro Tirador",
     "description": "+10% ranged damage, +20% crit damage, +5% armor shred, +2 HP.",
-    "extra_description": "Costo: 1 nivel de XP. Requisito: minecraft:ender_dragon. Disparo perfecto: apuntar/cargar 5 seg da +25% dano e ignora 10% armor. CD 15 seg. Perk: ascendant_skills:maestro_tirador.",
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "1 nivel de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "minecraft:ender_dragon\n",
+          "color": "light_purple"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Disparo perfecto: apuntar/cargar 5 seg da +25% dano e ignora 10% armor. CD 15 seg.",
+          "color": "gray"
+        }
+      ]
+    },
     "icon": {
       "type": "item",
       "data": {
@@ -783,12 +1351,60 @@
         }
       }
     ],
-    "extra_description": "Costo: 1 nivel de XP. Perk: ascendant_skills:bastion."
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "1 nivel de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Bonificaciones pasivas del nodo.",
+          "color": "gray"
+        }
+      ]
+    }
   },
   "muralla": {
     "title": "Muralla",
     "description": "+1 armor, +0.5 toughness, +10% knockback resist.",
-    "extra_description": "Costo: 1 nivel de XP. Requisito: mowziesmobs:ferrous_wroughtnaut. Royal Guard: agachado y bloqueando, el escudo cubre 100% de angulos, -40% move speed. CD propio 20 seg. Perk: ascendant_skills:muralla.",
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "1 nivel de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "mowziesmobs:ferrous_wroughtnaut\n",
+          "color": "light_purple"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Royal Guard: agachado y bloqueando, el escudo cubre 100% de angulos, -40% move speed. CD propio 20 seg.",
+          "color": "gray"
+        }
+      ]
+    },
     "icon": {
       "type": "item",
       "data": {
@@ -841,7 +1457,27 @@
   "fortaleza": {
     "title": "Fortaleza",
     "description": "+3 HP, +2 armor, +10% melee resist, -5% move speed.",
-    "extra_description": "Costo: 1 nivel de XP. Piel de acero: cada golpe melee recibido aumenta tu melee resist en 1%, max 5%. Se pierde tras 5 seg sin recibir golpe melee. Perk: ascendant_skills:fortaleza.",
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "1 nivel de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Piel de acero: cada golpe melee recibido aumenta tu melee resist en 1%, max 5%. Se pierde tras 5 seg sin recibir golpe melee.",
+          "color": "gray"
+        }
+      ]
+    },
     "icon": {
       "type": "item",
       "data": {
@@ -891,7 +1527,27 @@
   "guardaespaldas": {
     "title": "Guardaespaldas",
     "description": "+1 HP, +10% global resist mientras haya aliados cerca.",
-    "extra_description": "Costo: 1 nivel de XP. Intercepcion: 20% de probabilidad de interceptar ataques a aliados cercanos. Ese ataque recibe 20% global resist. Radio 10 bloques, CD 15 seg. Perk: ascendant_skills:guardaespaldas.",
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "1 nivel de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Intercepcion: 20% de probabilidad de interceptar ataques a aliados cercanos. Ese ataque recibe 20% global resist. Radio 10 bloques, CD 15 seg.",
+          "color": "gray"
+        }
+      ]
+    },
     "icon": {
       "type": "item",
       "data": {
@@ -925,7 +1581,35 @@
   "coloso": {
     "title": "Coloso",
     "description": "+4 HP, +1 toughness, +10% explosion resist, -5% move speed.",
-    "extra_description": "Costo: 1 nivel de XP. Requisito: cataclysm:netherite_monstrosity. Anclado: reduce 60% el knockback. Perk: ascendant_skills:coloso.",
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "1 nivel de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "cataclysm:netherite_monstrosity\n",
+          "color": "light_purple"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Anclado: reduce 60% el knockback.",
+          "color": "gray"
+        }
+      ]
+    },
     "icon": {
       "type": "item",
       "data": {
@@ -975,7 +1659,35 @@
   "provocador": {
     "title": "Provocador",
     "description": "+15% aggro reach, +10% melee resist.",
-    "extra_description": "Costo: 1 nivel de XP. Requisito: bosses_of_mass_destruction:void_blossom. Desafio: enemigos cercanos hacen -10% dano a tus aliados y reciben +5% dano de tus aliados. Radio 5 bloques. Perk: ascendant_skills:provocador.",
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "1 nivel de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "bosses_of_mass_destruction:void_blossom\n",
+          "color": "light_purple"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Desafio: enemigos cercanos hacen -10% dano a tus aliados y reciben +5% dano de tus aliados. Radio 5 bloques.",
+          "color": "gray"
+        }
+      ]
+    },
     "icon": {
       "type": "item",
       "data": {
@@ -1001,7 +1713,27 @@
   "regenerador": {
     "title": "Regenerador",
     "description": "+10% regen natural, +10% healing received, -5% melee dmg.",
-    "extra_description": "Costo: 1 nivel de XP. Segundo Aliento: al bajar de 30% HP max, te curas 15% HP max. CD 20 seg. Perk: ascendant_skills:regenerador.",
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "1 nivel de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Segundo Aliento: al bajar de 30% HP max, te curas 15% HP max. CD 20 seg.",
+          "color": "gray"
+        }
+      ]
+    },
     "icon": {
       "type": "effect",
       "data": {
@@ -1027,7 +1759,27 @@
   "invencible": {
     "title": "Invencible",
     "description": "+4 HP, +5% global resist, -10% regen natural.",
-    "extra_description": "Costo: 1 nivel de XP. Ultimo Bastion: al bajar de 20% HP, por 5 seg ganas +20% resist melee y distancia. CD 60 seg. Perk: ascendant_skills:invencible.",
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "1 nivel de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Ultimo Bastion: al bajar de 20% HP, por 5 seg ganas +20% resist melee y distancia. CD 60 seg.",
+          "color": "gray"
+        }
+      ]
+    },
     "icon": {
       "type": "effect",
       "data": {
@@ -1061,7 +1813,35 @@
   "bastion_absoluto": {
     "title": "Bastion Absoluto",
     "description": "+1 armor, +10% size, +15% elemental resist.",
-    "extra_description": "Costo: 1 nivel de XP. Requisito: cataclysm:scylla. Ultima Linea: cuando se rompa tu guardia, empuja enemigos cercanos y reduce cooldown del escudo 50%. CD 20 seg. Perk: ascendant_skills:bastion_absoluto.",
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "1 nivel de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "cataclysm:scylla\n",
+          "color": "light_purple"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Ultima Linea: cuando se rompa tu guardia, empuja enemigos cercanos y reduce cooldown del escudo 50%. CD 20 seg.",
+          "color": "gray"
+        }
+      ]
+    },
     "icon": {
       "type": "item",
       "data": {
@@ -1106,7 +1886,35 @@
   "titan": {
     "title": "Titan",
     "description": "+6 HP, +1 armor, +0.5 toughness, +5% global resist.",
-    "extra_description": "Costo: 1 nivel de XP. Requisito: minecraft:wither. Aura del Titan: aliados cercanos +10% global resist y enemigos -10% move speed. Radio 10 bloques. Perk: ascendant_skills:titan.",
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "1 nivel de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "minecraft:wither\n",
+          "color": "light_purple"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Aura del Titan: aliados cercanos +10% global resist y enemigos -10% move speed. Radio 10 bloques.",
+          "color": "gray"
+        }
+      ]
+    },
     "icon": {
       "type": "item",
       "data": {

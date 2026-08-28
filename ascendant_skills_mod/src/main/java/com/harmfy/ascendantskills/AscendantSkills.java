@@ -18,7 +18,10 @@ public final class AscendantSkills {
         NeoForge.EVENT_BUS.addListener(AscendantCommands::register);
         NeoForge.EVENT_BUS.addListener(BossTracker::onLivingDamage);
         NeoForge.EVENT_BUS.addListener(BossTracker::onLivingDeath);
-        NeoForge.EVENT_BUS.addListener(CriticalControl::onLivingIncomingDamage);
+        NeoForge.EVENT_BUS.addListener(CombatPerks::onLivingIncomingDamage);
+        NeoForge.EVENT_BUS.addListener(CombatPerks::onLivingDamagePost);
+        NeoForge.EVENT_BUS.addListener(CriticalControl::onCriticalHit);
+        NeoForge.EVENT_BUS.addListener(CriticalControl::onEntityJoinLevel);
         NeoForge.EVENT_BUS.addListener(CriticalControl::onProjectileImpact);
         NeoForge.EVENT_BUS.addListener(PuffishBridge::onPlayerLogin);
         NeoForge.EVENT_BUS.addListener(PuffishBridge::onPlayerTick);
