@@ -534,14 +534,6 @@
           "value": 0.1,
           "operation": "addition"
         }
-      },
-      {
-        "type": "puffish_skills:attribute",
-        "data": {
-          "attribute": "ascendant_skills:global_resistance",
-          "value": 0.05,
-          "operation": "addition"
-        }
       }
     ]
   },
@@ -1567,14 +1559,6 @@
           "value": -0.05,
           "operation": "multiply_total"
         }
-      },
-      {
-        "type": "puffish_skills:attribute",
-        "data": {
-          "attribute": "ascendant_skills:global_resistance",
-          "value": 0.05,
-          "operation": "addition"
-        }
       }
     ],
     "extra_description": {
@@ -2031,14 +2015,6 @@
           "value": 4,
           "operation": "addition"
         }
-      },
-      {
-        "type": "puffish_skills:attribute",
-        "data": {
-          "attribute": "ascendant_skills:global_resistance",
-          "value": 0.05,
-          "operation": "addition"
-        }
       }
     ]
   },
@@ -2186,14 +2162,6 @@
         "data": {
           "attribute": "generic.armor_toughness",
           "value": 0.5,
-          "operation": "addition"
-        }
-      },
-      {
-        "type": "puffish_skills:attribute",
-        "data": {
-          "attribute": "ascendant_skills:global_resistance",
-          "value": 0.05,
           "operation": "addition"
         }
       }
