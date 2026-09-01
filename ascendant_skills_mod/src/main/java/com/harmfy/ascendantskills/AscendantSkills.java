@@ -16,6 +16,7 @@ public final class AscendantSkills {
     public AscendantSkills(IEventBus modEventBus) {
         AscendantConfig.loadOrCreate();
         AscendantAttributes.ATTRIBUTES.register(modEventBus);
+        AscendantPotions.POTIONS.register(modEventBus);
         modEventBus.addListener(AscendantAttributes::addPlayerAttributes);
         modEventBus.addListener(AscendantNetworking::register);
         Attributes.KNOCKBACK_RESISTANCE.value().setSyncable(true);
@@ -30,6 +31,8 @@ public final class AscendantSkills {
         NeoForge.EVENT_BUS.addListener(CombatPerks::onLivingUseItemTick);
         NeoForge.EVENT_BUS.addListener(CombatPerks::onArrowLoose);
         NeoForge.EVENT_BUS.addListener(CombatPerks::onPlayerTick);
+        NeoForge.EVENT_BUS.addListener(AscendantPotions::registerBrewingRecipes);
+        NeoForge.EVENT_BUS.addListener(AscendantPotions::onUseItemFinish);
         NeoForge.EVENT_BUS.addListener(CriticalControl::onCriticalHit);
         NeoForge.EVENT_BUS.addListener(CriticalControl::onEntityJoinLevel);
         NeoForge.EVENT_BUS.addListener(CriticalControl::onProjectileImpact);

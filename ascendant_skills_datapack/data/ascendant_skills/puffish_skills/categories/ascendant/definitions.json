@@ -14,7 +14,7 @@
         "frame": "task"
       }
     },
-    "cost": 1,
+    "cost": 0,
     "rewards": [
       {
         "type": "puffish_skills:tag",
@@ -60,7 +60,7 @@
         "frame": "task"
       }
     },
-    "cost": 5,
+    "cost": 3,
     "rewards": [
       {
         "type": "puffish_skills:tag",
@@ -183,7 +183,7 @@
         "frame": "goal"
       }
     },
-    "cost": 7,
+    "cost": 5,
     "rewards": [
       {
         "type": "puffish_skills:tag",
@@ -219,7 +219,7 @@
   },
   "coraza_de_acero": {
     "title": "Coraza de Acero",
-    "description": "+0.5 toughness, +1 armor, +1 HP.",
+    "description": "+0.75 toughness, +2 armor, +2 HP.",
     "extra_description": {
       "text": "",
       "extra": [
@@ -228,7 +228,7 @@
           "color": "gold"
         },
         {
-          "text": "10 niveles de XP\n",
+          "text": "10 niveles de XP\\n",
           "color": "yellow"
         },
         {
@@ -236,7 +236,7 @@
           "color": "dark_purple"
         },
         {
-          "text": "mowziesmobs:umvuthi\n",
+          "text": "mowziesmobs:umvuthi\\n",
           "color": "light_purple"
         },
         {
@@ -244,7 +244,7 @@
           "color": "green"
         },
         {
-          "text": "+0.5 toughness, +1 armor, +1 HP.\n",
+          "text": "+0.75 toughness, +2 armor, +2 HP.\\n",
           "color": "gray"
         },
         {
@@ -281,7 +281,7 @@
         "type": "puffish_skills:attribute",
         "data": {
           "attribute": "generic.armor_toughness",
-          "value": 0.5,
+          "value": 0.75,
           "operation": "addition"
         }
       },
@@ -289,7 +289,7 @@
         "type": "puffish_skills:attribute",
         "data": {
           "attribute": "generic.armor",
-          "value": 1,
+          "value": 2,
           "operation": "addition"
         }
       },
@@ -297,7 +297,7 @@
         "type": "puffish_skills:attribute",
         "data": {
           "attribute": "generic.max_health",
-          "value": 1,
+          "value": 2,
           "operation": "addition"
         }
       }
@@ -305,7 +305,7 @@
   },
   "danzante_de_acero": {
     "title": "Danzante de Acero",
-    "description": "+0.25 melee reach, +5% move speed, +15% sweep dmg.",
+    "description": "+0.25 melee reach, +5% move speed, +50% sweep dmg.",
     "extra_description": {
       "text": "",
       "extra": [
@@ -314,7 +314,7 @@
           "color": "gold"
         },
         {
-          "text": "15 niveles de XP\n",
+          "text": "15 niveles de XP\\n",
           "color": "yellow"
         },
         {
@@ -322,7 +322,7 @@
           "color": "dark_purple"
         },
         {
-          "text": "Sin logro\n",
+          "text": "Sin logro\\n",
           "color": "gray"
         },
         {
@@ -330,7 +330,7 @@
           "color": "green"
         },
         {
-          "text": "+0.25 melee reach, +5% move speed, +15% sweep dmg.\n",
+          "text": "+0.25 melee reach, +5% move speed, +50% sweep dmg.\\n",
           "color": "gray"
         },
         {
@@ -338,7 +338,7 @@
           "color": "aqua"
         },
         {
-          "text": "Combo de acero: cada ataque aumenta +2% AS (max +10%) y pierde 1 carga cada 3 seg sin golpear.",
+          "text": "Combo de acero: cada ataque aumenta +2% AS melee (max +10%) y pierde 1 carga cada 3 seg sin golpear.",
           "color": "gray"
         }
       ]
@@ -383,7 +383,7 @@
         "type": "puffish_skills:attribute",
         "data": {
           "attribute": "player.sweeping_damage_ratio",
-          "value": 0.15,
+          "value": 0.5,
           "operation": "addition"
         }
       }
@@ -391,7 +391,7 @@
   },
   "verdugo": {
     "title": "Verdugo",
-    "description": "+10% crit dmg, +5% prob crit.",
+    "description": "+15% crit dmg, +5% prob crit melee.",
     "extra_description": {
       "text": "",
       "extra": [
@@ -400,7 +400,7 @@
           "color": "gold"
         },
         {
-          "text": "15 niveles de XP\n",
+          "text": "15 niveles de XP\\n",
           "color": "yellow"
         },
         {
@@ -408,7 +408,7 @@
           "color": "dark_purple"
         },
         {
-          "text": "Sin logro\n",
+          "text": "Sin logro\\n",
           "color": "gray"
         },
         {
@@ -416,7 +416,7 @@
           "color": "green"
         },
         {
-          "text": "+10% crit dmg, +5% prob crit.\n",
+          "text": "+15% crit dmg, +5% prob crit melee.\\n",
           "color": "gray"
         },
         {
@@ -424,7 +424,7 @@
           "color": "aqua"
         },
         {
-          "text": "Ojo Critico: el proximo ataque inflige +15% dmg melee si el enemigo esta bajo 25% HP. CD 10 seg; se reinicia si matas al enemigo.",
+          "text": "Ojo Critico: el proximo ataque inflige critico y +15% dmg melee si el enemigo esta bajo 30% HP. CD 10 seg; se reinicia si matas al enemigo.",
           "color": "gray"
         }
       ]
@@ -452,15 +452,15 @@
       {
         "type": "puffish_skills:attribute",
         "data": {
-          "attribute": "l2damagetracker:crit_damage",
-          "value": 0.1,
+          "attribute": "ascendant_skills:melee_crit_damage",
+          "value": 0.15,
           "operation": "addition"
         }
       },
       {
         "type": "puffish_skills:attribute",
         "data": {
-          "attribute": "l2damagetracker:crit_rate",
+          "attribute": "ascendant_skills:melee_crit_chance",
           "value": 0.05,
           "operation": "addition"
         }
@@ -469,7 +469,7 @@
   },
   "inamovible": {
     "title": "Inamovible",
-    "description": "+5% global resist, +10% knockback resist.",
+    "description": "+10% global resist, +10% knockback resist.",
     "extra_description": {
       "text": "",
       "extra": [
@@ -478,7 +478,7 @@
           "color": "gold"
         },
         {
-          "text": "17 niveles de XP\n",
+          "text": "17 niveles de XP\\n",
           "color": "yellow"
         },
         {
@@ -486,7 +486,7 @@
           "color": "dark_purple"
         },
         {
-          "text": "cataclysm:netherite_monstrosity\n",
+          "text": "cataclysm:netherite_monstrosity\\n",
           "color": "light_purple"
         },
         {
@@ -494,7 +494,7 @@
           "color": "green"
         },
         {
-          "text": "+5% global resist, +10% knockback resist.\n",
+          "text": "+10% global resist, +10% knockback resist.\\n",
           "color": "gray"
         },
         {
@@ -539,7 +539,7 @@
         "type": "puffish_skills:attribute",
         "data": {
           "attribute": "ascendant_skills:global_resistance",
-          "value": 0.05,
+          "value": 0.1,
           "operation": "addition"
         }
       }
@@ -547,7 +547,7 @@
   },
   "veterano_de_guerra": {
     "title": "Veterano de Guerra",
-    "description": "+5% melee dmg, +1 HP.",
+    "description": "+10% melee dmg, +2 HP.",
     "extra_description": {
       "text": "",
       "extra": [
@@ -556,7 +556,7 @@
           "color": "gold"
         },
         {
-          "text": "20 niveles de XP\n",
+          "text": "25 niveles de XP\\n",
           "color": "yellow"
         },
         {
@@ -564,7 +564,7 @@
           "color": "dark_purple"
         },
         {
-          "text": "Sin logro\n",
+          "text": "Sin logro\\n",
           "color": "gray"
         },
         {
@@ -572,7 +572,7 @@
           "color": "green"
         },
         {
-          "text": "+5% melee dmg, +1 HP.\n",
+          "text": "+10% melee dmg, +2 HP.\\n",
           "color": "gray"
         },
         {
@@ -580,7 +580,7 @@
           "color": "aqua"
         },
         {
-          "text": "Veterano de Guerra: los enemigos golpeados tienen -5% dmg contra ti durante 3 seg.",
+          "text": "Veterano de Guerra: los enemigos golpeados hacen -10% dmg contra ti durante 5 seg.",
           "color": "gray"
         }
       ]
@@ -597,7 +597,7 @@
         "frame": "goal"
       }
     },
-    "cost": 20,
+    "cost": 25,
     "rewards": [
       {
         "type": "puffish_skills:tag",
@@ -609,7 +609,7 @@
         "type": "puffish_skills:attribute",
         "data": {
           "attribute": "generic.max_health",
-          "value": 1,
+          "value": 2,
           "operation": "addition"
         }
       },
@@ -617,7 +617,7 @@
         "type": "puffish_skills:attribute",
         "data": {
           "attribute": "generic.attack_damage",
-          "value": 0.05,
+          "value": 0.1,
           "operation": "multiply_total"
         }
       }
@@ -625,7 +625,7 @@
   },
   "berserker": {
     "title": "Berserker",
-    "description": "+4% life steal, +2% AS, +1 dmg con espada/hacha, -2 armor.",
+    "description": "+5% life steal, +3% AS, +2 dmg con espada/hacha, -1.5 armor.",
     "extra_description": {
       "text": "",
       "extra": [
@@ -634,7 +634,7 @@
           "color": "gold"
         },
         {
-          "text": "20 niveles de XP\n",
+          "text": "20 niveles de XP\\n",
           "color": "yellow"
         },
         {
@@ -642,7 +642,7 @@
           "color": "dark_purple"
         },
         {
-          "text": "Sin logro\n",
+          "text": "Sin logro\\n",
           "color": "gray"
         },
         {
@@ -650,7 +650,7 @@
           "color": "green"
         },
         {
-          "text": "+4% life steal, +2% AS, +1 dmg con espada/hacha, -2 armor.\n",
+          "text": "+5% life steal, +3% AS, +2 dmg con espada/hacha, -1.5 armor.\\n",
           "color": "gray"
         },
         {
@@ -687,7 +687,7 @@
         "type": "puffish_skills:attribute",
         "data": {
           "attribute": "generic.armor",
-          "value": -2,
+          "value": -1.5,
           "operation": "addition"
         }
       },
@@ -695,7 +695,7 @@
         "type": "puffish_skills:attribute",
         "data": {
           "attribute": "generic.attack_speed",
-          "value": 0.02,
+          "value": 0.03,
           "operation": "multiply_total"
         }
       }
@@ -703,7 +703,7 @@
   },
   "juggernaut": {
     "title": "Juggernaut",
-    "description": "-5% melee dmg, +2 armor, +5% melee resist.",
+    "description": "-5% melee dmg, +3 armor, +10% melee resist.",
     "extra_description": {
       "text": "",
       "extra": [
@@ -712,7 +712,7 @@
           "color": "gold"
         },
         {
-          "text": "25 niveles de XP\n",
+          "text": "20 niveles de XP\\n",
           "color": "yellow"
         },
         {
@@ -720,7 +720,7 @@
           "color": "dark_purple"
         },
         {
-          "text": "Sin logro\n",
+          "text": "Sin logro\\n",
           "color": "gray"
         },
         {
@@ -728,7 +728,7 @@
           "color": "green"
         },
         {
-          "text": "-5% melee dmg, +2 armor, +5% melee resist.\n",
+          "text": "-5% melee dmg, +3 armor, +10% melee resist.\\n",
           "color": "gray"
         },
         {
@@ -753,7 +753,7 @@
         "frame": "goal"
       }
     },
-    "cost": 25,
+    "cost": 20,
     "rewards": [
       {
         "type": "puffish_skills:tag",
@@ -765,7 +765,7 @@
         "type": "puffish_skills:attribute",
         "data": {
           "attribute": "generic.armor",
-          "value": 2,
+          "value": 3,
           "operation": "addition"
         }
       },
@@ -776,12 +776,20 @@
           "value": -0.05,
           "operation": "multiply_total"
         }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:melee_resistance",
+          "value": 0.1,
+          "operation": "addition"
+        }
       }
     ]
   },
   "conquistador": {
     "title": "Conquistador",
-    "description": "+5% armor shred, +1 HP, +3% melee resist.",
+    "description": "+5% armor shred melee, +5% melee dmg, +0.75 toughness, +3 HP, +5% melee resist.",
     "extra_description": {
       "text": "",
       "extra": [
@@ -790,7 +798,7 @@
           "color": "gold"
         },
         {
-          "text": "30 niveles de XP\n",
+          "text": "30 niveles de XP\\n",
           "color": "yellow"
         },
         {
@@ -798,7 +806,7 @@
           "color": "dark_purple"
         },
         {
-          "text": "cataclysm:maledictus\n",
+          "text": "cataclysm:maledictus\\n",
           "color": "light_purple"
         },
         {
@@ -806,7 +814,7 @@
           "color": "green"
         },
         {
-          "text": "+5% armor shred, +1 HP, +3% melee resist.\n",
+          "text": "+5% armor shred melee, +5% melee dmg, +0.75 toughness, +3 HP, +5% melee resist.\\n",
           "color": "gray"
         },
         {
@@ -814,7 +822,7 @@
           "color": "aqua"
         },
         {
-          "text": "Conquistador: +5% melee dmg, +0.5 toughness y al matar un mob hostil obtienes +2% melee dmg durante 5 seg (acumulable 5 veces).",
+          "text": "Conquistador: al matar un mob hostil obtienes +3% melee dmg durante 5 seg, acumulable 5 veces; pierde 1 carga cada 5 seg sin matar.",
           "color": "gray"
         }
       ]
@@ -843,7 +851,7 @@
         "type": "puffish_skills:attribute",
         "data": {
           "attribute": "generic.max_health",
-          "value": 1,
+          "value": 3,
           "operation": "addition"
         }
       },
@@ -851,7 +859,7 @@
         "type": "puffish_skills:attribute",
         "data": {
           "attribute": "generic.armor_toughness",
-          "value": 0.5,
+          "value": 0.75,
           "operation": "addition"
         }
       },
@@ -862,12 +870,28 @@
           "value": 0.05,
           "operation": "multiply_total"
         }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:melee_resistance",
+          "value": 0.05,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:melee_armor_shred",
+          "value": 0.05,
+          "operation": "addition"
+        }
       }
     ]
   },
   "senor_de_la_guerra": {
     "title": "Senor de la Guerra",
-    "description": "+10% melee damage, +5% AS, +10% healing received, +1 HP.",
+    "description": "+20% melee dmg, +10% AS melee, +4 HP.",
     "extra_description": {
       "text": "",
       "extra": [
@@ -876,7 +900,7 @@
           "color": "gold"
         },
         {
-          "text": "35 niveles de XP\n",
+          "text": "35 niveles de XP\\n",
           "color": "yellow"
         },
         {
@@ -884,7 +908,7 @@
           "color": "dark_purple"
         },
         {
-          "text": "minecraft:ender_dragon\n",
+          "text": "minecraft:warden\\n",
           "color": "light_purple"
         },
         {
@@ -892,7 +916,7 @@
           "color": "green"
         },
         {
-          "text": "+10% melee damage, +5% AS, +10% healing received, +1 HP.\n",
+          "text": "+20% melee dmg, +10% AS melee, +4 HP.\\n",
           "color": "gray"
         },
         {
@@ -900,7 +924,7 @@
           "color": "aqua"
         },
         {
-          "text": "Aura de dominio: -5% de dano recibido por enemigos cercanos.",
+          "text": "Aura de dominio: enemigos cercanos hacen -10% dano contra ti. Radio 10 bloques.",
           "color": "gray"
         }
       ]
@@ -929,22 +953,22 @@
         "type": "puffish_skills:attribute",
         "data": {
           "attribute": "generic.max_health",
-          "value": 1,
+          "value": 4,
           "operation": "addition"
         }
       },
       {
         "type": "puffish_skills:attribute",
         "data": {
-          "attribute": "generic.attack_speed",
-          "value": 0.05,
+          "attribute": "generic.attack_damage",
+          "value": 0.2,
           "operation": "multiply_total"
         }
       },
       {
         "type": "puffish_skills:attribute",
         "data": {
-          "attribute": "generic.attack_damage",
+          "attribute": "generic.attack_speed",
           "value": 0.1,
           "operation": "multiply_total"
         }
@@ -953,7 +977,7 @@
   },
   "cazador": {
     "title": "Cazador",
-    "description": "Selecciona la clase Rango. +5% projectile damage, +3% prob crit, +5% move speed.",
+    "description": "Selecciona la clase Rango. +5% projectile damage, +5% prob crit ranged, +5% move speed.",
     "extra_description": {
       "text": "",
       "extra": [
@@ -962,7 +986,7 @@
           "color": "gold"
         },
         {
-          "text": "1 nivel de XP\n",
+          "text": "5 niveles de XP\\n",
           "color": "yellow"
         },
         {
@@ -970,16 +994,24 @@
           "color": "dark_purple"
         },
         {
-          "text": "mowziesmobs:naga\n",
-          "color": "light_purple"
+          "text": "Sin logro\\n",
+          "color": "gray"
+        },
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+5% projectile damage, +5% prob crit ranged, +5% move speed.\\n",
+          "color": "gray"
         },
         {
           "text": "Perk: ",
           "color": "aqua"
         },
         {
-          "text": "AS Ranged = velocidad de tensado/apuntado con arco y recarga de ballesta.",
-          "color": "gray"
+          "text": "-",
+          "color": "dark_gray"
         }
       ]
     },
@@ -995,12 +1027,28 @@
         "frame": "task"
       }
     },
-    "cost": 1,
+    "cost": 5,
     "rewards": [
       {
         "type": "puffish_skills:tag",
         "data": {
           "tag": "ascendant_class_cazador"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:ranged_damage",
+          "value": 0.05,
+          "operation": "multiply_total"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:ranged_crit_chance",
+          "value": 0.05,
+          "operation": "addition"
         }
       },
       {
@@ -1049,7 +1097,7 @@
         "frame": "goal"
       }
     },
-    "cost": 1,
+    "cost": 10,
     "rewards": [
       {
         "type": "puffish_skills:tag",
@@ -1061,7 +1109,7 @@
   },
   "ojo_certero": {
     "title": "Ojo Certero",
-    "description": "+10% crit damage, +5% prob crit, -5% AS Ranged.",
+    "description": "+15% crit dmg ranged, +5% crit chance ranged, -5% AS ranged.",
     "icon": {
       "type": "item",
       "data": {
@@ -1074,12 +1122,36 @@
         "frame": "goal"
       }
     },
-    "cost": 1,
+    "cost": 15,
     "rewards": [
       {
         "type": "puffish_skills:tag",
         "data": {
           "tag": "ascendant_range_ojo_certero"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:ranged_crit_damage",
+          "value": 0.15,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:ranged_crit_chance",
+          "value": 0.05,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:ranged_attack_speed",
+          "value": -0.05,
+          "operation": "multiply_total"
         }
       }
     ],
@@ -1091,23 +1163,39 @@
           "color": "gold"
         },
         {
-          "text": "1 nivel de XP\n",
+          "text": "15 niveles de XP\\n",
           "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "Sin logro\\n",
+          "color": "gray"
+        },
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+15% crit dmg ranged, +5% crit chance ranged, -5% AS ranged.\\n",
+          "color": "gray"
         },
         {
           "text": "Perk: ",
           "color": "aqua"
         },
         {
-          "text": "Bonificaciones pasivas del nodo.",
-          "color": "gray"
+          "text": "-",
+          "color": "dark_gray"
         }
       ]
     }
   },
   "tiro_rapido": {
     "title": "Tiro Rapido",
-    "description": "+10% AS Ranged, +10% move speed al apuntar, -5% prob crit.",
+    "description": "+10% AS ranged, -10% crit dmg ranged.",
     "icon": {
       "type": "item",
       "data": {
@@ -1120,12 +1208,28 @@
         "frame": "goal"
       }
     },
-    "cost": 1,
+    "cost": 15,
     "rewards": [
       {
         "type": "puffish_skills:tag",
         "data": {
           "tag": "ascendant_range_tiro_rapido"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:ranged_attack_speed",
+          "value": 0.1,
+          "operation": "multiply_total"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:ranged_crit_damage",
+          "value": -0.1,
+          "operation": "addition"
         }
       }
     ],
@@ -1137,15 +1241,31 @@
           "color": "gold"
         },
         {
-          "text": "1 nivel de XP\n",
+          "text": "15 niveles de XP\\n",
           "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "Sin logro\\n",
+          "color": "gray"
+        },
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+10% AS ranged, -10% crit dmg ranged.\\n",
+          "color": "gray"
         },
         {
           "text": "Perk: ",
           "color": "aqua"
         },
         {
-          "text": "Bonificaciones pasivas del nodo.",
+          "text": "La velocidad de ataque ranged acelera el tensado del arco y la recarga de la ballesta.",
           "color": "gray"
         }
       ]
@@ -1153,7 +1273,7 @@
   },
   "francotirador": {
     "title": "Francotirador",
-    "description": "Dano adicional por distancia del proyectil, min 30 bloques, max +20%. Bajo 15 bloques: -5% dano.",
+    "description": "+15% crit dmg ranged, +5% crit chance ranged, -5% AS ranged.",
     "extra_description": {
       "text": "",
       "extra": [
@@ -1162,7 +1282,7 @@
           "color": "gold"
         },
         {
-          "text": "1 nivel de XP\n",
+          "text": "20 niveles de XP\\n",
           "color": "yellow"
         },
         {
@@ -1170,15 +1290,23 @@
           "color": "dark_purple"
         },
         {
-          "text": "cataclysm:ignis\n",
+          "text": "cataclysm:ignis\\n",
           "color": "light_purple"
+        },
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+15% crit dmg ranged, +5% crit chance ranged, -5% AS ranged.\\n",
+          "color": "gray"
         },
         {
           "text": "Perk: ",
           "color": "aqua"
         },
         {
-          "text": "Bonificaciones pasivas del nodo.",
+          "text": "Tiro lejano: los proyectiles ganan dano por distancia desde 10 bloques hasta +20% a 30 bloques.",
           "color": "gray"
         }
       ]
@@ -1195,19 +1323,43 @@
         "frame": "challenge"
       }
     },
-    "cost": 1,
+    "cost": 20,
     "rewards": [
       {
         "type": "puffish_skills:tag",
         "data": {
           "tag": "ascendant_range_francotirador"
         }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:ranged_crit_damage",
+          "value": 0.15,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:ranged_crit_chance",
+          "value": 0.05,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:ranged_attack_speed",
+          "value": -0.05,
+          "operation": "multiply_total"
+        }
       }
     ]
   },
   "aljaba_ligera": {
     "title": "Aljaba Ligera",
-    "description": "+10% projectile velocity, +5% prob de no consumir ammo, -5% armor projectile shred.",
+    "description": "+10% projectile velocity, +10% prob de no consumir flechas.",
     "extra_description": {
       "text": "",
       "extra": [
@@ -1216,7 +1368,7 @@
           "color": "gold"
         },
         {
-          "text": "1 nivel de XP\n",
+          "text": "20 niveles de XP\\n",
           "color": "yellow"
         },
         {
@@ -1224,15 +1376,23 @@
           "color": "dark_purple"
         },
         {
-          "text": "bosses_of_mass_destruction:void_blossom\n",
+          "text": "bosses_of_mass_destruction:void_blossom\\n",
           "color": "light_purple"
+        },
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+10% projectile velocity, +10% prob de no consumir flechas.\\n",
+          "color": "gray"
         },
         {
           "text": "Perk: ",
           "color": "aqua"
         },
         {
-          "text": "Bonificaciones pasivas del nodo.",
+          "text": "Cadencia ligera: cada impacto aumenta +2% AS ranged, max +10%; pierde 1 carga cada 5 seg sin impactar.",
           "color": "gray"
         }
       ]
@@ -1249,7 +1409,7 @@
         "frame": "challenge"
       }
     },
-    "cost": 1,
+    "cost": 20,
     "rewards": [
       {
         "type": "puffish_skills:tag",
@@ -1261,7 +1421,7 @@
   },
   "perforador": {
     "title": "Perforador",
-    "description": "+5% projectile damage, +5% armor projectile shred.",
+    "description": "+5% projectile damage, +5% armor shred ranged.",
     "extra_description": {
       "text": "",
       "extra": [
@@ -1270,15 +1430,31 @@
           "color": "gold"
         },
         {
-          "text": "1 nivel de XP\n",
+          "text": "25 niveles de XP\\n",
           "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "Sin logro\\n",
+          "color": "gray"
+        },
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+5% projectile damage, +5% armor shred ranged.\\n",
+          "color": "gray"
         },
         {
           "text": "Perk: ",
           "color": "aqua"
         },
         {
-          "text": "10% prob de atravesar a un objetivo; si el item tiene perforacion, suma 1 nivel. CD 10 seg.",
+          "text": "Perforador: tus flechas obtienen +1 piercing. Cada objetivo muerto en trayectoria aumenta +15% el dano restante.",
           "color": "gray"
         }
       ]
@@ -1295,19 +1471,35 @@
         "frame": "goal"
       }
     },
-    "cost": 1,
+    "cost": 25,
     "rewards": [
       {
         "type": "puffish_skills:tag",
         "data": {
           "tag": "ascendant_range_perforador"
         }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:ranged_damage",
+          "value": 0.05,
+          "operation": "multiply_total"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:ranged_armor_shred",
+          "value": 0.05,
+          "operation": "addition"
+        }
       }
     ]
   },
   "escaramuzador": {
     "title": "Escaramuzador",
-    "description": "+10% AS Ranged, +5% move speed, -5% crit dmg.",
+    "description": "+5% AS ranged, +10% move speed.",
     "extra_description": {
       "text": "",
       "extra": [
@@ -1316,15 +1508,31 @@
           "color": "gold"
         },
         {
-          "text": "1 nivel de XP\n",
+          "text": "25 niveles de XP\\n",
           "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "Sin logro\\n",
+          "color": "gray"
+        },
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+5% AS ranged, +10% move speed.\\n",
+          "color": "gray"
         },
         {
           "text": "Perk: ",
           "color": "aqua"
         },
         {
-          "text": "Tras moverte 10 bloques sin disparar, el siguiente disparo gana +10% dano.",
+          "text": "Escaramuza: al moverte antes de disparar, el siguiente disparo gana dano.",
           "color": "gray"
         }
       ]
@@ -1341,7 +1549,7 @@
         "frame": "goal"
       }
     },
-    "cost": 1,
+    "cost": 25,
     "rewards": [
       {
         "type": "puffish_skills:tag",
@@ -1352,8 +1560,16 @@
       {
         "type": "puffish_skills:attribute",
         "data": {
-          "attribute": "generic.movement_speed",
+          "attribute": "ascendant_skills:ranged_attack_speed",
           "value": 0.05,
+          "operation": "multiply_total"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "generic.movement_speed",
+          "value": 0.1,
           "operation": "multiply_total"
         }
       }
@@ -1361,7 +1577,7 @@
   },
   "deadeye": {
     "title": "Deadeye",
-    "description": "Impactos a larga distancia, min 30 bloques: +10% crit chance y +20% crit dmg.",
+    "description": "+5% crit chance ranged, +15% crit dmg ranged, -5% AS ranged.",
     "extra_description": {
       "text": "",
       "extra": [
@@ -1370,7 +1586,7 @@
           "color": "gold"
         },
         {
-          "text": "1 nivel de XP\n",
+          "text": "30 niveles de XP\\n",
           "color": "yellow"
         },
         {
@@ -1378,15 +1594,23 @@
           "color": "dark_purple"
         },
         {
-          "text": "cataclysm:scylla\n",
+          "text": "cataclysm:scylla\\n",
           "color": "light_purple"
+        },
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+5% crit chance ranged, +15% crit dmg ranged, -5% AS ranged.\\n",
+          "color": "gray"
         },
         {
           "text": "Perk: ",
           "color": "aqua"
         },
         {
-          "text": "Bonificaciones pasivas del nodo.",
+          "text": "Deadeye: cada critico aumenta +1% crit chance del siguiente disparo, max 25 cargas; pierde 1 carga en golpe normal o tras 20 seg sin critico.",
           "color": "gray"
         }
       ]
@@ -1403,19 +1627,43 @@
         "frame": "challenge"
       }
     },
-    "cost": 1,
+    "cost": 30,
     "rewards": [
       {
         "type": "puffish_skills:tag",
         "data": {
           "tag": "ascendant_range_deadeye"
         }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:ranged_crit_chance",
+          "value": 0.05,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:ranged_crit_damage",
+          "value": 0.15,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:ranged_attack_speed",
+          "value": -0.05,
+          "operation": "multiply_total"
+        }
       }
     ]
   },
   "barrage": {
     "title": "Barrage",
-    "description": "Cada 4 impactos consecutivos activa un disparo critico asegurado.",
+    "description": "+5% projectile damage, +10% projectile velocity, +10% AS ranged.",
     "extra_description": {
       "text": "",
       "extra": [
@@ -1424,7 +1672,7 @@
           "color": "gold"
         },
         {
-          "text": "1 nivel de XP\n",
+          "text": "30 niveles de XP\\n",
           "color": "yellow"
         },
         {
@@ -1432,15 +1680,23 @@
           "color": "dark_purple"
         },
         {
-          "text": "cataclysm:the_leviathan\n",
+          "text": "cataclysm:the_leviathan\\n",
           "color": "light_purple"
+        },
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+5% projectile damage, +10% projectile velocity, +10% AS ranged.\\n",
+          "color": "gray"
         },
         {
           "text": "Perk: ",
           "color": "aqua"
         },
         {
-          "text": "Bonificaciones pasivas del nodo.",
+          "text": "Barrage: pasa de 4 a 5 disparos.",
           "color": "gray"
         }
       ]
@@ -1457,19 +1713,35 @@
         "frame": "challenge"
       }
     },
-    "cost": 1,
+    "cost": 30,
     "rewards": [
       {
         "type": "puffish_skills:tag",
         "data": {
           "tag": "ascendant_range_barrage"
         }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:ranged_damage",
+          "value": 0.05,
+          "operation": "multiply_total"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:ranged_attack_speed",
+          "value": 0.1,
+          "operation": "multiply_total"
+        }
       }
     ]
   },
   "maestro_tirador": {
     "title": "Maestro Tirador",
-    "description": "+10% ranged damage, +20% crit damage, +5% armor shred, +2 HP.",
+    "description": "+20% projectile damage, +20% crit dmg ranged, +15% armor shred ranged, +4 HP.",
     "extra_description": {
       "text": "",
       "extra": [
@@ -1478,7 +1750,7 @@
           "color": "gold"
         },
         {
-          "text": "1 nivel de XP\n",
+          "text": "35 niveles de XP\\n",
           "color": "yellow"
         },
         {
@@ -1486,15 +1758,23 @@
           "color": "dark_purple"
         },
         {
-          "text": "minecraft:ender_dragon\n",
+          "text": "minecraft:ender_dragon\\n",
           "color": "light_purple"
+        },
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+20% projectile damage, +20% crit dmg ranged, +15% armor shred ranged, +4 HP.\\n",
+          "color": "gray"
         },
         {
           "text": "Perk: ",
           "color": "aqua"
         },
         {
-          "text": "Disparo perfecto: apuntar/cargar 5 seg da +25% dano e ignora 10% armor. CD 15 seg.",
+          "text": "Disparo perfecto: apuntar/cargar 5 seg da +30% dano e ignora 15% armor. CD 10 seg.",
           "color": "gray"
         }
       ]
@@ -1511,7 +1791,7 @@
         "frame": "challenge"
       }
     },
-    "cost": 1,
+    "cost": 35,
     "rewards": [
       {
         "type": "puffish_skills:tag",
@@ -1523,7 +1803,31 @@
         "type": "puffish_skills:attribute",
         "data": {
           "attribute": "generic.max_health",
-          "value": 2,
+          "value": 4,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:ranged_damage",
+          "value": 0.2,
+          "operation": "multiply_total"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:ranged_crit_damage",
+          "value": 0.2,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:ranged_armor_shred",
+          "value": 0.15,
           "operation": "addition"
         }
       }
@@ -1531,7 +1835,7 @@
   },
   "bastion": {
     "title": "Bastion",
-    "description": "Selecciona la clase Tanque. +5% global resist, +3 HP, -5% move speed.",
+    "description": "Selecciona la clase Tanque. +5% global resist, +4 HP, -5% move speed.",
     "icon": {
       "type": "item",
       "data": {
@@ -1544,7 +1848,7 @@
         "frame": "task"
       }
     },
-    "cost": 1,
+    "cost": 7,
     "rewards": [
       {
         "type": "puffish_skills:tag",
@@ -1556,7 +1860,7 @@
         "type": "puffish_skills:attribute",
         "data": {
           "attribute": "generic.max_health",
-          "value": 3,
+          "value": 4,
           "operation": "addition"
         }
       },
@@ -1585,23 +1889,39 @@
           "color": "gold"
         },
         {
-          "text": "1 nivel de XP\n",
+          "text": "7 niveles de XP\\n",
           "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "Sin logro\\n",
+          "color": "gray"
+        },
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+5% global resist, +4 HP, -5% move speed.\\n",
+          "color": "gray"
         },
         {
           "text": "Perk: ",
           "color": "aqua"
         },
         {
-          "text": "Bonificaciones pasivas del nodo.",
-          "color": "gray"
+          "text": "-",
+          "color": "dark_gray"
         }
       ]
     }
   },
   "muralla": {
     "title": "Muralla",
-    "description": "+1 armor, +0.5 toughness, +10% knockback resist.",
+    "description": "+3 armor, +1 toughness, +10% knockback resist.",
     "extra_description": {
       "text": "",
       "extra": [
@@ -1610,7 +1930,7 @@
           "color": "gold"
         },
         {
-          "text": "1 nivel de XP\n",
+          "text": "10 niveles de XP\\n",
           "color": "yellow"
         },
         {
@@ -1618,15 +1938,23 @@
           "color": "dark_purple"
         },
         {
-          "text": "mowziesmobs:ferrous_wroughtnaut\n",
+          "text": "mowziesmobs:ferrous_wroughtnaut\\n",
           "color": "light_purple"
+        },
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+3 armor, +1 toughness, +10% knockback resist.\\n",
+          "color": "gray"
         },
         {
           "text": "Perk: ",
           "color": "aqua"
         },
         {
-          "text": "Royal Guard: agachado y bloqueando, el escudo cubre 100% de angulos, -40% move speed. CD propio 20 seg.",
+          "text": "Postura del Baluarte: con escudo en mano izquierda obtienes +10% melee, projectile y explosion resist. Sin escudo obtienes +10% move speed y +10% melee dmg.",
           "color": "gray"
         }
       ]
@@ -1643,8 +1971,10 @@
         "frame": "challenge"
       }
     },
-    "cost": 1,
-    "required_mods": ["shieldexp"],
+    "cost": 10,
+    "required_mods": [
+      "shieldexp"
+    ],
     "rewards": [
       {
         "type": "puffish_skills:tag",
@@ -1656,7 +1986,7 @@
         "type": "puffish_skills:attribute",
         "data": {
           "attribute": "generic.armor",
-          "value": 1,
+          "value": 3,
           "operation": "addition"
         }
       },
@@ -1664,7 +1994,7 @@
         "type": "puffish_skills:attribute",
         "data": {
           "attribute": "generic.armor_toughness",
-          "value": 0.5,
+          "value": 1,
           "operation": "addition"
         }
       },
@@ -1680,7 +2010,7 @@
   },
   "fortaleza": {
     "title": "Fortaleza",
-    "description": "+3 HP, +2 armor, +10% melee resist, -5% move speed.",
+    "description": "+5 HP, +4 armor, +10% melee resist, +10% projectile resist, -5% move speed.",
     "extra_description": {
       "text": "",
       "extra": [
@@ -1689,15 +2019,31 @@
           "color": "gold"
         },
         {
-          "text": "1 nivel de XP\n",
+          "text": "15 niveles de XP\\n",
           "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "Sin logro\\n",
+          "color": "gray"
+        },
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+5 HP, +4 armor, +10% melee resist, +10% projectile resist, -5% move speed.\\n",
+          "color": "gray"
         },
         {
           "text": "Perk: ",
           "color": "aqua"
         },
         {
-          "text": "Piel de acero: cada golpe melee recibido aumenta tu melee resist en 1%, max 5%. Se pierde tras 5 seg sin recibir golpe melee.",
+          "text": "Piel de acero: golpes melee de mobs aumentan +2% melee resist, max 5 cargas; pierde 1 carga cada 5 seg sin recibir golpe melee.",
           "color": "gray"
         }
       ]
@@ -1714,7 +2060,7 @@
         "frame": "goal"
       }
     },
-    "cost": 1,
+    "cost": 15,
     "rewards": [
       {
         "type": "puffish_skills:tag",
@@ -1726,7 +2072,7 @@
         "type": "puffish_skills:attribute",
         "data": {
           "attribute": "generic.max_health",
-          "value": 3,
+          "value": 5,
           "operation": "addition"
         }
       },
@@ -1734,7 +2080,23 @@
         "type": "puffish_skills:attribute",
         "data": {
           "attribute": "generic.armor",
-          "value": 2,
+          "value": 4,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:melee_resistance",
+          "value": 0.1,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:projectile_resistance",
+          "value": 0.1,
           "operation": "addition"
         }
       },
@@ -1750,7 +2112,7 @@
   },
   "guardaespaldas": {
     "title": "Guardaespaldas",
-    "description": "+1 HP, +10% global resist mientras haya aliados cerca.",
+    "description": "+2 HP.",
     "extra_description": {
       "text": "",
       "extra": [
@@ -1759,15 +2121,31 @@
           "color": "gold"
         },
         {
-          "text": "1 nivel de XP\n",
+          "text": "15 niveles de XP\\n",
           "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "Sin logro\\n",
+          "color": "gray"
+        },
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+2 HP.\\n",
+          "color": "gray"
         },
         {
           "text": "Perk: ",
           "color": "aqua"
         },
         {
-          "text": "Intercepcion: 20% de probabilidad de interceptar ataques a aliados cercanos. Ese ataque recibe 20% global resist. Radio 10 bloques, CD 15 seg.",
+          "text": "Intercepcion: si estas en party, reduces 30% el dano final del siguiente golpe/proyectil que recibe el aliado mas cercano en 10 bloques. CD 10 seg.",
           "color": "gray"
         }
       ]
@@ -1784,7 +2162,7 @@
         "frame": "goal"
       }
     },
-    "cost": 1,
+    "cost": 15,
     "rewards": [
       {
         "type": "puffish_skills:tag",
@@ -1796,7 +2174,7 @@
         "type": "puffish_skills:attribute",
         "data": {
           "attribute": "generic.max_health",
-          "value": 1,
+          "value": 2,
           "operation": "addition"
         }
       }
@@ -1804,7 +2182,7 @@
   },
   "coloso": {
     "title": "Coloso",
-    "description": "+4 HP, +1 toughness, +10% explosion resist, -5% move speed.",
+    "description": "+10% size, +6 HP, +1 toughness, +15% explosion resist, -5% move speed.",
     "extra_description": {
       "text": "",
       "extra": [
@@ -1813,7 +2191,7 @@
           "color": "gold"
         },
         {
-          "text": "1 nivel de XP\n",
+          "text": "20 niveles de XP\\n",
           "color": "yellow"
         },
         {
@@ -1821,8 +2199,16 @@
           "color": "dark_purple"
         },
         {
-          "text": "cataclysm:netherite_monstrosity\n",
+          "text": "cataclysm:netherite_monstrosity\\n",
           "color": "light_purple"
+        },
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+10% size, +6 HP, +1 toughness, +15% explosion resist, -5% move speed.\\n",
+          "color": "gray"
         },
         {
           "text": "Perk: ",
@@ -1846,7 +2232,7 @@
         "frame": "challenge"
       }
     },
-    "cost": 1,
+    "cost": 20,
     "rewards": [
       {
         "type": "puffish_skills:tag",
@@ -1858,7 +2244,7 @@
         "type": "puffish_skills:attribute",
         "data": {
           "attribute": "generic.max_health",
-          "value": 4,
+          "value": 6,
           "operation": "addition"
         }
       },
@@ -1867,6 +2253,22 @@
         "data": {
           "attribute": "generic.armor_toughness",
           "value": 1,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "generic.scale",
+          "value": 0.1,
+          "operation": "multiply_total"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:explosion_resistance",
+          "value": 0.15,
           "operation": "addition"
         }
       },
@@ -1882,7 +2284,7 @@
   },
   "provocador": {
     "title": "Provocador",
-    "description": "+15% aggro reach, +10% melee resist.",
+    "description": "+20% aggro reach, +5% global resist.",
     "extra_description": {
       "text": "",
       "extra": [
@@ -1891,7 +2293,7 @@
           "color": "gold"
         },
         {
-          "text": "1 nivel de XP\n",
+          "text": "20 niveles de XP\\n",
           "color": "yellow"
         },
         {
@@ -1899,8 +2301,16 @@
           "color": "dark_purple"
         },
         {
-          "text": "bosses_of_mass_destruction:void_blossom\n",
+          "text": "bosses_of_mass_destruction:void_blossom\\n",
           "color": "light_purple"
+        },
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+20% aggro reach, +5% global resist.\\n",
+          "color": "gray"
         },
         {
           "text": "Perk: ",
@@ -1924,19 +2334,27 @@
         "frame": "challenge"
       }
     },
-    "cost": 1,
+    "cost": 20,
     "rewards": [
       {
         "type": "puffish_skills:tag",
         "data": {
           "tag": "ascendant_tank_provocador"
         }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:global_resistance",
+          "value": 0.05,
+          "operation": "addition"
+        }
       }
     ]
   },
   "regenerador": {
     "title": "Regenerador",
-    "description": "+10% regen natural, +10% healing received, -5% melee dmg.",
+    "description": "+0.5 HP de regen pasiva, -2 seg de intervalo, -5% melee dmg.",
     "extra_description": {
       "text": "",
       "extra": [
@@ -1945,15 +2363,31 @@
           "color": "gold"
         },
         {
-          "text": "1 nivel de XP\n",
+          "text": "25 niveles de XP\\n",
           "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "Sin logro\\n",
+          "color": "gray"
+        },
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+0.5 HP de regen pasiva, intervalo 8 seg, -5% melee dmg.\\n",
+          "color": "gray"
         },
         {
           "text": "Perk: ",
           "color": "aqua"
         },
         {
-          "text": "Segundo Aliento: al bajar de 30% HP max, te curas 15% HP max. CD 20 seg.",
+          "text": "Segundo Aliento: al recibir un golpe mortal o bajar de 30% HP max, te curas 15% HP max. CD 20 seg.",
           "color": "gray"
         }
       ]
@@ -1970,19 +2404,43 @@
         "frame": "goal"
       }
     },
-    "cost": 1,
+    "cost": 25,
     "rewards": [
       {
         "type": "puffish_skills:tag",
         "data": {
           "tag": "ascendant_tank_regenerador"
         }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:passive_regen_health",
+          "value": 0.5,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:passive_regen_interval",
+          "value": -2,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "generic.attack_damage",
+          "value": -0.05,
+          "operation": "multiply_total"
+        }
       }
     ]
   },
   "invencible": {
     "title": "Invencible",
-    "description": "+4 HP, +5% global resist, -10% regen natural.",
+    "description": "+5 HP, +5% global resist, +2 seg de intervalo de curacion pasiva.",
     "extra_description": {
       "text": "",
       "extra": [
@@ -1991,15 +2449,31 @@
           "color": "gold"
         },
         {
-          "text": "1 nivel de XP\n",
+          "text": "25 niveles de XP\\n",
           "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "Sin logro\\n",
+          "color": "gray"
+        },
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+5 HP, +5% global resist, +2 seg de intervalo de curacion pasiva.\\n",
+          "color": "gray"
         },
         {
           "text": "Perk: ",
           "color": "aqua"
         },
         {
-          "text": "Ultimo Bastion: al bajar de 20% HP, por 5 seg ganas +20% resist melee y distancia. CD 60 seg.",
+          "text": "Ultimo Bastion: al bajar de 30% HP max obtienes +50% global resist por 5 seg. CD 40 seg.",
           "color": "gray"
         }
       ]
@@ -2016,7 +2490,7 @@
         "frame": "goal"
       }
     },
-    "cost": 1,
+    "cost": 25,
     "rewards": [
       {
         "type": "puffish_skills:tag",
@@ -2028,7 +2502,7 @@
         "type": "puffish_skills:attribute",
         "data": {
           "attribute": "generic.max_health",
-          "value": 4,
+          "value": 5,
           "operation": "addition"
         }
       },
@@ -2039,12 +2513,20 @@
           "value": 0.05,
           "operation": "addition"
         }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:passive_regen_interval",
+          "value": 2,
+          "operation": "addition"
+        }
       }
     ]
   },
   "bastion_absoluto": {
     "title": "Bastion Absoluto",
-    "description": "+1 armor, +10% size, +15% elemental resist.",
+    "description": "+1 toughness, +5% melee resist, +5% projectile resist.",
     "extra_description": {
       "text": "",
       "extra": [
@@ -2053,7 +2535,7 @@
           "color": "gold"
         },
         {
-          "text": "1 nivel de XP\n",
+          "text": "30 niveles de XP\\n",
           "color": "yellow"
         },
         {
@@ -2061,15 +2543,23 @@
           "color": "dark_purple"
         },
         {
-          "text": "cataclysm:scylla\n",
+          "text": "cataclysm:scylla\\n",
           "color": "light_purple"
+        },
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+1 toughness, +5% melee resist, +5% projectile resist.\\n",
+          "color": "gray"
         },
         {
           "text": "Perk: ",
           "color": "aqua"
         },
         {
-          "text": "Ultima Linea: cuando se rompa tu guardia, empuja enemigos cercanos y reduce cooldown del escudo 50%. CD 20 seg.",
+          "text": "Ultima Linea: cuando se rompa tu guardia, empuja enemigos cercanos. CD 10 seg.",
           "color": "gray"
         }
       ]
@@ -2086,8 +2576,10 @@
         "frame": "challenge"
       }
     },
-    "cost": 1,
-    "required_mods": ["shieldexp"],
+    "cost": 30,
+    "required_mods": [
+      "shieldexp"
+    ],
     "rewards": [
       {
         "type": "puffish_skills:tag",
@@ -2098,7 +2590,7 @@
       {
         "type": "puffish_skills:attribute",
         "data": {
-          "attribute": "generic.armor",
+          "attribute": "generic.armor_toughness",
           "value": 1,
           "operation": "addition"
         }
@@ -2106,16 +2598,24 @@
       {
         "type": "puffish_skills:attribute",
         "data": {
-          "attribute": "generic.scale",
-          "value": 0.1,
-          "operation": "multiply_total"
+          "attribute": "ascendant_skills:melee_resistance",
+          "value": 0.05,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:projectile_resistance",
+          "value": 0.05,
+          "operation": "addition"
         }
       }
     ]
   },
   "titan": {
     "title": "Titan",
-    "description": "+6 HP, +1 armor, +0.5 toughness, +5% global resist.",
+    "description": "+10 HP, +3 armor, +2 toughness, +5% global resist.",
     "extra_description": {
       "text": "",
       "extra": [
@@ -2124,7 +2624,7 @@
           "color": "gold"
         },
         {
-          "text": "1 nivel de XP\n",
+          "text": "35 niveles de XP\\n",
           "color": "yellow"
         },
         {
@@ -2132,15 +2632,23 @@
           "color": "dark_purple"
         },
         {
-          "text": "minecraft:wither\n",
+          "text": "minecraft:wither\\n",
           "color": "light_purple"
+        },
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+10 HP, +3 armor, +2 toughness, +5% global resist.\\n",
+          "color": "gray"
         },
         {
           "text": "Perk: ",
           "color": "aqua"
         },
         {
-          "text": "Aura del Titan: aliados cercanos +10% global resist y enemigos -10% move speed. Radio 10 bloques.",
+          "text": "Aura del Titan: aliados cercanos obtienen +5% global resist y enemigos -10% move speed. Radio 10 bloques.",
           "color": "gray"
         }
       ]
@@ -2157,7 +2665,7 @@
         "frame": "challenge"
       }
     },
-    "cost": 1,
+    "cost": 35,
     "rewards": [
       {
         "type": "puffish_skills:tag",
@@ -2169,7 +2677,7 @@
         "type": "puffish_skills:attribute",
         "data": {
           "attribute": "generic.max_health",
-          "value": 6,
+          "value": 10,
           "operation": "addition"
         }
       },
@@ -2177,7 +2685,7 @@
         "type": "puffish_skills:attribute",
         "data": {
           "attribute": "generic.armor",
-          "value": 1,
+          "value": 3,
           "operation": "addition"
         }
       },
@@ -2185,7 +2693,7 @@
         "type": "puffish_skills:attribute",
         "data": {
           "attribute": "generic.armor_toughness",
-          "value": 0.5,
+          "value": 2,
           "operation": "addition"
         }
       },

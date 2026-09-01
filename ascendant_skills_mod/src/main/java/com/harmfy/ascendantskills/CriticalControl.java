@@ -23,7 +23,7 @@ public final class CriticalControl {
 
         if (CombatPerks.consumeCriticalEye(player, event.getTarget())) {
             event.setCriticalHit(true);
-            event.setDamageMultiplier(CombatPerks.criticalEyeDamageMultiplier());
+            event.setDamageMultiplier(CombatPerks.criticalEyeDamageMultiplier(player, event.getTarget()));
             player.crit(event.getTarget());
             return;
         }

@@ -176,42 +176,42 @@ public final class AscendantConfig {
 
     private static Map<String, RequirementEntry> defaultRequirements() {
         Map<String, RequirementEntry> file = new LinkedHashMap<>();
-        put(file, "inicio", 1);
-        put(file, "combate", 5);
-        put(file, "cazador", 1, "mowziesmobs:naga");
-        put(file, "bastion", 1);
+        put(file, "inicio", 0);
+        put(file, "combate", 3);
+        put(file, "cazador", 5);
+        put(file, "bastion", 7);
 
-        put(file, "punteria", 1);
-        put(file, "ojo_certero", 1);
-        put(file, "tiro_rapido", 1);
-        put(file, "francotirador", 1, "cataclysm:ignis");
-        put(file, "aljaba_ligera", 1, "bosses_of_mass_destruction:void_blossom");
-        put(file, "perforador", 1);
-        put(file, "escaramuzador", 1);
-        put(file, "deadeye", 1, "cataclysm:scylla");
-        put(file, "barrage", 1, "cataclysm:the_leviathan");
-        put(file, "maestro_tirador", 1, "minecraft:ender_dragon");
+        put(file, "punteria", 10, "mowziesmobs:naga");
+        put(file, "ojo_certero", 15);
+        put(file, "tiro_rapido", 15);
+        put(file, "francotirador", 20, "cataclysm:ignis");
+        put(file, "aljaba_ligera", 20, "bosses_of_mass_destruction:void_blossom");
+        put(file, "perforador", 25);
+        put(file, "escaramuzador", 25);
+        put(file, "deadeye", 30, "cataclysm:scylla");
+        put(file, "barrage", 30, "cataclysm:the_leviathan");
+        put(file, "maestro_tirador", 35, "minecraft:ender_dragon");
 
-        put(file, "luchador", 7);
+        put(file, "luchador", 5);
         put(file, "coraza_de_acero", 10, "mowziesmobs:umvuthi");
         put(file, "danzante_de_acero", 15);
         put(file, "verdugo", 15);
         put(file, "inamovible", 17, "cataclysm:netherite_monstrosity");
-        put(file, "veterano_de_guerra", 20);
         put(file, "berserker", 20);
-        put(file, "juggernaut", 25);
+        put(file, "juggernaut", 20);
+        put(file, "veterano_de_guerra", 25);
         put(file, "conquistador", 30, "cataclysm:maledictus");
-        put(file, "senor_de_la_guerra", 35, "minecraft:ender_dragon");
+        put(file, "senor_de_la_guerra", 35, "minecraft:warden");
 
-        put(file, "muralla", 1, "mowziesmobs:ferrous_wroughtnaut");
-        put(file, "fortaleza", 1);
-        put(file, "guardaespaldas", 1);
-        put(file, "coloso", 1, "cataclysm:netherite_monstrosity");
-        put(file, "provocador", 1, "bosses_of_mass_destruction:void_blossom");
-        put(file, "regenerador", 1);
-        put(file, "invencible", 1);
-        put(file, "bastion_absoluto", 1, "cataclysm:scylla");
-        put(file, "titan", 1, "minecraft:wither");
+        put(file, "muralla", 10, "mowziesmobs:ferrous_wroughtnaut");
+        put(file, "fortaleza", 15);
+        put(file, "guardaespaldas", 15);
+        put(file, "coloso", 20, "cataclysm:netherite_monstrosity");
+        put(file, "provocador", 20, "bosses_of_mass_destruction:void_blossom");
+        put(file, "regenerador", 25);
+        put(file, "invencible", 25);
+        put(file, "bastion_absoluto", 30, "cataclysm:scylla");
+        put(file, "titan", 35, "minecraft:wither");
         return file;
     }
 
