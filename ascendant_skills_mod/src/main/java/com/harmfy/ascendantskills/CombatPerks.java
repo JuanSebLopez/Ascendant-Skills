@@ -352,18 +352,6 @@ public final class CombatPerks {
     private static float globalResistanceMultiplier(ServerPlayer player) {
         AttributeInstance attribute = player.getAttribute(AscendantAttributes.GLOBAL_RESISTANCE);
         double resistance = attribute == null ? 0.0D : attribute.getValue();
-        if (has(player, "bastion")) {
-            resistance += 0.05D;
-        }
-        if (has(player, "inamovible")) {
-            resistance += 0.05D;
-        }
-        if (has(player, "invencible")) {
-            resistance += 0.05D;
-        }
-        if (has(player, "titan")) {
-            resistance += 0.05D;
-        }
         resistance = Math.max(-1.0D, Math.min(0.95D, resistance));
         return (float) Math.max(0.05D, 1.0D - resistance);
     }

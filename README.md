@@ -20,7 +20,7 @@ It currently contains:
 - Skill requirements are loaded from `config/ascendant_skills/requirements.json`.
 - Gameplay toggles are loaded from `config/ascendant_skills/gameplay.json`.
 - Vanilla jump criticals and fully charged bow critical arrows are disabled by default.
-- The 0.3.4 Luchador branch implements dynamic melee perks, stacks, cooldowns, global resistance, knockback protection, and healing hooks.
+- The 0.3.3 Luchador branch implements dynamic melee perks, stacks, cooldowns, global resistance, knockback protection, and healing hooks.
 
 ## Implemented perks
 
@@ -28,7 +28,7 @@ It currently contains:
 - `luchador`: +5% melee damage.
 - `danzante_de_acero`: steel combo grants +2% attack speed per melee hit, up to +10%, decaying by 1 stack after 3 seconds without hitting.
 - `verdugo`: +5% melee crit chance, +10% melee crit damage, and Critical Eye guarantees a melee critical against targets below 25% health with a 10 second cooldown reset on kill.
-- `inamovible`: +5% global resistance applied by Ascendant Skills.
+- `inamovible`: +5% global resistance.
 - `veterano_de_guerra`: +5% melee damage and struck enemies deal -5% damage to you for 3 seconds.
 - `berserker`: +1 flat melee damage with swords/axes, 4% melee life steal, and below 20% health gains +15% melee damage, +12% attack speed, and 10% total melee life steal.
 - `juggernaut`: -5% outgoing melee damage, -5% incoming melee damage, and 5 seconds of knockback immunity after taking melee damage with a 15 second cooldown.
@@ -41,10 +41,10 @@ It currently contains:
 - `francotirador`: +20% projectile damage from 30+ blocks, -5% below that.
 - `ojo_certero`: +5% ranged crit chance and +10% ranged crit damage.
 - `deadeye`: +10% ranged crit chance and +20% ranged crit damage from 30+ blocks.
-- `bastion`: +5% global resistance applied by Ascendant Skills.
+- `bastion`: +5% global resistance.
 - `fortaleza`: -10% incoming melee damage.
-- `invencible`: +5% global resistance applied by Ascendant Skills.
-- `titan`: +5% global resistance applied by Ascendant Skills.
+- `invencible`: +5% global resistance.
+- `titan`: +5% global resistance.
 - `muralla`: -5% incoming projectile damage.
 
 ## Config
