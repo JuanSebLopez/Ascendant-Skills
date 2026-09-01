@@ -17,6 +17,7 @@ public final class AscendantSkills {
         AscendantConfig.loadOrCreate();
         AscendantAttributes.ATTRIBUTES.register(modEventBus);
         modEventBus.addListener(AscendantAttributes::addPlayerAttributes);
+        modEventBus.addListener(AscendantNetworking::register);
         Attributes.KNOCKBACK_RESISTANCE.value().setSyncable(true);
 
         NeoForge.EVENT_BUS.addListener(AscendantCommands::register);

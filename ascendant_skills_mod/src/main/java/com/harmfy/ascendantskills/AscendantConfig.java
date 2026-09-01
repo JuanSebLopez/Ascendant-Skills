@@ -92,6 +92,30 @@ public final class AscendantConfig {
         return Math.max(minPartySize(), gameplay.maxPartySize);
     }
 
+    public static double globalResistanceSoftCap() {
+        return clamp(orDefault(gameplay.globalResistanceSoftCap, 0.20D), 0.0D, 0.95D);
+    }
+
+    public static double globalResistanceOverflowMultiplier() {
+        return clamp(orDefault(gameplay.globalResistanceOverflowMultiplier, 0.35D), 0.0D, 1.0D);
+    }
+
+    public static double globalResistanceHardCap() {
+        return clamp(orDefault(gameplay.globalResistanceHardCap, 0.35D), 0.0D, 0.95D);
+    }
+
+    public static double globalResistanceFullEffectDamage() {
+        return Math.max(0.1D, orDefault(gameplay.globalResistanceFullEffectDamage, 8.0D));
+    }
+
+    public static double globalResistanceMinimumDamageScale() {
+        return clamp(orDefault(gameplay.globalResistanceMinimumDamageScale, 0.25D), 0.0D, 1.0D);
+    }
+
+    public static double globalResistanceEnvironmentalMultiplier() {
+        return clamp(orDefault(gameplay.globalResistanceEnvironmentalMultiplier, 0.25D), 0.0D, 1.0D);
+    }
+
     public static String configDirForDisplay() {
         return CONFIG_DIR.toString();
     }
@@ -199,6 +223,12 @@ public final class AscendantConfig {
         file.maxSoloBossCreditPlayers = 3;
         file.minPartySize = 2;
         file.maxPartySize = 4;
+        file.globalResistanceSoftCap = 0.20D;
+        file.globalResistanceOverflowMultiplier = 0.35D;
+        file.globalResistanceHardCap = 0.35D;
+        file.globalResistanceFullEffectDamage = 8.0D;
+        file.globalResistanceMinimumDamageScale = 0.25D;
+        file.globalResistanceEnvironmentalMultiplier = 0.25D;
         return file;
     }
 
@@ -208,6 +238,14 @@ public final class AscendantConfig {
 
     private static void put(Map<String, RequirementEntry> file, String skillId, int levels, String boss) {
         file.put(skillId, new RequirementEntry(levels, boss));
+    }
+
+    private static double clamp(double value, double min, double max) {
+        return Math.max(min, Math.min(max, value));
+    }
+
+    private static double orDefault(Double value, double fallback) {
+        return value == null ? fallback : value;
     }
 
     private static final class RequirementEntry {
@@ -236,5 +274,17 @@ public final class AscendantConfig {
         private int minPartySize;
         @SerializedName(value = "max_party_size", alternate = "maxPartySize")
         private int maxPartySize;
+        @SerializedName(value = "global_resistance_soft_cap", alternate = "globalResistanceSoftCap")
+        private Double globalResistanceSoftCap;
+        @SerializedName(value = "global_resistance_overflow_multiplier", alternate = "globalResistanceOverflowMultiplier")
+        private Double globalResistanceOverflowMultiplier;
+        @SerializedName(value = "global_resistance_hard_cap", alternate = "globalResistanceHardCap")
+        private Double globalResistanceHardCap;
+        @SerializedName(value = "global_resistance_full_effect_damage", alternate = "globalResistanceFullEffectDamage")
+        private Double globalResistanceFullEffectDamage;
+        @SerializedName(value = "global_resistance_minimum_damage_scale", alternate = "globalResistanceMinimumDamageScale")
+        private Double globalResistanceMinimumDamageScale;
+        @SerializedName(value = "global_resistance_environmental_multiplier", alternate = "globalResistanceEnvironmentalMultiplier")
+        private Double globalResistanceEnvironmentalMultiplier;
     }
 }

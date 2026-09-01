@@ -2,7 +2,6 @@ package com.harmfy.ascendantskills;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -24,6 +23,7 @@ import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent;
 import net.neoforged.neoforge.event.entity.living.LivingKnockBackEvent;
 import net.neoforged.neoforge.event.entity.player.ArrowLooseEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -72,7 +72,7 @@ public final class CombatPerks {
         }
 
         if (event.getEntity() instanceof ServerPlayer defender) {
-            multiplier *= incomingDamageMultiplier(defender, source, melee, projectile);
+            multiplier *= incomingDamageMultiplier(defender, source, melee, projectile, event.getAmount());
             activateJuggernaut(defender, melee);
         }
 
@@ -143,7 +143,7 @@ public final class CombatPerks {
         updateSteelCombo(player);
         updateBerserkerAttackSpeed(player);
         updateGlobalAttackSpeed(player);
-        updatePerkActionBar(player);
+        syncPerkHud(player);
         if (!player.isUsingItem() || !isRangedUseItem(player.getUseItem())) {
             RANGED_USE_SPEED.remove(player.getUUID());
         }
@@ -252,9 +252,9 @@ public final class CombatPerks {
         return multiplier;
     }
 
-    private static float incomingDamageMultiplier(ServerPlayer defender, DamageSource source, boolean melee, boolean projectile) {
+    private static float incomingDamageMultiplier(ServerPlayer defender, DamageSource source, boolean melee, boolean projectile, float originalDamage) {
         float multiplier = 1.0F;
-        multiplier *= globalResistanceMultiplier(defender);
+        multiplier *= globalResistanceMultiplier(defender, source, originalDamage);
         if (melee) {
             if (has(defender, "fortaleza")) {
                 multiplier *= 0.90F;
@@ -349,11 +349,25 @@ public final class CombatPerks {
         return attribute == null ? 1.0F : (float) attribute.getValue();
     }
 
-    private static float globalResistanceMultiplier(ServerPlayer player) {
+    private static float globalResistanceMultiplier(ServerPlayer player, DamageSource source, float originalDamage) {
         AttributeInstance attribute = player.getAttribute(AscendantAttributes.GLOBAL_RESISTANCE);
-        double resistance = attribute == null ? 0.0D : attribute.getValue();
-        resistance = Math.max(-1.0D, Math.min(0.95D, resistance));
-        return (float) Math.max(0.05D, 1.0D - resistance);
+        double rawResistance = attribute == null ? 0.0D : Math.max(0.0D, attribute.getValue());
+        if (rawResistance <= 0.0D) {
+            return 1.0F;
+        }
+
+        double softCap = AscendantConfig.globalResistanceSoftCap();
+        double softenedResistance = rawResistance <= softCap
+                ? rawResistance
+                : softCap + (rawResistance - softCap) * AscendantConfig.globalResistanceOverflowMultiplier();
+        double damageScale = clamp(originalDamage / AscendantConfig.globalResistanceFullEffectDamage(),
+                AscendantConfig.globalResistanceMinimumDamageScale(),
+                1.0D);
+        double typeMultiplier = source.getEntity() == null
+                ? AscendantConfig.globalResistanceEnvironmentalMultiplier()
+                : 1.0D;
+        double effectiveResistance = Math.min(AscendantConfig.globalResistanceHardCap(), softenedResistance * damageScale * typeMultiplier);
+        return (float) (1.0D - effectiveResistance);
     }
 
     private static float globalAttackSpeedMultiplier(LivingEntity player) {
@@ -421,34 +435,41 @@ public final class CombatPerks {
         }
     }
 
-    private static void updatePerkActionBar(ServerPlayer player) {
+    private static void syncPerkHud(ServerPlayer player) {
         if (player.tickCount % 10 != 0) {
             return;
         }
 
-        StringBuilder status = new StringBuilder();
-        if (has(player, "danzante_de_acero")) {
-            SteelCombo combo = STEEL_COMBOS.get(player.getUUID());
-            int stacks = combo == null ? 0 : Math.max(0, combo.stacks);
-            status.append("Combo de acero: ").append(stacks).append("/").append(STEEL_COMBO_MAX_STACKS);
-        }
-        if (has(player, "verdugo")) {
-            if (!status.isEmpty()) {
-                status.append(" | ");
-            }
-            long now = player.level().getGameTime();
-            long readyAt = CRITICAL_EYE_COOLDOWNS.getOrDefault(player.getUUID(), 0L);
-            if (readyAt <= now) {
-                status.append("Ojo Critico: listo");
-            } else {
-                long seconds = Math.max(1L, (readyAt - now + TICKS_PER_SECOND - 1L) / TICKS_PER_SECOND);
-                status.append("Ojo Critico: ").append(seconds).append("s");
-            }
-        }
+        PacketDistributor.sendToPlayer(player, new PerkHudPayload(
+                has(player, "danzante_de_acero") ? steelComboStacks(player) : -1,
+                STEEL_COMBO_MAX_STACKS,
+                has(player, "verdugo") ? remainingTicks(player, CRITICAL_EYE_COOLDOWNS.getOrDefault(player.getUUID(), 0L)) : -1,
+                remainingJuggernautActiveTicks(player),
+                has(player, "juggernaut") ? remainingJuggernautCooldownTicks(player) : -1,
+                has(player, "conquistador") ? conquerorStacks(player) : -1,
+                CONQUEROR_MAX_STACKS,
+                has(player, "berserker") && isLowHealth(player)
+        ));
+    }
 
-        if (!status.isEmpty()) {
-            player.displayClientMessage(Component.literal(status.toString()), true);
-        }
+    private static int steelComboStacks(ServerPlayer player) {
+        SteelCombo combo = STEEL_COMBOS.get(player.getUUID());
+        return combo == null ? 0 : Math.max(0, combo.stacks);
+    }
+
+    private static int remainingJuggernautActiveTicks(ServerPlayer player) {
+        JuggernautState state = JUGGERNAUTS.get(player.getUUID());
+        return state == null ? 0 : remainingTicks(player, state.immunityUntilTick);
+    }
+
+    private static int remainingJuggernautCooldownTicks(ServerPlayer player) {
+        JuggernautState state = JUGGERNAUTS.get(player.getUUID());
+        return state == null ? 0 : remainingTicks(player, state.cooldownUntilTick);
+    }
+
+    private static int remainingTicks(ServerPlayer player, long readyAtTick) {
+        long remaining = readyAtTick - player.level().getGameTime();
+        return remaining <= 0L ? 0 : (int) Math.min(Integer.MAX_VALUE, remaining);
     }
 
     private static void applyAttackSpeedModifier(ServerPlayer player, ResourceLocation id, double amount) {
@@ -507,6 +528,10 @@ public final class CombatPerks {
 
     private static boolean has(ServerPlayer player, String perkId) {
         return AscendantData.get(player.server).hasPerk(player.getUUID(), AscendantSkills.MOD_ID + ":" + perkId);
+    }
+
+    private static double clamp(double value, double min, double max) {
+        return Math.max(min, Math.min(max, value));
     }
 
     private static final class SteelCombo {
