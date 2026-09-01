@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "B": {
+      "item": "minecraft:book"
+    },
+    "E": {
+      "item": "minecraft:echo_shard"
+    },
+    "P": {
+      "tag": "c:ender_pearls"
+    },
+    "Y": {
+      "item": "minecraft:ender_eye"
+    }
+  },
+  "pattern": [
+    "EPA",
+    "YBY",
+    "APE"
+  ],
+  "result": {
+    "count": 1,
+    "id": "xpbook:xp_tome"
+  }
+}

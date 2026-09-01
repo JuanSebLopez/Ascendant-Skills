@@ -1,0 +1,13 @@
+{
+  "required": false,
+  "minVersion": "0.8",
+  "package": "com.harmfy.ascendantskills.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "plugin": "com.harmfy.ascendantskills.mixin.AscendantMixinPlugin",
+  "mixins": [
+    "InfernalMobsCoreMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

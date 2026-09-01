@@ -19,6 +19,7 @@ public final class PuffishBridge {
 
     public static void register() {
         SkillsAPI.registerSkillUnlockEvent(PuffishBridge::onSkillUnlock);
+        SkillsAPI.registerSkillLockEvent(PuffishBridge::onSkillLock);
     }
 
     public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
@@ -70,6 +71,49 @@ public final class PuffishBridge {
                 .orElse("Puffish esta cargado, pero no existe la categoria " + CATEGORY_ID + ".");
     }
 
+    public static boolean refreshRewards(ServerPlayer player) {
+        if (!isAvailable()) {
+            return false;
+        }
+        return SkillsAPI.getCategory(CATEGORY_ID)
+                .map(category -> {
+                    SkillsAPI.updateRewards(player, CATEGORY_ID);
+                    syncPoints(player);
+                    return true;
+                })
+                .orElse(false);
+    }
+
+    public static ResetResult resetAscendantTree(ServerPlayer player) {
+        if (!isAvailable()) {
+            AscendantData data = AscendantData.get(player.server);
+            int removedPerks = data.clearPerks(player.getUUID());
+            data.clearSpentLevels(player.getUUID());
+            return new ResetResult(false, 0, removedPerks);
+        }
+
+        return SkillsAPI.getCategory(CATEGORY_ID)
+                .map(category -> {
+                    AscendantData data = AscendantData.get(player.server);
+                    int refundedLevels = data.refundableSpentLevels(player.getUUID());
+                    int removedPerks = data.perks(player.getUUID()).size();
+                    category.resetSkills(player);
+                    removedPerks = Math.max(removedPerks, data.clearPerks(player.getUUID()));
+                    data.clearSpentLevels(player.getUUID());
+                    if (refundedLevels > 0 && !player.isCreative()) {
+                        player.giveExperienceLevels(refundedLevels);
+                    }
+                    syncPoints(player);
+                    return new ResetResult(true, refundedLevels, removedPerks);
+                })
+                .orElseGet(() -> {
+                    AscendantData data = AscendantData.get(player.server);
+                    int removedPerks = data.clearPerks(player.getUUID());
+                    data.clearSpentLevels(player.getUUID());
+                    return new ResetResult(false, 0, removedPerks);
+                });
+    }
+
     private static void onSkillUnlock(ServerPlayer player, ResourceLocation categoryId, String skillId) {
         if (!CATEGORY_ID.equals(categoryId)) {
             return;
@@ -95,15 +139,25 @@ public final class PuffishBridge {
 
         if (!player.isCreative()) {
             player.giveExperienceLevels(-requirement.levels());
+            data.recordSpentLevels(player.getUUID(), skillId, requirement.levels());
         }
         data.grantPerk(player.getUUID(), AscendantSkills.MOD_ID + ":" + skillId);
         player.sendSystemMessage(Component.literal("Skill desbloqueada: " + skillId + ". Niveles consumidos: " + requirement.levels() + "."));
         syncPoints(player);
     }
 
+    private static void onSkillLock(ServerPlayer player, ResourceLocation categoryId, String skillId) {
+        if (CATEGORY_ID.equals(categoryId)) {
+            AscendantData.get(player.server).revokePerk(player.getUUID(), AscendantSkills.MOD_ID + ":" + skillId);
+        }
+    }
+
     private static void relock(ServerPlayer player, String skillId) {
         SkillsAPI.getCategory(CATEGORY_ID)
                 .flatMap(category -> category.getSkill(skillId))
                 .ifPresent(skill -> skill.lock(player));
+    }
+
+    public record ResetResult(boolean puffishCategoryFound, int refundedLevels, int removedPerks) {
     }
 }

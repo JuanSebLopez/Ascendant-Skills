@@ -153,9 +153,8 @@ public final class AscendantConfig {
     private static Map<String, RequirementEntry> defaultRequirements() {
         Map<String, RequirementEntry> file = new LinkedHashMap<>();
         put(file, "inicio", 1);
-        put(file, "combate", 1);
+        put(file, "combate", 5);
         put(file, "cazador", 1, "mowziesmobs:naga");
-        put(file, "combatiente", 1, "mowziesmobs:umvuthi");
         put(file, "bastion", 1);
 
         put(file, "punteria", 1);
@@ -169,16 +168,16 @@ public final class AscendantConfig {
         put(file, "barrage", 1, "cataclysm:the_leviathan");
         put(file, "maestro_tirador", 1, "minecraft:ender_dragon");
 
-        put(file, "vanguardia", 1);
-        put(file, "coraza_de_acero", 1, "mowziesmobs:umvuthi");
-        put(file, "danzante_de_acero", 1);
-        put(file, "verdugo", 1);
-        put(file, "inamovible", 1, "cataclysm:netherite_monstrosity");
-        put(file, "veterano_de_guerra", 1);
-        put(file, "berserker", 1);
-        put(file, "juggernaut", 1);
-        put(file, "conquistador", 1, "cataclysm:maledictus");
-        put(file, "senor_de_la_guerra", 1, "minecraft:warden");
+        put(file, "luchador", 7);
+        put(file, "coraza_de_acero", 10, "mowziesmobs:umvuthi");
+        put(file, "danzante_de_acero", 15);
+        put(file, "verdugo", 15);
+        put(file, "inamovible", 17, "cataclysm:netherite_monstrosity");
+        put(file, "veterano_de_guerra", 20);
+        put(file, "berserker", 20);
+        put(file, "juggernaut", 25);
+        put(file, "conquistador", 30, "cataclysm:maledictus");
+        put(file, "senor_de_la_guerra", 35, "minecraft:ender_dragon");
 
         put(file, "muralla", 1, "mowziesmobs:ferrous_wroughtnaut");
         put(file, "fortaleza", 1);

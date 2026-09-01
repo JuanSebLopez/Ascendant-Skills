@@ -14,10 +14,12 @@ runs/
 .idea/
 .vscode/
 *.iml
+*.lnk
 
 # Generated scratch files
 tmp/
 neoforge_mdk_tmp/
+dist/
 
 # Local third-party jars used for compileOnly development.
 # Copy Puffish Skills here locally when building:

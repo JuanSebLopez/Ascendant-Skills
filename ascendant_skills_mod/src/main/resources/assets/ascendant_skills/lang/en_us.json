@@ -1,3 +1,6 @@
 {
-  "modmenu.nameTranslation.ascendant_skills": "Ascendant Skills"
+  "modmenu.nameTranslation.ascendant_skills": "Ascendant Skills",
+  "attribute.ascendant_skills.global_attack_speed": "Global Attack Speed",
+  "attribute.ascendant_skills.global_damage": "Global Damage",
+  "attribute.ascendant_skills.global_resistance": "Global Resistance"
 }

@@ -47,7 +47,7 @@
   },
   "combate": {
     "title": "COMBATE",
-    "description": "Desbloquea las ramas de combate: Rango, Melee y Tanque.",
+    "description": "Selecciona la clase Combate. +5% global DMG, +5% global AS, +1 HP.",
     "icon": {
       "type": "item",
       "data": {
@@ -60,12 +60,36 @@
         "frame": "task"
       }
     },
-    "cost": 1,
+    "cost": 5,
     "rewards": [
       {
         "type": "puffish_skills:tag",
         "data": {
-          "tag": "ascendant_branch_combate"
+          "tag": "ascendant_class_combate"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "generic.max_health",
+          "value": 1,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:global_damage",
+          "value": 0.05,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:global_attack_speed",
+          "value": 0.05,
+          "operation": "addition"
         }
       }
     ],
@@ -77,32 +101,7 @@
           "color": "gold"
         },
         {
-          "text": "1 nivel de XP\n",
-          "color": "yellow"
-        },
-        {
-          "text": "Perk: ",
-          "color": "aqua"
-        },
-        {
-          "text": "Bonificaciones pasivas del nodo.",
-          "color": "gray"
-        }
-      ]
-    }
-  },
-  "combatiente": {
-    "title": "Combatiente",
-    "description": "Selecciona la clase Combate. +5% global DMG, +5% global AS, +1 HP.",
-    "extra_description": {
-      "text": "",
-      "extra": [
-        {
-          "text": "Costo: ",
-          "color": "gold"
-        },
-        {
-          "text": "1 nivel de XP\n",
+          "text": "5 niveles de XP\n",
           "color": "yellow"
         },
         {
@@ -110,51 +109,30 @@
           "color": "dark_purple"
         },
         {
-          "text": "mowziesmobs:umvuthi\n",
-          "color": "light_purple"
+          "text": "Sin logro\n",
+          "color": "gray"
+        },
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+5% global DMG, +5% global AS, +1 HP.\n",
+          "color": "gray"
         },
         {
           "text": "Perk: ",
           "color": "aqua"
         },
         {
-          "text": "La bonificacion de dano y AS queda marcada por tag para Ascendant Skills.",
-          "color": "gray"
+          "text": "-",
+          "color": "dark_gray"
         }
       ]
-    },
-    "icon": {
-      "type": "item",
-      "data": {
-        "item": "minecraft:iron_sword"
-      }
-    },
-    "frame": {
-      "type": "advancement",
-      "data": {
-        "frame": "task"
-      }
-    },
-    "cost": 1,
-    "rewards": [
-      {
-        "type": "puffish_skills:tag",
-        "data": {
-          "tag": "ascendant_class_combatiente"
-        }
-      },
-      {
-        "type": "puffish_skills:attribute",
-        "data": {
-          "attribute": "generic.max_health",
-          "value": 1,
-          "operation": "addition"
-        }
-      }
-    ]
+    }
   },
-  "vanguardia": {
-    "title": "Vanguardia",
+  "luchador": {
+    "title": "Luchador",
     "description": "+5% melee dmg, +5% AS melee, +5% knockback resist.",
     "extra_description": {
       "text": "",
@@ -164,16 +142,32 @@
           "color": "gold"
         },
         {
-          "text": "1 nivel de XP\n",
+          "text": "7 niveles de XP\n",
           "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "Sin logro\n",
+          "color": "gray"
+        },
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+5% melee dmg, +5% AS melee, +5% knockback resist.\n",
+          "color": "gray"
         },
         {
           "text": "Perk: ",
           "color": "aqua"
         },
         {
-          "text": "Subclase melee. Sin requisito de logro.",
-          "color": "gray"
+          "text": "-",
+          "color": "dark_gray"
         }
       ]
     },
@@ -189,12 +183,12 @@
         "frame": "goal"
       }
     },
-    "cost": 1,
+    "cost": 7,
     "rewards": [
       {
         "type": "puffish_skills:tag",
         "data": {
-          "tag": "ascendant_melee_vanguardia"
+          "tag": "ascendant_melee_luchador"
         }
       },
       {
@@ -203,6 +197,22 @@
           "attribute": "generic.knockback_resistance",
           "value": 0.05,
           "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "generic.attack_damage",
+          "value": 0.05,
+          "operation": "multiply_total"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "generic.attack_speed",
+          "value": 0.05,
+          "operation": "multiply_total"
         }
       }
     ]
@@ -218,7 +228,7 @@
           "color": "gold"
         },
         {
-          "text": "1 nivel de XP\n",
+          "text": "10 niveles de XP\n",
           "color": "yellow"
         },
         {
@@ -230,12 +240,20 @@
           "color": "light_purple"
         },
         {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+0.5 toughness, +1 armor, +1 HP.\n",
+          "color": "gray"
+        },
+        {
           "text": "Perk: ",
           "color": "aqua"
         },
         {
-          "text": "Bonificaciones pasivas del nodo.",
-          "color": "gray"
+          "text": "-",
+          "color": "dark_gray"
         }
       ]
     },
@@ -251,7 +269,7 @@
         "frame": "goal"
       }
     },
-    "cost": 1,
+    "cost": 10,
     "rewards": [
       {
         "type": "puffish_skills:tag",
@@ -296,15 +314,31 @@
           "color": "gold"
         },
         {
-          "text": "1 nivel de XP\n",
+          "text": "15 niveles de XP\n",
           "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "Sin logro\n",
+          "color": "gray"
+        },
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+0.25 melee reach, +5% move speed, +15% sweep dmg.\n",
+          "color": "gray"
         },
         {
           "text": "Perk: ",
           "color": "aqua"
         },
         {
-          "text": "Combo de acero: cada ataque aumenta 2% AS, max 10%; pierde 1 carga cada 3 seg sin golpear.",
+          "text": "Combo de acero: cada ataque aumenta +2% AS (max +10%) y pierde 1 carga cada 3 seg sin golpear.",
           "color": "gray"
         }
       ]
@@ -321,7 +355,7 @@
         "frame": "goal"
       }
     },
-    "cost": 1,
+    "cost": 15,
     "rewards": [
       {
         "type": "puffish_skills:tag",
@@ -335,6 +369,22 @@
           "attribute": "generic.movement_speed",
           "value": 0.05,
           "operation": "multiply_total"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "player.entity_interaction_range",
+          "value": 0.25,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "player.sweeping_damage_ratio",
+          "value": 0.15,
+          "operation": "addition"
         }
       }
     ]
@@ -350,15 +400,31 @@
           "color": "gold"
         },
         {
-          "text": "1 nivel de XP\n",
+          "text": "15 niveles de XP\n",
           "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "Sin logro\n",
+          "color": "gray"
+        },
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+10% crit dmg, +5% prob crit.\n",
+          "color": "gray"
         },
         {
           "text": "Perk: ",
           "color": "aqua"
         },
         {
-          "text": "Ojo Critico: el proximo ataque inflige +15% melee dmg si el enemigo esta bajo 25% HP. CD 10 seg; se reinicia si lo matas.",
+          "text": "Ojo Critico: el proximo ataque inflige +15% dmg melee si el enemigo esta bajo 25% HP. CD 10 seg; se reinicia si matas al enemigo.",
           "color": "gray"
         }
       ]
@@ -375,12 +441,28 @@
         "frame": "goal"
       }
     },
-    "cost": 1,
+    "cost": 15,
     "rewards": [
       {
         "type": "puffish_skills:tag",
         "data": {
           "tag": "ascendant_melee_verdugo"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "l2damagetracker:crit_damage",
+          "value": 0.1,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "l2damagetracker:crit_rate",
+          "value": 0.05,
+          "operation": "addition"
         }
       }
     ]
@@ -396,7 +478,7 @@
           "color": "gold"
         },
         {
-          "text": "1 nivel de XP\n",
+          "text": "17 niveles de XP\n",
           "color": "yellow"
         },
         {
@@ -408,12 +490,20 @@
           "color": "light_purple"
         },
         {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+5% global resist, +10% knockback resist.\n",
+          "color": "gray"
+        },
+        {
           "text": "Perk: ",
           "color": "aqua"
         },
         {
-          "text": "Bonificaciones pasivas del nodo.",
-          "color": "gray"
+          "text": "-",
+          "color": "dark_gray"
         }
       ]
     },
@@ -429,7 +519,7 @@
         "frame": "challenge"
       }
     },
-    "cost": 1,
+    "cost": 17,
     "rewards": [
       {
         "type": "puffish_skills:tag",
@@ -442,6 +532,14 @@
         "data": {
           "attribute": "generic.knockback_resistance",
           "value": 0.1,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:global_resistance",
+          "value": 0.05,
           "operation": "addition"
         }
       }
@@ -458,15 +556,31 @@
           "color": "gold"
         },
         {
-          "text": "1 nivel de XP\n",
+          "text": "20 niveles de XP\n",
           "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "Sin logro\n",
+          "color": "gray"
+        },
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+5% melee dmg, +1 HP.\n",
+          "color": "gray"
         },
         {
           "text": "Perk: ",
           "color": "aqua"
         },
         {
-          "text": "Los enemigos golpeados tienen -5% dmg contra ti durante 3 seg.",
+          "text": "Veterano de Guerra: los enemigos golpeados tienen -5% dmg contra ti durante 3 seg.",
           "color": "gray"
         }
       ]
@@ -483,7 +597,7 @@
         "frame": "goal"
       }
     },
-    "cost": 1,
+    "cost": 20,
     "rewards": [
       {
         "type": "puffish_skills:tag",
@@ -497,6 +611,14 @@
           "attribute": "generic.max_health",
           "value": 1,
           "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "generic.attack_damage",
+          "value": 0.05,
+          "operation": "multiply_total"
         }
       }
     ]
@@ -512,15 +634,31 @@
           "color": "gold"
         },
         {
-          "text": "1 nivel de XP\n",
+          "text": "20 niveles de XP\n",
           "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "Sin logro\n",
+          "color": "gray"
+        },
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+4% life steal, +2% AS, +1 dmg con espada/hacha, -2 armor.\n",
+          "color": "gray"
         },
         {
           "text": "Perk: ",
           "color": "aqua"
         },
         {
-          "text": "Berserker: bajo 20% de vida, +15% melee dmg, +12% AS y +6% life steal.",
+          "text": "Berserker: mientras tengas menos del 20% de vida infliges +15% dmg melee, +12% AS y +6% life steal.",
           "color": "gray"
         }
       ]
@@ -537,7 +675,7 @@
         "frame": "goal"
       }
     },
-    "cost": 1,
+    "cost": 20,
     "rewards": [
       {
         "type": "puffish_skills:tag",
@@ -551,6 +689,14 @@
           "attribute": "generic.armor",
           "value": -2,
           "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "generic.attack_speed",
+          "value": 0.02,
+          "operation": "multiply_total"
         }
       }
     ]
@@ -566,15 +712,31 @@
           "color": "gold"
         },
         {
-          "text": "1 nivel de XP\n",
+          "text": "25 niveles de XP\n",
           "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "Sin logro\n",
+          "color": "gray"
+        },
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "-5% melee dmg, +2 armor, +5% melee resist.\n",
+          "color": "gray"
         },
         {
           "text": "Perk: ",
           "color": "aqua"
         },
         {
-          "text": "Al recibir melee DMG obtienes 5 seg de inmunidad al knockback melee. CD 15 seg.",
+          "text": "Juggernaut: al recibir melee dmg obtienes 5 seg de inmunidad al knockback melee. CD 15 seg.",
           "color": "gray"
         }
       ]
@@ -591,7 +753,7 @@
         "frame": "goal"
       }
     },
-    "cost": 1,
+    "cost": 25,
     "rewards": [
       {
         "type": "puffish_skills:tag",
@@ -605,6 +767,14 @@
           "attribute": "generic.armor",
           "value": 2,
           "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "generic.attack_damage",
+          "value": -0.05,
+          "operation": "multiply_total"
         }
       }
     ]
@@ -620,7 +790,7 @@
           "color": "gold"
         },
         {
-          "text": "1 nivel de XP\n",
+          "text": "30 niveles de XP\n",
           "color": "yellow"
         },
         {
@@ -632,11 +802,19 @@
           "color": "light_purple"
         },
         {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+5% armor shred, +1 HP, +3% melee resist.\n",
+          "color": "gray"
+        },
+        {
           "text": "Perk: ",
           "color": "aqua"
         },
         {
-          "text": "Al matar mob hostil: +2% melee dmg 5 seg, max 5 stacks.",
+          "text": "Conquistador: +5% melee dmg, +0.5 toughness y al matar un mob hostil obtienes +2% melee dmg durante 5 seg (acumulable 5 veces).",
           "color": "gray"
         }
       ]
@@ -653,7 +831,7 @@
         "frame": "challenge"
       }
     },
-    "cost": 1,
+    "cost": 30,
     "rewards": [
       {
         "type": "puffish_skills:tag",
@@ -667,6 +845,22 @@
           "attribute": "generic.max_health",
           "value": 1,
           "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "generic.armor_toughness",
+          "value": 0.5,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "generic.attack_damage",
+          "value": 0.05,
+          "operation": "multiply_total"
         }
       }
     ]
@@ -682,7 +876,7 @@
           "color": "gold"
         },
         {
-          "text": "1 nivel de XP\n",
+          "text": "35 niveles de XP\n",
           "color": "yellow"
         },
         {
@@ -690,15 +884,23 @@
           "color": "dark_purple"
         },
         {
-          "text": "minecraft:warden\n",
+          "text": "minecraft:ender_dragon\n",
           "color": "light_purple"
+        },
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+10% melee damage, +5% AS, +10% healing received, +1 HP.\n",
+          "color": "gray"
         },
         {
           "text": "Perk: ",
           "color": "aqua"
         },
         {
-          "text": "Aura de dominio: -5% dano recibido por enemigos cercanos.",
+          "text": "Aura de dominio: -5% de dano recibido por enemigos cercanos.",
           "color": "gray"
         }
       ]
@@ -715,7 +917,7 @@
         "frame": "challenge"
       }
     },
-    "cost": 1,
+    "cost": 35,
     "rewards": [
       {
         "type": "puffish_skills:tag",
@@ -729,6 +931,22 @@
           "attribute": "generic.max_health",
           "value": 1,
           "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "generic.attack_speed",
+          "value": 0.05,
+          "operation": "multiply_total"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "generic.attack_damage",
+          "value": 0.1,
+          "operation": "multiply_total"
         }
       }
     ]
@@ -1349,6 +1567,14 @@
           "value": -0.05,
           "operation": "multiply_total"
         }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:global_resistance",
+          "value": 0.05,
+          "operation": "addition"
+        }
       }
     ],
     "extra_description": {
@@ -1418,9 +1644,7 @@
       }
     },
     "cost": 1,
-    "required_mods": [
-      "shieldexp"
-    ],
+    "required_mods": ["shieldexp"],
     "rewards": [
       {
         "type": "puffish_skills:tag",
@@ -1807,6 +2031,14 @@
           "value": 4,
           "operation": "addition"
         }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:global_resistance",
+          "value": 0.05,
+          "operation": "addition"
+        }
       }
     ]
   },
@@ -1855,9 +2087,7 @@
       }
     },
     "cost": 1,
-    "required_mods": [
-      "shieldexp"
-    ],
+    "required_mods": ["shieldexp"],
     "rewards": [
       {
         "type": "puffish_skills:tag",
@@ -1956,6 +2186,14 @@
         "data": {
           "attribute": "generic.armor_toughness",
           "value": 0.5,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:global_resistance",
+          "value": 0.05,
           "operation": "addition"
         }
       }

@@ -94,6 +94,22 @@ public final class AscendantCommands {
                                         .executes(ctx -> perkList(ctx.getSource(), EntityArgument.getPlayer(ctx, "player"))))))
                 .then(Commands.literal("attribute")
                         .requires(source -> source.hasPermission(2))
+                        .then(Commands.literal("get")
+                                .then(Commands.argument("player", EntityArgument.player())
+                                        .then(Commands.argument("attribute", ResourceLocationArgument.id()).suggests(ATTRIBUTE_SUGGESTIONS)
+                                                .executes(ctx -> attributeGet(
+                                                        ctx.getSource(),
+                                                        EntityArgument.getPlayer(ctx, "player"),
+                                                        ResourceLocationArgument.getId(ctx, "attribute"))))))
+                        .then(Commands.literal("set")
+                                .then(Commands.argument("player", EntityArgument.player())
+                                        .then(Commands.argument("attribute", ResourceLocationArgument.id()).suggests(ATTRIBUTE_SUGGESTIONS)
+                                                .then(Commands.argument("value", DoubleArgumentType.doubleArg())
+                                                        .executes(ctx -> attributeSet(
+                                                                ctx.getSource(),
+                                                                EntityArgument.getPlayer(ctx, "player"),
+                                                                ResourceLocationArgument.getId(ctx, "attribute"),
+                                                                DoubleArgumentType.getDouble(ctx, "value")))))))
                         .then(Commands.argument("player", EntityArgument.player())
                                 .then(Commands.argument("attribute", ResourceLocationArgument.id()).suggests(ATTRIBUTE_SUGGESTIONS)
                                         .then(Commands.argument("value", DoubleArgumentType.doubleArg())
@@ -102,11 +118,20 @@ public final class AscendantCommands {
                                                         EntityArgument.getPlayer(ctx, "player"),
                                                         ResourceLocationArgument.getId(ctx, "attribute"),
                                                         DoubleArgumentType.getDouble(ctx, "value")))))))
+                .then(Commands.literal("reset")
+                        .requires(source -> source.hasPermission(2))
+                        .then(Commands.argument("player", EntityArgument.player())
+                                .executes(ctx -> resetPlayer(ctx.getSource(), EntityArgument.getPlayer(ctx, "player")))))
                 .then(Commands.literal("puffish")
                         .then(Commands.literal("open")
                                 .executes(ctx -> puffishOpen(ctx.getSource())))
                         .then(Commands.literal("sync")
                                 .executes(ctx -> puffishSync(ctx.getSource())))
+                        .then(Commands.literal("refresh")
+                                .executes(ctx -> puffishRefresh(ctx.getSource(), ctx.getSource().getPlayerOrException()))
+                                .then(Commands.argument("player", EntityArgument.player())
+                                        .requires(source -> source.hasPermission(2))
+                                        .executes(ctx -> puffishRefresh(ctx.getSource(), EntityArgument.getPlayer(ctx, "player")))))
                         .then(Commands.literal("status")
                                 .executes(ctx -> puffishStatus(ctx.getSource()))))
                 .then(Commands.literal("config")
@@ -214,6 +239,29 @@ public final class AscendantCommands {
         return 1;
     }
 
+    private static int attributeGet(CommandSourceStack source, ServerPlayer target, ResourceLocation attributeId) {
+        Holder.Reference<Attribute> holder = BuiltInRegistries.ATTRIBUTE.getHolder(attributeId).orElse(null);
+        if (holder == null) {
+            source.sendFailure(Component.literal("Atributo desconocido: " + attributeId));
+            return 0;
+        }
+
+        AttributeInstance instance = target.getAttribute(holder);
+        if (instance == null) {
+            source.sendFailure(Component.literal(target.getName().getString() + " no tiene atributo " + attributeId));
+            return 0;
+        }
+
+        send(source, "Atributo " + attributeId + " de " + target.getName().getString() + ": base=" + instance.getBaseValue() + ", total=" + instance.getValue() + ".", true);
+        return 1;
+    }
+
+    private static int resetPlayer(CommandSourceStack source, ServerPlayer target) {
+        PuffishBridge.ResetResult result = PuffishBridge.resetAscendantTree(target);
+        send(source, "Reset aplicado a " + target.getName().getString() + ". Niveles reembolsados: " + result.refundedLevels() + ". Perks removidos: " + result.removedPerks() + ".", result.puffishCategoryFound() || result.removedPerks() > 0);
+        return 1;
+    }
+
     private static int puffishOpen(CommandSourceStack source) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
         PuffishBridge.open(source.getPlayerOrException());
         return 1;
@@ -222,8 +270,14 @@ public final class AscendantCommands {
     private static int puffishSync(CommandSourceStack source) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
         ServerPlayer player = source.getPlayerOrException();
         PuffishBridge.syncPoints(player);
-        send(source, "Puntos Puffish sincronizados con niveles XP.", true);
+        send(source, "Puntos visibles sincronizados con niveles XP. No cambia costos ni textos; eso depende del datapack y /reload.", true);
         return 1;
+    }
+
+    private static int puffishRefresh(CommandSourceStack source, ServerPlayer target) {
+        boolean refreshed = PuffishBridge.refreshRewards(target);
+        send(source, refreshed ? "Rewards recalculados para " + target.getName().getString() + ". No cambia costos ni textos de Puffish." : "No se pudo recalcular Puffish para " + target.getName().getString() + ".", refreshed);
+        return refreshed ? 1 : 0;
     }
 
     private static int puffishStatus(CommandSourceStack source) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
@@ -235,7 +289,7 @@ public final class AscendantCommands {
     private static int configReload(CommandSourceStack source) {
         AscendantConfig.loadOrCreate();
         source.getServer().getPlayerList().getPlayers().forEach(PuffishBridge::syncPoints);
-        send(source, "Config recargada.", true);
+        send(source, "Config recargada. Afecta consumo/requisitos del mod; costos y textos de Puffish dependen del datapack y /reload.", true);
         return 1;
     }
 

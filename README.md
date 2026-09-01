@@ -20,14 +20,20 @@ It currently contains:
 - Skill requirements are loaded from `config/ascendant_skills/requirements.json`.
 - Gameplay toggles are loaded from `config/ascendant_skills/gameplay.json`.
 - Vanilla jump criticals and fully charged bow critical arrows are disabled by default.
-- Early perk effects are implemented for simple damage, resistance, critical chance, and Berserker life steal.
+- The 0.3.3 Luchador branch implements dynamic melee perks, stacks, cooldowns, global resistance, knockback protection, and healing hooks.
 
 ## Implemented perks
 
-Initial implemented effects:
-
-- `combatiente`: +5% outgoing damage.
-- `vanguardia`: +5% melee damage.
+- `combate`: +5% outgoing damage, +5% global attack speed, +1 HP.
+- `luchador`: +5% melee damage.
+- `danzante_de_acero`: steel combo grants +2% attack speed per melee hit, up to +10%, decaying by 1 stack after 3 seconds without hitting.
+- `verdugo`: +5% melee crit chance, +10% melee crit damage, and Critical Eye guarantees a melee critical against targets below 25% health with a 10 second cooldown reset on kill.
+- `inamovible`: +5% global resistance.
+- `veterano_de_guerra`: +5% melee damage and struck enemies deal -5% damage to you for 3 seconds.
+- `berserker`: +1 flat melee damage with swords/axes, 4% melee life steal, and below 20% health gains +15% melee damage, +12% attack speed, and 10% total melee life steal.
+- `juggernaut`: -5% outgoing melee damage, -5% incoming melee damage, and 5 seconds of knockback immunity after taking melee damage with a 15 second cooldown.
+- `conquistador`: +5% melee damage, +3% incoming melee resistance, +5% bonus damage against armored targets, and hostile kills grant +2% melee damage for 5 seconds up to 5 stacks.
+- `senor_de_la_guerra`: +10% melee damage, +10% healing received, and -5% incoming damage from nearby enemies.
 - `cazador`: +5% projectile damage and +3% ranged crit chance.
 - `punteria`: +5% projectile damage.
 - `perforador`: +5% projectile damage.
@@ -35,13 +41,11 @@ Initial implemented effects:
 - `francotirador`: +20% projectile damage from 30+ blocks, -5% below that.
 - `ojo_certero`: +5% ranged crit chance and +10% ranged crit damage.
 - `deadeye`: +10% ranged crit chance and +20% ranged crit damage from 30+ blocks.
-- `bastion`: -5% incoming damage.
+- `bastion`: +5% global resistance.
 - `fortaleza`: -10% incoming melee damage.
-- `juggernaut`: -5% incoming melee damage and -5% outgoing melee damage.
-- `invencible`: -5% incoming damage.
-- `titan`: -5% incoming damage.
+- `invencible`: +5% global resistance.
+- `titan`: +5% global resistance.
 - `muralla`: -5% incoming projectile damage.
-- `berserker`: 4% melee life steal, plus +15% melee damage while below 20% health.
 
 ## Config
 
@@ -60,9 +64,8 @@ The mod creates these files when the game starts:
     "levels": 1,
     "boss": "mowziesmobs:naga"
   },
-  "combatiente": {
-    "levels": 1,
-    "boss": "mowziesmobs:umvuthi"
+  "luchador": {
+    "levels": 7
   }
 }
 ```
@@ -92,8 +95,11 @@ Use `"boss": null` or omit a skill to make it level-only. Unknown skills default
 
 /ascendant_skills attribute <player> <attribute_id> <value>
 
+/ascendant_skills reset <player>
+
 /ascendant_skills puffish open
 /ascendant_skills puffish sync
+/ascendant_skills puffish refresh [player]
 /ascendant_skills puffish status
 
 /ascendant_skills config reload
