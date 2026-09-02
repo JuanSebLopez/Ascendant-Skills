@@ -149,12 +149,12 @@ public final class CombatPerks {
         UUID projectileId = projectile.getUUID();
         PROJECTILE_ORIGINS.put(projectileId, new ProjectileOrigin(owner.getUUID(), owner.level().dimension().location().toString(), projectile.position(), now + PROJECTILE_STATE_TICKS));
 
-        if (projectile instanceof net.minecraft.world.entity.projectile.AbstractArrow arrow && canApplyProjectilePhysics(arrow)) {
+        if (projectile instanceof net.minecraft.world.entity.projectile.AbstractArrow arrow) {
             double velocity = projectileVelocityMultiplier(owner);
             if (Math.abs(velocity - 1.0D) > 0.0001D) {
                 arrow.setDeltaMovement(arrow.getDeltaMovement().scale(velocity));
             }
-            if (has(owner, "perforador")) {
+            if (has(owner, "perforador") && canApplyVanillaPiercing(arrow)) {
                 ((AbstractArrowAccessor) arrow).ascendantSkills$setPierceLevel((byte) Math.min(Byte.MAX_VALUE, arrow.getPierceLevel() + 1));
             }
         }
@@ -173,9 +173,12 @@ public final class CombatPerks {
         }
     }
 
-    private static boolean canApplyProjectilePhysics(net.minecraft.world.entity.projectile.AbstractArrow arrow) {
+    private static boolean canApplyVanillaPiercing(net.minecraft.world.entity.projectile.AbstractArrow arrow) {
         ResourceLocation entityTypeId = BuiltInRegistries.ENTITY_TYPE.getKey(arrow.getType());
-        return AscendantSkills.MOD_ID.equals(entityTypeId.getNamespace()) || "minecraft".equals(entityTypeId.getNamespace());
+        if ("minecraft".equals(entityTypeId.getNamespace()) || AscendantSkills.MOD_ID.equals(entityTypeId.getNamespace())) {
+            return true;
+        }
+        return !"cataclysm".equals(entityTypeId.getNamespace()) && !arrow.getClass().getName().contains("cataclysm");
     }
 
     public static void onLivingDamagePost(LivingDamageEvent.Post event) {
