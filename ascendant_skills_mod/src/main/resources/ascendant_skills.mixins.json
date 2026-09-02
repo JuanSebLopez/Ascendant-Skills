@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_21",
   "plugin": "com.harmfy.ascendantskills.mixin.AscendantMixinPlugin",
   "mixins": [
+    "AbstractArrowAccessor",
     "InfernalMobsCoreMixin"
   ],
   "injectors": {

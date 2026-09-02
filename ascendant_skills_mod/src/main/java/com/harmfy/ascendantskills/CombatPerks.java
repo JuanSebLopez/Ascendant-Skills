@@ -21,6 +21,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.phys.Vec3;
+import com.harmfy.ascendantskills.mixin.AbstractArrowAccessor;
 import net.neoforged.neoforge.common.damagesource.DamageContainer;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
@@ -151,6 +152,9 @@ public final class CombatPerks {
             double velocity = projectileVelocityMultiplier(owner);
             if (Math.abs(velocity - 1.0D) > 0.0001D) {
                 arrow.setDeltaMovement(arrow.getDeltaMovement().scale(velocity));
+            }
+            if (has(owner, "perforador")) {
+                ((AbstractArrowAccessor) arrow).ascendantSkills$setPierceLevel((byte) Math.min(Byte.MAX_VALUE, arrow.getPierceLevel() + 1));
             }
         }
 
