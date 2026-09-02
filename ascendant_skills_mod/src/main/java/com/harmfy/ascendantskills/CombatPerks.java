@@ -22,6 +22,7 @@ import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.phys.Vec3;
 import com.harmfy.ascendantskills.mixin.AbstractArrowAccessor;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.neoforged.neoforge.common.damagesource.DamageContainer;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
@@ -148,7 +149,7 @@ public final class CombatPerks {
         UUID projectileId = projectile.getUUID();
         PROJECTILE_ORIGINS.put(projectileId, new ProjectileOrigin(owner.getUUID(), owner.level().dimension().location().toString(), projectile.position(), now + PROJECTILE_STATE_TICKS));
 
-        if (projectile instanceof net.minecraft.world.entity.projectile.AbstractArrow arrow) {
+        if (projectile instanceof net.minecraft.world.entity.projectile.AbstractArrow arrow && canApplyProjectilePhysics(arrow)) {
             double velocity = projectileVelocityMultiplier(owner);
             if (Math.abs(velocity - 1.0D) > 0.0001D) {
                 arrow.setDeltaMovement(arrow.getDeltaMovement().scale(velocity));
@@ -170,6 +171,11 @@ public final class CombatPerks {
             escaramuzador.distance = 0.0D;
             escaramuzador.ready = false;
         }
+    }
+
+    private static boolean canApplyProjectilePhysics(net.minecraft.world.entity.projectile.AbstractArrow arrow) {
+        ResourceLocation entityTypeId = BuiltInRegistries.ENTITY_TYPE.getKey(arrow.getType());
+        return AscendantSkills.MOD_ID.equals(entityTypeId.getNamespace()) || "minecraft".equals(entityTypeId.getNamespace());
     }
 
     public static void onLivingDamagePost(LivingDamageEvent.Post event) {
