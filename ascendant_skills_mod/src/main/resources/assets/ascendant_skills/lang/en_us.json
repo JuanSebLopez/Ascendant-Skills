@@ -3,6 +3,7 @@
   "item.minecraft.potion.effect.forgetfulness_elixir": "Elixir del Olvido",
   "item.minecraft.splash_potion.effect.forgetfulness_elixir": "Splash Elixir del Olvido",
   "item.minecraft.lingering_potion.effect.forgetfulness_elixir": "Lingering Elixir del Olvido",
+  "effect.ascendant_skills.forgetfulness": "Olvido",
   "attribute.ascendant_skills.global_attack_speed": "Global Attack Speed",
   "attribute.ascendant_skills.global_damage": "Global Damage",
   "attribute.ascendant_skills.global_resistance": "Global Resistance",
@@ -17,6 +18,7 @@
   "attribute.ascendant_skills.ranged_crit_chance": "Ranged Crit Chance",
   "attribute.ascendant_skills.ranged_crit_damage": "Ranged Crit Damage",
   "attribute.ascendant_skills.ranged_armor_shred": "Ranged Armor Shred",
+  "attribute.ascendant_skills.projectile_velocity": "Projectile Velocity",
   "attribute.ascendant_skills.passive_regen_health": "Passive Regen Health",
   "attribute.ascendant_skills.passive_regen_interval": "Passive Regen Interval"
 }

@@ -13,7 +13,17 @@ public record PerkHudPayload(
         int juggernautCooldownTicks,
         int conquerorStacks,
         int conquerorMaxStacks,
-        boolean berserkerActive
+        boolean berserkerActive,
+        int aljabaStacks,
+        int aljabaMaxStacks,
+        int deadeyeStacks,
+        int deadeyeMaxStacks,
+        int escaramuzadorProgress,
+        boolean escaramuzadorReady,
+        int maestroCooldownTicks,
+        int barrageHits,
+        int barrageRequiredHits,
+        boolean barrageReady
 ) implements CustomPacketPayload {
     public static final CustomPacketPayload.Type<PerkHudPayload> TYPE = new CustomPacketPayload.Type<>(
             ResourceLocation.fromNamespaceAndPath(AscendantSkills.MOD_ID, "perk_hud")
@@ -32,6 +42,16 @@ public record PerkHudPayload(
                 buffer.readVarInt(),
                 buffer.readVarInt(),
                 buffer.readVarInt(),
+                buffer.readBoolean(),
+                buffer.readVarInt(),
+                buffer.readVarInt(),
+                buffer.readVarInt(),
+                buffer.readVarInt(),
+                buffer.readVarInt(),
+                buffer.readBoolean(),
+                buffer.readVarInt(),
+                buffer.readVarInt(),
+                buffer.readVarInt(),
                 buffer.readBoolean()
         );
     }
@@ -45,6 +65,16 @@ public record PerkHudPayload(
         buffer.writeVarInt(payload.conquerorStacks());
         buffer.writeVarInt(payload.conquerorMaxStacks());
         buffer.writeBoolean(payload.berserkerActive());
+        buffer.writeVarInt(payload.aljabaStacks());
+        buffer.writeVarInt(payload.aljabaMaxStacks());
+        buffer.writeVarInt(payload.deadeyeStacks());
+        buffer.writeVarInt(payload.deadeyeMaxStacks());
+        buffer.writeVarInt(payload.escaramuzadorProgress());
+        buffer.writeBoolean(payload.escaramuzadorReady());
+        buffer.writeVarInt(payload.maestroCooldownTicks());
+        buffer.writeVarInt(payload.barrageHits());
+        buffer.writeVarInt(payload.barrageRequiredHits());
+        buffer.writeBoolean(payload.barrageReady());
     }
 
     @Override

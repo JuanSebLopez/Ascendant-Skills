@@ -36,6 +36,12 @@ public final class AscendantCommands {
     }
 
     public static void register(RegisterCommandsEvent event) {
+        event.getDispatcher().register(Commands.literal("ascendant")
+                .requires(source -> source.hasPermission(2))
+                .then(Commands.literal("reset")
+                        .then(Commands.argument("player", EntityArgument.player())
+                                .executes(ctx -> resetPlayer(ctx.getSource(), EntityArgument.getPlayer(ctx, "player"))))));
+
         event.getDispatcher().register(Commands.literal("ascendant_skills")
                 .then(Commands.literal("party")
                         .then(Commands.literal("invite")
@@ -258,7 +264,7 @@ public final class AscendantCommands {
 
     private static int resetPlayer(CommandSourceStack source, ServerPlayer target) {
         PuffishBridge.ResetResult result = PuffishBridge.resetAscendantTree(target);
-        send(source, "Reset aplicado a " + target.getName().getString() + ". Niveles reembolsados: " + result.refundedLevels() + ". Perks removidos: " + result.removedPerks() + ".", result.puffishCategoryFound() || result.removedPerks() > 0);
+        send(source, "Reset completo aplicado a " + target.getName().getString() + ". Niveles reembolsados: " + result.refundedLevels() + ". Perks removidos: " + result.removedPerks() + ". Atributos propios reiniciados: " + result.resetAttributes() + ".", result.puffishCategoryFound() || result.removedPerks() > 0 || result.resetAttributes() > 0);
         return 1;
     }
 

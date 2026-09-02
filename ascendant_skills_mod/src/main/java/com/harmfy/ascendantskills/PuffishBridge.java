@@ -89,7 +89,9 @@ public final class PuffishBridge {
             AscendantData data = AscendantData.get(player.server);
             int removedPerks = data.clearPerks(player.getUUID());
             data.clearSpentLevels(player.getUUID());
-            return new ResetResult(false, 0, removedPerks);
+            CombatPerks.resetRuntime(player);
+            int resetAttributes = AscendantAttributes.resetAscendantBaseValues(player);
+            return new ResetResult(false, 0, removedPerks, resetAttributes);
         }
 
         return SkillsAPI.getCategory(CATEGORY_ID)
@@ -103,14 +105,19 @@ public final class PuffishBridge {
                     if (refundedLevels > 0 && !player.isCreative()) {
                         player.giveExperienceLevels(refundedLevels);
                     }
+                    CombatPerks.resetRuntime(player);
+                    int resetAttributes = AscendantAttributes.resetAscendantBaseValues(player);
+                    SkillsAPI.updateRewards(player, CATEGORY_ID);
                     syncPoints(player);
-                    return new ResetResult(true, refundedLevels, removedPerks);
+                    return new ResetResult(true, refundedLevels, removedPerks, resetAttributes);
                 })
                 .orElseGet(() -> {
                     AscendantData data = AscendantData.get(player.server);
                     int removedPerks = data.clearPerks(player.getUUID());
                     data.clearSpentLevels(player.getUUID());
-                    return new ResetResult(false, 0, removedPerks);
+                    CombatPerks.resetRuntime(player);
+                    int resetAttributes = AscendantAttributes.resetAscendantBaseValues(player);
+                    return new ResetResult(false, 0, removedPerks, resetAttributes);
                 });
     }
 
@@ -158,6 +165,6 @@ public final class PuffishBridge {
                 .ifPresent(skill -> skill.lock(player));
     }
 
-    public record ResetResult(boolean puffishCategoryFound, int refundedLevels, int removedPerks) {
+    public record ResetResult(boolean puffishCategoryFound, int refundedLevels, int removedPerks, int resetAttributes) {
     }
 }

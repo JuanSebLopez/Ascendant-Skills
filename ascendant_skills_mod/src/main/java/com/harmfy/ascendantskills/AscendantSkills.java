@@ -15,6 +15,7 @@ public final class AscendantSkills {
 
     public AscendantSkills(IEventBus modEventBus) {
         AscendantConfig.loadOrCreate();
+        AscendantEffects.EFFECTS.register(modEventBus);
         AscendantAttributes.ATTRIBUTES.register(modEventBus);
         AscendantPotions.POTIONS.register(modEventBus);
         modEventBus.addListener(AscendantAttributes::addPlayerAttributes);
@@ -28,6 +29,7 @@ public final class AscendantSkills {
         NeoForge.EVENT_BUS.addListener(CombatPerks::onLivingDamagePost);
         NeoForge.EVENT_BUS.addListener(CombatPerks::onLivingDeath);
         NeoForge.EVENT_BUS.addListener(CombatPerks::onLivingKnockBack);
+        NeoForge.EVENT_BUS.addListener(CombatPerks::onEntityJoinLevel);
         NeoForge.EVENT_BUS.addListener(CombatPerks::onLivingUseItemTick);
         NeoForge.EVENT_BUS.addListener(CombatPerks::onArrowLoose);
         NeoForge.EVENT_BUS.addListener(CombatPerks::onPlayerTick);

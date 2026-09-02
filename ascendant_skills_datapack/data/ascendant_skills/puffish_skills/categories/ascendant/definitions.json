@@ -1,7 +1,7 @@
 {
   "inicio": {
-    "title": "INICIO",
-    "description": "Punto inicial del arbol de habilidades.",
+    "title": "Inicio",
+    "description": "Aquí es donde inicia tu aventura.",
     "icon": {
       "type": "item",
       "data": {
@@ -14,7 +14,7 @@
         "frame": "task"
       }
     },
-    "cost": 0,
+    "cost": 1,
     "rewards": [
       {
         "type": "puffish_skills:tag",
@@ -46,12 +46,24 @@
     }
   },
   "combate": {
-    "title": "COMBATE",
-    "description": "Selecciona la clase Combate. +5% global DMG, +5% global AS, +1 HP.",
+    "title": "Combate",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+5% global DMG, +5% global AS, +1 HP.",
+          "color": "gray"
+        }
+      ]
+    },
     "icon": {
       "type": "item",
       "data": {
-        "item": "cataclysm:the_incinerator"
+        "item": "minecraft:wooden_sword"
       }
     },
     "frame": {
@@ -101,7 +113,7 @@
           "color": "gold"
         },
         {
-          "text": "5 niveles de XP\n",
+          "text": "3 niveles de XP\n",
           "color": "yellow"
         },
         {
@@ -109,15 +121,7 @@
           "color": "dark_purple"
         },
         {
-          "text": "Sin logro\n",
-          "color": "gray"
-        },
-        {
-          "text": "Stats: ",
-          "color": "green"
-        },
-        {
-          "text": "+5% global DMG, +5% global AS, +1 HP.\n",
+          "text": "-\n",
           "color": "gray"
         },
         {
@@ -133,7 +137,19 @@
   },
   "luchador": {
     "title": "Luchador",
-    "description": "+5% melee dmg, +5% AS melee, +5% knockback resist.",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+5% melee dmg, +5% AS melee, +5% knockback resist.",
+          "color": "gray"
+        }
+      ]
+    },
     "extra_description": {
       "text": "",
       "extra": [
@@ -150,16 +166,8 @@
           "color": "dark_purple"
         },
         {
-          "text": "Sin logro\n",
-          "color": "gray"
-        },
-        {
-          "text": "Stats: ",
-          "color": "green"
-        },
-        {
-          "text": "+5% melee dmg, +5% AS melee, +5% knockback resist.\n",
-          "color": "gray"
+          "text": "Matar a 5 zombies\n",
+          "color": "light_purple"
         },
         {
           "text": "Perk: ",
@@ -174,7 +182,7 @@
     "icon": {
       "type": "item",
       "data": {
-        "item": "minecraft:netherite_sword"
+        "item": "minecraft:iron_sword"
       }
     },
     "frame": {
@@ -219,7 +227,19 @@
   },
   "coraza_de_acero": {
     "title": "Coraza de Acero",
-    "description": "+0.75 toughness, +2 armor, +2 HP.",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+0.75 toughness, +2 armor, +2 HP.",
+          "color": "gray"
+        }
+      ]
+    },
     "extra_description": {
       "text": "",
       "extra": [
@@ -228,7 +248,7 @@
           "color": "gold"
         },
         {
-          "text": "10 niveles de XP\\n",
+          "text": "10 niveles de XP\n",
           "color": "yellow"
         },
         {
@@ -236,16 +256,8 @@
           "color": "dark_purple"
         },
         {
-          "text": "mowziesmobs:umvuthi\\n",
+          "text": "Asesinar a Umvuthi\n",
           "color": "light_purple"
-        },
-        {
-          "text": "Stats: ",
-          "color": "green"
-        },
-        {
-          "text": "+0.75 toughness, +2 armor, +2 HP.\\n",
-          "color": "gray"
         },
         {
           "text": "Perk: ",
@@ -305,7 +317,19 @@
   },
   "danzante_de_acero": {
     "title": "Danzante de Acero",
-    "description": "+0.25 melee reach, +5% move speed, +50% sweep dmg.",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+0.25 melee reach, +5% move speed, +50% sweep dmg.",
+          "color": "gray"
+        }
+      ]
+    },
     "extra_description": {
       "text": "",
       "extra": [
@@ -314,7 +338,7 @@
           "color": "gold"
         },
         {
-          "text": "15 niveles de XP\\n",
+          "text": "15 niveles de XP\n",
           "color": "yellow"
         },
         {
@@ -322,15 +346,7 @@
           "color": "dark_purple"
         },
         {
-          "text": "Sin logro\\n",
-          "color": "gray"
-        },
-        {
-          "text": "Stats: ",
-          "color": "green"
-        },
-        {
-          "text": "+0.25 melee reach, +5% move speed, +50% sweep dmg.\\n",
+          "text": "-\n",
           "color": "gray"
         },
         {
@@ -346,7 +362,7 @@
     "icon": {
       "type": "item",
       "data": {
-        "item": "minecraft:golden_sword"
+        "item": "minecraft:iron_boots"
       }
     },
     "frame": {
@@ -391,7 +407,19 @@
   },
   "verdugo": {
     "title": "Verdugo",
-    "description": "+15% crit dmg, +5% prob crit melee.",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+15% crit dmg, +5% prob crit melee.",
+          "color": "gray"
+        }
+      ]
+    },
     "extra_description": {
       "text": "",
       "extra": [
@@ -400,7 +428,7 @@
           "color": "gold"
         },
         {
-          "text": "15 niveles de XP\\n",
+          "text": "15 niveles de XP\n",
           "color": "yellow"
         },
         {
@@ -408,15 +436,7 @@
           "color": "dark_purple"
         },
         {
-          "text": "Sin logro\\n",
-          "color": "gray"
-        },
-        {
-          "text": "Stats: ",
-          "color": "green"
-        },
-        {
-          "text": "+15% crit dmg, +5% prob crit melee.\\n",
+          "text": "-\n",
           "color": "gray"
         },
         {
@@ -432,7 +452,7 @@
     "icon": {
       "type": "item",
       "data": {
-        "item": "minecraft:netherite_axe"
+        "item": "minecraft:diamond_axe"
       }
     },
     "frame": {
@@ -469,7 +489,19 @@
   },
   "inamovible": {
     "title": "Inamovible",
-    "description": "+10% global resist, +10% knockback resist.",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+10% global resist, +10% knockback resist.",
+          "color": "gray"
+        }
+      ]
+    },
     "extra_description": {
       "text": "",
       "extra": [
@@ -478,7 +510,7 @@
           "color": "gold"
         },
         {
-          "text": "17 niveles de XP\\n",
+          "text": "17 niveles de XP\n",
           "color": "yellow"
         },
         {
@@ -486,16 +518,8 @@
           "color": "dark_purple"
         },
         {
-          "text": "cataclysm:netherite_monstrosity\\n",
+          "text": "Asesinar a Netherite Monstrosity\n",
           "color": "light_purple"
-        },
-        {
-          "text": "Stats: ",
-          "color": "green"
-        },
-        {
-          "text": "+10% global resist, +10% knockback resist.\\n",
-          "color": "gray"
         },
         {
           "text": "Perk: ",
@@ -510,7 +534,7 @@
     "icon": {
       "type": "item",
       "data": {
-        "item": "minecraft:netherite_chestplate"
+        "item": "cataclysm:monstrous_eye"
       }
     },
     "frame": {
@@ -547,7 +571,19 @@
   },
   "veterano_de_guerra": {
     "title": "Veterano de Guerra",
-    "description": "+10% melee dmg, +2 HP.",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+10% melee dmg, +2 HP.",
+          "color": "gray"
+        }
+      ]
+    },
     "extra_description": {
       "text": "",
       "extra": [
@@ -556,7 +592,7 @@
           "color": "gold"
         },
         {
-          "text": "25 niveles de XP\\n",
+          "text": "25 niveles de XP\n",
           "color": "yellow"
         },
         {
@@ -564,15 +600,7 @@
           "color": "dark_purple"
         },
         {
-          "text": "Sin logro\\n",
-          "color": "gray"
-        },
-        {
-          "text": "Stats: ",
-          "color": "green"
-        },
-        {
-          "text": "+10% melee dmg, +2 HP.\\n",
+          "text": "-\n",
           "color": "gray"
         },
         {
@@ -588,7 +616,7 @@
     "icon": {
       "type": "item",
       "data": {
-        "item": "minecraft:shield"
+        "item": "cataclysm:blazing_grips"
       }
     },
     "frame": {
@@ -625,7 +653,19 @@
   },
   "berserker": {
     "title": "Berserker",
-    "description": "+5% life steal, +3% AS, +2 dmg con espada/hacha, -1.5 armor.",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+5% life steal, +3% AS, +2 dmg con espada/hacha, -1.5 armor.",
+          "color": "gray"
+        }
+      ]
+    },
     "extra_description": {
       "text": "",
       "extra": [
@@ -634,7 +674,7 @@
           "color": "gold"
         },
         {
-          "text": "20 niveles de XP\\n",
+          "text": "20 niveles de XP\n",
           "color": "yellow"
         },
         {
@@ -642,15 +682,7 @@
           "color": "dark_purple"
         },
         {
-          "text": "Sin logro\\n",
-          "color": "gray"
-        },
-        {
-          "text": "Stats: ",
-          "color": "green"
-        },
-        {
-          "text": "+5% life steal, +3% AS, +2 dmg con espada/hacha, -1.5 armor.\\n",
+          "text": "-\n",
           "color": "gray"
         },
         {
@@ -666,7 +698,7 @@
     "icon": {
       "type": "item",
       "data": {
-        "item": "minecraft:diamond_axe"
+        "item": "minecraft:netherite_axe"
       }
     },
     "frame": {
@@ -703,7 +735,19 @@
   },
   "juggernaut": {
     "title": "Juggernaut",
-    "description": "-5% melee dmg, +3 armor, +10% melee resist.",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "-5% melee dmg, +3 armor, +10% melee resist.",
+          "color": "gray"
+        }
+      ]
+    },
     "extra_description": {
       "text": "",
       "extra": [
@@ -712,7 +756,7 @@
           "color": "gold"
         },
         {
-          "text": "20 niveles de XP\\n",
+          "text": "20 niveles de XP\n",
           "color": "yellow"
         },
         {
@@ -720,16 +764,8 @@
           "color": "dark_purple"
         },
         {
-          "text": "Sin logro\\n",
-          "color": "gray"
-        },
-        {
-          "text": "Stats: ",
-          "color": "green"
-        },
-        {
-          "text": "-5% melee dmg, +3 armor, +10% melee resist.\\n",
-          "color": "gray"
+          "text": "Asesinar al Warden\n",
+          "color": "light_purple"
         },
         {
           "text": "Perk: ",
@@ -789,7 +825,19 @@
   },
   "conquistador": {
     "title": "Conquistador",
-    "description": "+5% armor shred melee, +5% melee dmg, +0.75 toughness, +3 HP, +5% melee resist.",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+5% armor shred melee, +5% melee dmg, +0.75 toughness, +3 HP, +5% melee resist.",
+          "color": "gray"
+        }
+      ]
+    },
     "extra_description": {
       "text": "",
       "extra": [
@@ -798,7 +846,7 @@
           "color": "gold"
         },
         {
-          "text": "30 niveles de XP\\n",
+          "text": "30 niveles de XP\n",
           "color": "yellow"
         },
         {
@@ -806,16 +854,8 @@
           "color": "dark_purple"
         },
         {
-          "text": "cataclysm:maledictus\\n",
+          "text": "Asesinar a Maledictus\n",
           "color": "light_purple"
-        },
-        {
-          "text": "Stats: ",
-          "color": "green"
-        },
-        {
-          "text": "+5% armor shred melee, +5% melee dmg, +0.75 toughness, +3 HP, +5% melee resist.\\n",
-          "color": "gray"
         },
         {
           "text": "Perk: ",
@@ -830,7 +870,7 @@
     "icon": {
       "type": "item",
       "data": {
-        "item": "minecraft:netherite_sword"
+        "item": "cataclysm:ignitium_helmet"
       }
     },
     "frame": {
@@ -890,8 +930,20 @@
     ]
   },
   "senor_de_la_guerra": {
-    "title": "Senor de la Guerra",
-    "description": "+20% melee dmg, +10% AS melee, +4 HP.",
+    "title": "Señor de la Guerra",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+20% melee dmg, +10% AS melee, +4 HP.",
+          "color": "gray"
+        }
+      ]
+    },
     "extra_description": {
       "text": "",
       "extra": [
@@ -900,7 +952,7 @@
           "color": "gold"
         },
         {
-          "text": "35 niveles de XP\\n",
+          "text": "35 niveles de XP\n",
           "color": "yellow"
         },
         {
@@ -908,16 +960,8 @@
           "color": "dark_purple"
         },
         {
-          "text": "minecraft:warden\\n",
+          "text": "Asesinar al Ender Dragon\n",
           "color": "light_purple"
-        },
-        {
-          "text": "Stats: ",
-          "color": "green"
-        },
-        {
-          "text": "+20% melee dmg, +10% AS melee, +4 HP.\\n",
-          "color": "gray"
         },
         {
           "text": "Perk: ",
@@ -977,7 +1021,19 @@
   },
   "cazador": {
     "title": "Cazador",
-    "description": "Selecciona la clase Rango. +5% projectile damage, +5% prob crit ranged, +5% move speed.",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+5% projectile damage, +5% prob crit ranged, +5% move speed.",
+          "color": "gray"
+        }
+      ]
+    },
     "extra_description": {
       "text": "",
       "extra": [
@@ -986,7 +1042,7 @@
           "color": "gold"
         },
         {
-          "text": "5 niveles de XP\\n",
+          "text": "7 niveles de XP\n",
           "color": "yellow"
         },
         {
@@ -994,15 +1050,7 @@
           "color": "dark_purple"
         },
         {
-          "text": "Sin logro\\n",
-          "color": "gray"
-        },
-        {
-          "text": "Stats: ",
-          "color": "green"
-        },
-        {
-          "text": "+5% projectile damage, +5% prob crit ranged, +5% move speed.\\n",
+          "text": "-\n",
           "color": "gray"
         },
         {
@@ -1027,7 +1075,7 @@
         "frame": "task"
       }
     },
-    "cost": 5,
+    "cost": 7,
     "rewards": [
       {
         "type": "puffish_skills:tag",
@@ -1063,7 +1111,19 @@
   },
   "punteria": {
     "title": "Punteria",
-    "description": "+5% projectile damage, +10% projectile velocity.",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+10% crit dmg ranged, +5% prob crit ranged.",
+          "color": "gray"
+        }
+      ]
+    },
     "extra_description": {
       "text": "",
       "extra": [
@@ -1072,15 +1132,23 @@
           "color": "gold"
         },
         {
-          "text": "1 nivel de XP\n",
+          "text": "10 niveles de XP\n",
           "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "Matar a 5 esqueletos\n",
+          "color": "light_purple"
         },
         {
           "text": "Perk: ",
           "color": "aqua"
         },
         {
-          "text": "Bonificaciones pasivas del nodo.",
+          "text": "-",
           "color": "gray"
         }
       ]
@@ -1088,7 +1156,7 @@
     "icon": {
       "type": "item",
       "data": {
-        "item": "minecraft:arrow"
+        "item": "furniture:telescope"
       }
     },
     "frame": {
@@ -1104,16 +1172,44 @@
         "data": {
           "tag": "ascendant_range_punteria"
         }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:ranged_crit_damage",
+          "value": 0.1,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:ranged_crit_chance",
+          "value": 0.05,
+          "operation": "addition"
+        }
       }
     ]
   },
   "ojo_certero": {
     "title": "Ojo Certero",
-    "description": "+15% crit dmg ranged, +5% crit chance ranged, -5% AS ranged.",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+15% crit dmg ranged, +5% prob crit ranged, -5% AS ranged.",
+          "color": "gray"
+        }
+      ]
+    },
     "icon": {
       "type": "item",
       "data": {
-        "item": "minecraft:spyglass"
+        "item": "endrem:lost_eye"
       }
     },
     "frame": {
@@ -1163,7 +1259,7 @@
           "color": "gold"
         },
         {
-          "text": "15 niveles de XP\\n",
+          "text": "15 niveles de XP\n",
           "color": "yellow"
         },
         {
@@ -1171,15 +1267,7 @@
           "color": "dark_purple"
         },
         {
-          "text": "Sin logro\\n",
-          "color": "gray"
-        },
-        {
-          "text": "Stats: ",
-          "color": "green"
-        },
-        {
-          "text": "+15% crit dmg ranged, +5% crit chance ranged, -5% AS ranged.\\n",
+          "text": "-\n",
           "color": "gray"
         },
         {
@@ -1195,11 +1283,23 @@
   },
   "tiro_rapido": {
     "title": "Tiro Rapido",
-    "description": "+10% AS ranged, -10% crit dmg ranged.",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+10% AS ranged, -10% crit dmg ranged.",
+          "color": "gray"
+        }
+      ]
+    },
     "icon": {
       "type": "item",
       "data": {
-        "item": "minecraft:crossbow"
+        "item": "aquaculture:neptunium_bow"
       }
     },
     "frame": {
@@ -1241,7 +1341,7 @@
           "color": "gold"
         },
         {
-          "text": "15 niveles de XP\\n",
+          "text": "15 niveles de XP\n",
           "color": "yellow"
         },
         {
@@ -1249,15 +1349,7 @@
           "color": "dark_purple"
         },
         {
-          "text": "Sin logro\\n",
-          "color": "gray"
-        },
-        {
-          "text": "Stats: ",
-          "color": "green"
-        },
-        {
-          "text": "+10% AS ranged, -10% crit dmg ranged.\\n",
+          "text": "-\n",
           "color": "gray"
         },
         {
@@ -1265,7 +1357,7 @@
           "color": "aqua"
         },
         {
-          "text": "La velocidad de ataque ranged acelera el tensado del arco y la recarga de la ballesta.",
+          "text": "-",
           "color": "gray"
         }
       ]
@@ -1273,7 +1365,19 @@
   },
   "francotirador": {
     "title": "Francotirador",
-    "description": "+15% crit dmg ranged, +5% crit chance ranged, -5% AS ranged.",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+15% crit dmg ranged, +5% prob crit ranged, -5% AS ranged.",
+          "color": "gray"
+        }
+      ]
+    },
     "extra_description": {
       "text": "",
       "extra": [
@@ -1282,7 +1386,7 @@
           "color": "gold"
         },
         {
-          "text": "20 niveles de XP\\n",
+          "text": "20 niveles de XP\n",
           "color": "yellow"
         },
         {
@@ -1290,16 +1394,8 @@
           "color": "dark_purple"
         },
         {
-          "text": "cataclysm:ignis\\n",
+          "text": "Asesinar a Ignis\n",
           "color": "light_purple"
-        },
-        {
-          "text": "Stats: ",
-          "color": "green"
-        },
-        {
-          "text": "+15% crit dmg ranged, +5% crit chance ranged, -5% AS ranged.\\n",
-          "color": "gray"
         },
         {
           "text": "Perk: ",
@@ -1359,7 +1455,19 @@
   },
   "aljaba_ligera": {
     "title": "Aljaba Ligera",
-    "description": "+10% projectile velocity, +10% prob de no consumir flechas.",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+10% projectile velocity, +10% prob de no consumir flechas, -10% crit dmg ranged.",
+          "color": "gray"
+        }
+      ]
+    },
     "extra_description": {
       "text": "",
       "extra": [
@@ -1368,7 +1476,7 @@
           "color": "gold"
         },
         {
-          "text": "20 niveles de XP\\n",
+          "text": "20 niveles de XP\n",
           "color": "yellow"
         },
         {
@@ -1376,16 +1484,8 @@
           "color": "dark_purple"
         },
         {
-          "text": "bosses_of_mass_destruction:void_blossom\\n",
+          "text": "Asesinar a Void Blossom\n",
           "color": "light_purple"
-        },
-        {
-          "text": "Stats: ",
-          "color": "green"
-        },
-        {
-          "text": "+10% projectile velocity, +10% prob de no consumir flechas.\\n",
-          "color": "gray"
         },
         {
           "text": "Perk: ",
@@ -1416,12 +1516,40 @@
         "data": {
           "tag": "ascendant_range_aljaba_ligera"
         }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:projectile_velocity",
+          "value": 0.1,
+          "operation": "multiply_total"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:ranged_crit_damage",
+          "value": -0.1,
+          "operation": "addition"
+        }
       }
     ]
   },
   "perforador": {
     "title": "Perforador",
-    "description": "+5% projectile damage, +5% armor shred ranged.",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+5% projectile damage, +5% armor shred ranged.",
+          "color": "gray"
+        }
+      ]
+    },
     "extra_description": {
       "text": "",
       "extra": [
@@ -1430,7 +1558,7 @@
           "color": "gold"
         },
         {
-          "text": "25 niveles de XP\\n",
+          "text": "25 niveles de XP\n",
           "color": "yellow"
         },
         {
@@ -1438,15 +1566,7 @@
           "color": "dark_purple"
         },
         {
-          "text": "Sin logro\\n",
-          "color": "gray"
-        },
-        {
-          "text": "Stats: ",
-          "color": "green"
-        },
-        {
-          "text": "+5% projectile damage, +5% armor shred ranged.\\n",
+          "text": "-\n",
           "color": "gray"
         },
         {
@@ -1454,7 +1574,7 @@
           "color": "aqua"
         },
         {
-          "text": "Perforador: tus flechas obtienen +1 piercing. Cada objetivo muerto en trayectoria aumenta +15% el dano restante.",
+          "text": "Perforador: tus flechas obtienen +1 piercing. Cada objetivo muerto en trayectoria aumenta +15% el daño de la trayectoria restante de la flecha.",
           "color": "gray"
         }
       ]
@@ -1499,7 +1619,19 @@
   },
   "escaramuzador": {
     "title": "Escaramuzador",
-    "description": "+5% AS ranged, +10% move speed.",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+5% AS ranged, +10% move speed.",
+          "color": "gray"
+        }
+      ]
+    },
     "extra_description": {
       "text": "",
       "extra": [
@@ -1508,7 +1640,7 @@
           "color": "gold"
         },
         {
-          "text": "25 niveles de XP\\n",
+          "text": "25 niveles de XP\n",
           "color": "yellow"
         },
         {
@@ -1516,15 +1648,7 @@
           "color": "dark_purple"
         },
         {
-          "text": "Sin logro\\n",
-          "color": "gray"
-        },
-        {
-          "text": "Stats: ",
-          "color": "green"
-        },
-        {
-          "text": "+5% AS ranged, +10% move speed.\\n",
+          "text": "-\n",
           "color": "gray"
         },
         {
@@ -1532,7 +1656,7 @@
           "color": "aqua"
         },
         {
-          "text": "Escaramuza: al moverte antes de disparar, el siguiente disparo gana dano.",
+          "text": "Escaramuza: al moverte 10 bloques, el siguiente disparo gana +10% daño.",
           "color": "gray"
         }
       ]
@@ -1540,7 +1664,7 @@
     "icon": {
       "type": "item",
       "data": {
-        "item": "minecraft:leather_boots"
+        "item": "artifacts:running_shoes"
       }
     },
     "frame": {
@@ -1577,7 +1701,19 @@
   },
   "deadeye": {
     "title": "Deadeye",
-    "description": "+5% crit chance ranged, +15% crit dmg ranged, -5% AS ranged.",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+5% crit chance ranged, +15% crit dmg ranged, -5% AS ranged.",
+          "color": "gray"
+        }
+      ]
+    },
     "extra_description": {
       "text": "",
       "extra": [
@@ -1586,7 +1722,7 @@
           "color": "gold"
         },
         {
-          "text": "30 niveles de XP\\n",
+          "text": "30 niveles de XP\n",
           "color": "yellow"
         },
         {
@@ -1594,16 +1730,8 @@
           "color": "dark_purple"
         },
         {
-          "text": "cataclysm:scylla\\n",
+          "text": "Asesinar a Scylla\n",
           "color": "light_purple"
-        },
-        {
-          "text": "Stats: ",
-          "color": "green"
-        },
-        {
-          "text": "+5% crit chance ranged, +15% crit dmg ranged, -5% AS ranged.\\n",
-          "color": "gray"
         },
         {
           "text": "Perk: ",
@@ -1663,7 +1791,19 @@
   },
   "barrage": {
     "title": "Barrage",
-    "description": "+5% projectile damage, +10% projectile velocity, +10% AS ranged.",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+5% projectile damage, +10% projectile velocity, +10% AS ranged, -10% crit dmg ranged.",
+          "color": "gray"
+        }
+      ]
+    },
     "extra_description": {
       "text": "",
       "extra": [
@@ -1672,7 +1812,7 @@
           "color": "gold"
         },
         {
-          "text": "30 niveles de XP\\n",
+          "text": "30 niveles de XP\n",
           "color": "yellow"
         },
         {
@@ -1680,23 +1820,15 @@
           "color": "dark_purple"
         },
         {
-          "text": "cataclysm:the_leviathan\\n",
+          "text": "Asesinar al Leviathan\n",
           "color": "light_purple"
-        },
-        {
-          "text": "Stats: ",
-          "color": "green"
-        },
-        {
-          "text": "+5% projectile damage, +10% projectile velocity, +10% AS ranged.\\n",
-          "color": "gray"
         },
         {
           "text": "Perk: ",
           "color": "aqua"
         },
         {
-          "text": "Barrage: pasa de 4 a 5 disparos.",
+          "text": "Cada 5 disparos consecutivos sin fallar, el siguiente disparo es un crítico garantizado.",
           "color": "gray"
         }
       ]
@@ -1736,12 +1868,40 @@
           "value": 0.1,
           "operation": "multiply_total"
         }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:projectile_velocity",
+          "value": 0.1,
+          "operation": "multiply_total"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:ranged_crit_damage",
+          "value": -0.1,
+          "operation": "addition"
+        }
       }
     ]
   },
   "maestro_tirador": {
     "title": "Maestro Tirador",
-    "description": "+20% projectile damage, +20% crit dmg ranged, +15% armor shred ranged, +4 HP.",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+20% projectile damage, +20% crit dmg ranged, +15% armor shred ranged, +20% AS ranged, +4 HP.",
+          "color": "gray"
+        }
+      ]
+    },
     "extra_description": {
       "text": "",
       "extra": [
@@ -1750,7 +1910,7 @@
           "color": "gold"
         },
         {
-          "text": "35 niveles de XP\\n",
+          "text": "35 niveles de XP\n",
           "color": "yellow"
         },
         {
@@ -1758,16 +1918,8 @@
           "color": "dark_purple"
         },
         {
-          "text": "minecraft:ender_dragon\\n",
+          "text": "Asesinar al Wither\n",
           "color": "light_purple"
-        },
-        {
-          "text": "Stats: ",
-          "color": "green"
-        },
-        {
-          "text": "+20% projectile damage, +20% crit dmg ranged, +15% armor shred ranged, +4 HP.\\n",
-          "color": "gray"
         },
         {
           "text": "Perk: ",
@@ -1782,7 +1934,7 @@
     "icon": {
       "type": "item",
       "data": {
-        "item": "minecraft:dragon_head"
+        "item": "minecraft:wither_skeleton_skull"
       }
     },
     "frame": {
@@ -1830,12 +1982,32 @@
           "value": 0.15,
           "operation": "addition"
         }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:ranged_attack_speed",
+          "value": 0.2,
+          "operation": "multiply_total"
+        }
       }
     ]
   },
   "bastion": {
     "title": "Bastion",
-    "description": "Selecciona la clase Tanque. +5% global resist, +4 HP, -5% move speed.",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+5% global resist, +4 HP, -5% move speed.",
+          "color": "gray"
+        }
+      ]
+    },
     "icon": {
       "type": "item",
       "data": {
@@ -1889,7 +2061,7 @@
           "color": "gold"
         },
         {
-          "text": "7 niveles de XP\\n",
+          "text": "7 niveles de XP\n",
           "color": "yellow"
         },
         {
@@ -1897,15 +2069,7 @@
           "color": "dark_purple"
         },
         {
-          "text": "Sin logro\\n",
-          "color": "gray"
-        },
-        {
-          "text": "Stats: ",
-          "color": "green"
-        },
-        {
-          "text": "+5% global resist, +4 HP, -5% move speed.\\n",
+          "text": "-\n",
           "color": "gray"
         },
         {
@@ -1921,7 +2085,19 @@
   },
   "muralla": {
     "title": "Muralla",
-    "description": "+3 armor, +1 toughness, +10% knockback resist.",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+3 armor, +1 toughness, +10% knockback resist.",
+          "color": "gray"
+        }
+      ]
+    },
     "extra_description": {
       "text": "",
       "extra": [
@@ -1930,7 +2106,7 @@
           "color": "gold"
         },
         {
-          "text": "10 niveles de XP\\n",
+          "text": "10 niveles de XP\n",
           "color": "yellow"
         },
         {
@@ -1938,16 +2114,8 @@
           "color": "dark_purple"
         },
         {
-          "text": "mowziesmobs:ferrous_wroughtnaut\\n",
+          "text": "Asesinar a Ferrous Wroughtnaut\n",
           "color": "light_purple"
-        },
-        {
-          "text": "Stats: ",
-          "color": "green"
-        },
-        {
-          "text": "+3 armor, +1 toughness, +10% knockback resist.\\n",
-          "color": "gray"
         },
         {
           "text": "Perk: ",
@@ -1962,7 +2130,7 @@
     "icon": {
       "type": "item",
       "data": {
-        "item": "shieldexp:iron_shield"
+        "item": "mowziesmobs:wrought_helmet"
       }
     },
     "frame": {
@@ -2010,7 +2178,19 @@
   },
   "fortaleza": {
     "title": "Fortaleza",
-    "description": "+5 HP, +4 armor, +10% melee resist, +10% projectile resist, -5% move speed.",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+5 HP, +4 armor, +10% melee resist, +10% projectile resist, -5% move speed.",
+          "color": "gray"
+        }
+      ]
+    },
     "extra_description": {
       "text": "",
       "extra": [
@@ -2019,7 +2199,7 @@
           "color": "gold"
         },
         {
-          "text": "15 niveles de XP\\n",
+          "text": "15 niveles de XP\n",
           "color": "yellow"
         },
         {
@@ -2027,15 +2207,7 @@
           "color": "dark_purple"
         },
         {
-          "text": "Sin logro\\n",
-          "color": "gray"
-        },
-        {
-          "text": "Stats: ",
-          "color": "green"
-        },
-        {
-          "text": "+5 HP, +4 armor, +10% melee resist, +10% projectile resist, -5% move speed.\\n",
+          "text": "-\n",
           "color": "gray"
         },
         {
@@ -2051,7 +2223,7 @@
     "icon": {
       "type": "item",
       "data": {
-        "item": "minecraft:netherite_chestplate"
+        "item": "cataclysm:sturdy_boots"
       }
     },
     "frame": {
@@ -2112,7 +2284,19 @@
   },
   "guardaespaldas": {
     "title": "Guardaespaldas",
-    "description": "+2 HP.",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+2 HP.",
+          "color": "gray"
+        }
+      ]
+    },
     "extra_description": {
       "text": "",
       "extra": [
@@ -2121,7 +2305,7 @@
           "color": "gold"
         },
         {
-          "text": "15 niveles de XP\\n",
+          "text": "15 niveles de XP\n",
           "color": "yellow"
         },
         {
@@ -2129,15 +2313,7 @@
           "color": "dark_purple"
         },
         {
-          "text": "Sin logro\\n",
-          "color": "gray"
-        },
-        {
-          "text": "Stats: ",
-          "color": "green"
-        },
-        {
-          "text": "+2 HP.\\n",
+          "text": "-\n",
           "color": "gray"
         },
         {
@@ -2153,7 +2329,7 @@
     "icon": {
       "type": "item",
       "data": {
-        "item": "minecraft:shield"
+        "item": "shieldexp:diamond_shield"
       }
     },
     "frame": {
@@ -2182,7 +2358,19 @@
   },
   "coloso": {
     "title": "Coloso",
-    "description": "+10% size, +6 HP, +1 toughness, +15% explosion resist, -5% move speed.",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+10% size, +6 HP, +1 toughness, +15% explosion resist, -5% move speed.",
+          "color": "gray"
+        }
+      ]
+    },
     "extra_description": {
       "text": "",
       "extra": [
@@ -2191,7 +2379,7 @@
           "color": "gold"
         },
         {
-          "text": "20 niveles de XP\\n",
+          "text": "20 niveles de XP\n",
           "color": "yellow"
         },
         {
@@ -2199,16 +2387,8 @@
           "color": "dark_purple"
         },
         {
-          "text": "cataclysm:netherite_monstrosity\\n",
+          "text": "Asesinar al Gauntlet\n",
           "color": "light_purple"
-        },
-        {
-          "text": "Stats: ",
-          "color": "green"
-        },
-        {
-          "text": "+10% size, +6 HP, +1 toughness, +15% explosion resist, -5% move speed.\\n",
-          "color": "gray"
         },
         {
           "text": "Perk: ",
@@ -2223,7 +2403,7 @@
     "icon": {
       "type": "item",
       "data": {
-        "item": "minecraft:netherite_block"
+        "item": "bosses_of_mass_destruction:blazing_eye"
       }
     },
     "frame": {
@@ -2284,7 +2464,19 @@
   },
   "provocador": {
     "title": "Provocador",
-    "description": "+20% aggro reach, +5% global resist.",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+20% aggro reach, +5% global resist.",
+          "color": "gray"
+        }
+      ]
+    },
     "extra_description": {
       "text": "",
       "extra": [
@@ -2293,7 +2485,7 @@
           "color": "gold"
         },
         {
-          "text": "20 niveles de XP\\n",
+          "text": "20 niveles de XP\n",
           "color": "yellow"
         },
         {
@@ -2301,16 +2493,8 @@
           "color": "dark_purple"
         },
         {
-          "text": "bosses_of_mass_destruction:void_blossom\\n",
+          "text": "Asesinar a Void Blossom\n",
           "color": "light_purple"
-        },
-        {
-          "text": "Stats: ",
-          "color": "green"
-        },
-        {
-          "text": "+20% aggro reach, +5% global resist.\\n",
-          "color": "gray"
         },
         {
           "text": "Perk: ",
@@ -2325,7 +2509,7 @@
     "icon": {
       "type": "item",
       "data": {
-        "item": "minecraft:bell"
+        "item": "bosses_of_mass_destruction:crystal_fruit"
       }
     },
     "frame": {
@@ -2354,7 +2538,19 @@
   },
   "regenerador": {
     "title": "Regenerador",
-    "description": "+0.5 HP de regen pasiva, -2 seg de intervalo, -5% melee dmg.",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+0.5 HP de regen pasiva, -2 seg de intervalo, -5% melee dmg.",
+          "color": "gray"
+        }
+      ]
+    },
     "extra_description": {
       "text": "",
       "extra": [
@@ -2363,7 +2559,7 @@
           "color": "gold"
         },
         {
-          "text": "25 niveles de XP\\n",
+          "text": "25 niveles de XP\n",
           "color": "yellow"
         },
         {
@@ -2371,15 +2567,7 @@
           "color": "dark_purple"
         },
         {
-          "text": "Sin logro\\n",
-          "color": "gray"
-        },
-        {
-          "text": "Stats: ",
-          "color": "green"
-        },
-        {
-          "text": "+0.5 HP de regen pasiva, intervalo 8 seg, -5% melee dmg.\\n",
+          "text": "-\n",
           "color": "gray"
         },
         {
@@ -2440,7 +2628,19 @@
   },
   "invencible": {
     "title": "Invencible",
-    "description": "+5 HP, +5% global resist, +2 seg de intervalo de curacion pasiva.",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+5 HP, +5% global resist, +2 seg de intervalo de curacion pasiva.",
+          "color": "gray"
+        }
+      ]
+    },
     "extra_description": {
       "text": "",
       "extra": [
@@ -2449,7 +2649,7 @@
           "color": "gold"
         },
         {
-          "text": "25 niveles de XP\\n",
+          "text": "25 niveles de XP\n",
           "color": "yellow"
         },
         {
@@ -2457,15 +2657,7 @@
           "color": "dark_purple"
         },
         {
-          "text": "Sin logro\\n",
-          "color": "gray"
-        },
-        {
-          "text": "Stats: ",
-          "color": "green"
-        },
-        {
-          "text": "+5 HP, +5% global resist, +2 seg de intervalo de curacion pasiva.\\n",
+          "text": "-\n",
           "color": "gray"
         },
         {
@@ -2526,7 +2718,19 @@
   },
   "bastion_absoluto": {
     "title": "Bastion Absoluto",
-    "description": "+1 toughness, +5% melee resist, +5% projectile resist.",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+1 toughness, +5% melee resist, +5% projectile resist.",
+          "color": "gray"
+        }
+      ]
+    },
     "extra_description": {
       "text": "",
       "extra": [
@@ -2535,7 +2739,7 @@
           "color": "gold"
         },
         {
-          "text": "30 niveles de XP\\n",
+          "text": "30 niveles de XP\n",
           "color": "yellow"
         },
         {
@@ -2543,16 +2747,8 @@
           "color": "dark_purple"
         },
         {
-          "text": "cataclysm:scylla\\n",
+          "text": "cataclysm:scylla\n",
           "color": "light_purple"
-        },
-        {
-          "text": "Stats: ",
-          "color": "green"
-        },
-        {
-          "text": "+1 toughness, +5% melee resist, +5% projectile resist.\\n",
-          "color": "gray"
         },
         {
           "text": "Perk: ",
@@ -2567,7 +2763,7 @@
     "icon": {
       "type": "item",
       "data": {
-        "item": "shieldexp:netherite_shield"
+        "item": "advancednetherite:netherite_diamond_chestplate"
       }
     },
     "frame": {
@@ -2615,7 +2811,19 @@
   },
   "titan": {
     "title": "Titan",
-    "description": "+10 HP, +3 armor, +2 toughness, +5% global resist.",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+10 HP, +3 armor, +2 toughness, +5% global resist.",
+          "color": "gray"
+        }
+      ]
+    },
     "extra_description": {
       "text": "",
       "extra": [
@@ -2624,7 +2832,7 @@
           "color": "gold"
         },
         {
-          "text": "35 niveles de XP\\n",
+          "text": "35 niveles de XP\n",
           "color": "yellow"
         },
         {
@@ -2632,16 +2840,8 @@
           "color": "dark_purple"
         },
         {
-          "text": "minecraft:wither\\n",
+          "text": "Asesinar al Warden\n",
           "color": "light_purple"
-        },
-        {
-          "text": "Stats: ",
-          "color": "green"
-        },
-        {
-          "text": "+10 HP, +3 armor, +2 toughness, +5% global resist.\\n",
-          "color": "gray"
         },
         {
           "text": "Perk: ",
@@ -2656,7 +2856,7 @@
     "icon": {
       "type": "item",
       "data": {
-        "item": "minecraft:dragon_head"
+        "item": "deeperdarker:warden_helmet"
       }
     },
     "frame": {

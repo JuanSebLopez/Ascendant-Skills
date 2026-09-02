@@ -82,6 +82,28 @@ public final class AscendantClientHud {
             boxes.add(new HudBox("Q", stackColor(state.conquerorStacks(), state.conquerorMaxStacks()),
                     state.conquerorStacks() > 0 ? Integer.toString(state.conquerorStacks()) : ""));
         }
+        if (state.aljabaStacks() >= 0) {
+            boxes.add(new HudBox("A", stackColor(state.aljabaStacks(), state.aljabaMaxStacks()),
+                    state.aljabaStacks() > 0 ? Integer.toString(state.aljabaStacks()) : ""));
+        }
+        if (state.deadeyeStacks() >= 0) {
+            boxes.add(new HudBox("D", stackColor(state.deadeyeStacks(), state.deadeyeMaxStacks()),
+                    state.deadeyeStacks() > 0 ? compact(state.deadeyeStacks()) : ""));
+        }
+        if (state.escaramuzadorProgress() >= 0) {
+            int remaining = Math.max(0, 10 - state.escaramuzadorProgress());
+            boxes.add(new HudBox("S", state.escaramuzadorReady() ? 0xFF31E6FF : 0xFF37404A,
+                    state.escaramuzadorReady() ? "" : Integer.toString(Math.min(9, remaining))));
+        }
+        if (state.maestroCooldownTicks() >= 0) {
+            boolean ready = state.maestroCooldownTicks() == 0;
+            boxes.add(new HudBox("M", ready ? 0xFF31E6FF : 0xFF37404A,
+                    ready ? "" : seconds(state.maestroCooldownTicks())));
+        }
+        if (state.barrageHits() >= 0) {
+            boxes.add(new HudBox("R", state.barrageReady() ? 0xFF31E6FF : stackColor(state.barrageHits(), state.barrageRequiredHits()),
+                    state.barrageReady() ? "" : Integer.toString(Math.min(9, state.barrageHits()))));
+        }
         return boxes;
     }
 
@@ -105,6 +127,10 @@ public final class AscendantClientHud {
     private static String seconds(int ticks) {
         int seconds = Math.max(1, (ticks + 19) / 20);
         return seconds > 9 ? "9" : Integer.toString(seconds);
+    }
+
+    private static String compact(int value) {
+        return value > 9 ? "9" : Integer.toString(value);
     }
 
     private record HudBox(String label, int color, String value) {

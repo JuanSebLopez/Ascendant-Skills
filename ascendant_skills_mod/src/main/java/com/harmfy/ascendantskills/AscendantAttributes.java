@@ -1,8 +1,10 @@
 package com.harmfy.ascendantskills;
 
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 import net.neoforged.neoforge.event.entity.EntityAttributeModificationEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -36,7 +38,7 @@ public final class AscendantAttributes {
     );
     public static final DeferredHolder<Attribute, Attribute> MELEE_ARMOR_SHRED = ATTRIBUTES.register(
             "melee_armor_shred",
-            () -> new RangedAttribute("attribute.ascendant_skills.melee_armor_shred", 0.0D, 0.0D, 1.0D).setSyncable(true)
+            () -> new RangedAttribute("attribute.ascendant_skills.melee_armor_shred", 0.0D, 0.0D, 10.0D).setSyncable(true)
     );
     public static final DeferredHolder<Attribute, Attribute> MELEE_CRIT_CHANCE = ATTRIBUTES.register(
             "melee_crit_chance",
@@ -64,7 +66,11 @@ public final class AscendantAttributes {
     );
     public static final DeferredHolder<Attribute, Attribute> RANGED_ARMOR_SHRED = ATTRIBUTES.register(
             "ranged_armor_shred",
-            () -> new RangedAttribute("attribute.ascendant_skills.ranged_armor_shred", 0.0D, 0.0D, 1.0D).setSyncable(true)
+            () -> new RangedAttribute("attribute.ascendant_skills.ranged_armor_shred", 0.0D, 0.0D, 10.0D).setSyncable(true)
+    );
+    public static final DeferredHolder<Attribute, Attribute> PROJECTILE_VELOCITY = ATTRIBUTES.register(
+            "projectile_velocity",
+            () -> new RangedAttribute("attribute.ascendant_skills.projectile_velocity", 1.0D, 0.0D, 10.0D).setSyncable(true)
     );
     public static final DeferredHolder<Attribute, Attribute> PASSIVE_REGEN_HEALTH = ATTRIBUTES.register(
             "passive_regen_health",
@@ -93,7 +99,43 @@ public final class AscendantAttributes {
         event.add(EntityType.PLAYER, RANGED_CRIT_CHANCE);
         event.add(EntityType.PLAYER, RANGED_CRIT_DAMAGE);
         event.add(EntityType.PLAYER, RANGED_ARMOR_SHRED);
+        event.add(EntityType.PLAYER, PROJECTILE_VELOCITY);
         event.add(EntityType.PLAYER, PASSIVE_REGEN_HEALTH);
         event.add(EntityType.PLAYER, PASSIVE_REGEN_INTERVAL);
+    }
+
+    public static int resetAscendantBaseValues(ServerPlayer player) {
+        int changed = 0;
+        changed += reset(player, GLOBAL_DAMAGE);
+        changed += reset(player, GLOBAL_ATTACK_SPEED);
+        changed += reset(player, GLOBAL_RESISTANCE);
+        changed += reset(player, MELEE_RESISTANCE);
+        changed += reset(player, PROJECTILE_RESISTANCE);
+        changed += reset(player, EXPLOSION_RESISTANCE);
+        changed += reset(player, MELEE_ARMOR_SHRED);
+        changed += reset(player, MELEE_CRIT_CHANCE);
+        changed += reset(player, MELEE_CRIT_DAMAGE);
+        changed += reset(player, RANGED_DAMAGE);
+        changed += reset(player, RANGED_ATTACK_SPEED);
+        changed += reset(player, RANGED_CRIT_CHANCE);
+        changed += reset(player, RANGED_CRIT_DAMAGE);
+        changed += reset(player, RANGED_ARMOR_SHRED);
+        changed += reset(player, PROJECTILE_VELOCITY);
+        changed += reset(player, PASSIVE_REGEN_HEALTH);
+        changed += reset(player, PASSIVE_REGEN_INTERVAL);
+        return changed;
+    }
+
+    private static int reset(ServerPlayer player, DeferredHolder<Attribute, Attribute> attribute) {
+        AttributeInstance instance = player.getAttribute(attribute);
+        if (instance == null) {
+            return 0;
+        }
+        double defaultValue = attribute.value().getDefaultValue();
+        if (Math.abs(instance.getBaseValue() - defaultValue) < 0.00001D) {
+            return 0;
+        }
+        instance.setBaseValue(defaultValue);
+        return 1;
     }
 }

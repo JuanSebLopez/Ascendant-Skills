@@ -20,6 +20,9 @@ import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.common.damagesource.DamageContainer;
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent;
@@ -55,6 +58,11 @@ public final class CombatPerks {
     private static final int ALJABA_MAX_STACKS = 5;
     private static final int DEADEYE_DECAY_TICKS = 20 * TICKS_PER_SECOND;
     private static final int DEADEYE_MAX_STACKS = 25;
+    private static final int BARRAGE_REQUIRED_HITS = 5;
+    private static final int MAESTRO_CHARGE_TICKS = 5 * TICKS_PER_SECOND;
+    private static final int MAESTRO_COOLDOWN_TICKS = 10 * TICKS_PER_SECOND;
+    private static final int PROJECTILE_STATE_TICKS = 30 * TICKS_PER_SECOND;
+    private static final double ESCARAMUZADOR_REQUIRED_DISTANCE = 10.0D;
     private static final double WARLORD_AURA_RADIUS = 10.0D;
     private static final double BODYGUARD_RADIUS = 10.0D;
     private static final double PROVOCADOR_RADIUS = 5.0D;
@@ -76,10 +84,16 @@ public final class CombatPerks {
     private static final Map<UUID, StackingBuff> FORTRESS_STACKS = new HashMap<>();
     private static final Map<UUID, StackingBuff> ALJABA_STACKS = new HashMap<>();
     private static final Map<UUID, DeadeyeState> DEADEYE_STACKS = new HashMap<>();
+    private static final Map<UUID, BarrageState> BARRAGE_STATES = new HashMap<>();
+    private static final Map<UUID, EscaramuzadorState> ESCARAMUZADOR_STATES = new HashMap<>();
+    private static final Map<UUID, Long> MAESTRO_COOLDOWNS = new HashMap<>();
     private static final Map<UUID, Long> BODYGUARD_COOLDOWNS = new HashMap<>();
     private static final Map<UUID, Long> SECOND_WIND_COOLDOWNS = new HashMap<>();
     private static final Map<UUID, LastStandState> LAST_STANDS = new HashMap<>();
     private static final Map<UUID, RangedUseSpeed> RANGED_USE_SPEED = new HashMap<>();
+    private static final Map<UUID, ProjectileOrigin> PROJECTILE_ORIGINS = new HashMap<>();
+    private static final Map<UUID, Long> MAESTRO_PROJECTILES = new HashMap<>();
+    private static final Map<UUID, Long> ESCARAMUZADOR_PROJECTILES = new HashMap<>();
 
     private CombatPerks() {
     }
@@ -95,6 +109,7 @@ public final class CombatPerks {
 
         if (attacker != null) {
             amount += outgoingFlatDamage(attacker, melee);
+            applyArmorShred(event, attacker, melee, projectile, event.getEntity(), source.getDirectEntity());
             multiplier *= outgoingDamageMultiplier(attacker, melee, projectile, event.getEntity(), source.getDirectEntity());
             if (projectile) {
                 boolean rangedCrit = rollRangedCrit(attacker, event.getEntity(), source.getDirectEntity());
@@ -119,6 +134,37 @@ public final class CombatPerks {
         }
         if (newAmount != event.getAmount()) {
             event.setAmount(Math.max(0.0F, newAmount));
+        }
+    }
+
+    public static void onEntityJoinLevel(EntityJoinLevelEvent event) {
+        Entity entity = event.getEntity();
+        if (entity.level().isClientSide || !(entity instanceof Projectile projectile) || !(projectile.getOwner() instanceof ServerPlayer owner)) {
+            return;
+        }
+
+        long now = owner.level().getGameTime();
+        UUID projectileId = projectile.getUUID();
+        PROJECTILE_ORIGINS.put(projectileId, new ProjectileOrigin(owner.getUUID(), owner.level().dimension().location().toString(), projectile.position(), now + PROJECTILE_STATE_TICKS));
+
+        if (projectile instanceof net.minecraft.world.entity.projectile.AbstractArrow arrow) {
+            double velocity = projectileVelocityMultiplier(owner);
+            if (Math.abs(velocity - 1.0D) > 0.0001D) {
+                arrow.setDeltaMovement(arrow.getDeltaMovement().scale(velocity));
+            }
+        }
+
+        RangedUseSpeed useState = RANGED_USE_SPEED.get(owner.getUUID());
+        if (has(owner, "maestro_tirador") && useState != null && useState.useTicks >= MAESTRO_CHARGE_TICKS && remainingTicks(owner, MAESTRO_COOLDOWNS.getOrDefault(owner.getUUID(), 0L)) == 0) {
+            MAESTRO_PROJECTILES.put(projectileId, now + PROJECTILE_STATE_TICKS);
+            MAESTRO_COOLDOWNS.put(owner.getUUID(), now + MAESTRO_COOLDOWN_TICKS);
+        }
+
+        EscaramuzadorState escaramuzador = ESCARAMUZADOR_STATES.get(owner.getUUID());
+        if (has(owner, "escaramuzador") && escaramuzador != null && escaramuzador.ready) {
+            ESCARAMUZADOR_PROJECTILES.put(projectileId, now + PROJECTILE_STATE_TICKS);
+            escaramuzador.distance = 0.0D;
+            escaramuzador.ready = false;
         }
     }
 
@@ -210,6 +256,8 @@ public final class CombatPerks {
         updateConquerorStacks(player);
         updateAljabaStacks(player);
         updateDeadeyeStacks(player);
+        updateBarrage(player);
+        updateEscaramuzador(player);
         updateLastStand(player);
         updateTitanAura(player);
         applyPassiveRegen(player);
@@ -225,12 +273,13 @@ public final class CombatPerks {
             return;
         }
 
+        RangedUseSpeed state = RANGED_USE_SPEED.computeIfAbsent(player.getUUID(), ignored -> new RangedUseSpeed());
+        state.useTicks++;
         float speed = rangedAttackSpeedMultiplier(player);
         if (speed <= 1.0F) {
             return;
         }
 
-        RangedUseSpeed state = RANGED_USE_SPEED.computeIfAbsent(player.getUUID(), ignored -> new RangedUseSpeed());
         state.extraTicks += speed - 1.0F;
         int ticksToSkip = (int) state.extraTicks;
         if (ticksToSkip > 0) {
@@ -295,14 +344,12 @@ public final class CombatPerks {
                 multiplier *= 1.15F;
             }
             multiplier *= 1.0F + conquerorStacks(attacker) * 0.03F;
-            multiplier *= armorShredDamageBonus(attacker, target, AscendantAttributes.MELEE_ARMOR_SHRED);
             if (tauntedTargetDamageBonus(attacker, target)) {
                 multiplier *= 1.05F;
             }
         }
         if (projectile) {
             multiplier *= rangedDamageMultiplier(attacker);
-            multiplier *= armorShredDamageBonus(attacker, target, AscendantAttributes.RANGED_ARMOR_SHRED);
             if (has(attacker, "francotirador")) {
                 double distance = rangedDistance(attacker, target, directEntity);
                 if (distance >= 10.0D) {
@@ -310,9 +357,11 @@ public final class CombatPerks {
                     multiplier *= 1.0F + bonus;
                 }
             }
-            if (has(attacker, "maestro_tirador")) {
+            if (isMarkedProjectile(directEntity, MAESTRO_PROJECTILES)) {
                 multiplier *= 1.30F;
-                multiplier *= 1.15F;
+            }
+            if (isMarkedProjectile(directEntity, ESCARAMUZADOR_PROJECTILES)) {
+                multiplier *= 1.10F;
             }
             if (tauntedTargetDamageBonus(attacker, target)) {
                 multiplier *= 1.05F;
@@ -447,6 +496,14 @@ public final class CombatPerks {
     }
 
     private static boolean rollRangedCrit(ServerPlayer player, LivingEntity target, Entity directEntity) {
+        if (has(player, "barrage")) {
+            BarrageState barrage = BARRAGE_STATES.get(player.getUUID());
+            if (barrage != null && barrage.chargedCrit) {
+                barrage.chargedCrit = false;
+                barrage.hits = 0;
+                return true;
+            }
+        }
         float chance = rangedCritChance(player);
         return chance > 0.0F && player.getRandom().nextFloat() < chance;
     }
@@ -464,24 +521,38 @@ public final class CombatPerks {
     }
 
     private static void recordRangedHit(ServerPlayer player, boolean crit) {
-        if (!has(player, "deadeye")) {
-            return;
-        }
         long now = player.level().getGameTime();
-        DeadeyeState state = DEADEYE_STACKS.computeIfAbsent(player.getUUID(), ignored -> new DeadeyeState());
-        if (crit) {
-            state.stacks = Math.min(DEADEYE_MAX_STACKS, state.stacks + 1);
-            state.lastCritTick = now;
-            state.lastDecayTick = now;
-        } else if (state.stacks > 0) {
-            state.stacks--;
-            state.lastDecayTick = now;
+        if (has(player, "deadeye")) {
+            DeadeyeState state = DEADEYE_STACKS.computeIfAbsent(player.getUUID(), ignored -> new DeadeyeState());
+            if (crit) {
+                state.stacks = Math.min(DEADEYE_MAX_STACKS, state.stacks + 1);
+                state.lastCritTick = now;
+                state.lastDecayTick = now;
+            } else if (state.stacks > 0) {
+                state.stacks--;
+                state.lastDecayTick = now;
+            }
+        }
+        if (has(player, "barrage")) {
+            BarrageState barrage = BARRAGE_STATES.computeIfAbsent(player.getUUID(), ignored -> new BarrageState());
+            if (!barrage.chargedCrit) {
+                barrage.hits++;
+                if (barrage.hits >= BARRAGE_REQUIRED_HITS) {
+                    barrage.hits = 0;
+                    barrage.chargedCrit = true;
+                }
+            }
         }
     }
 
     private static double rangedDistance(ServerPlayer player, LivingEntity target, Entity directEntity) {
-        Entity origin = directEntity instanceof Projectile ? directEntity : player;
-        return origin.distanceTo(target);
+        if (directEntity instanceof Projectile projectile) {
+            ProjectileOrigin origin = PROJECTILE_ORIGINS.get(projectile.getUUID());
+            if (origin != null && origin.dimension.equals(target.level().dimension().location().toString())) {
+                return origin.position.distanceTo(target.position());
+            }
+        }
+        return player.distanceTo(target);
     }
 
     private static float globalDamageMultiplier(ServerPlayer player) {
@@ -517,17 +588,38 @@ public final class CombatPerks {
         return (float) (1.0D - resistance);
     }
 
-    private static float armorShredDamageBonus(ServerPlayer attacker, LivingEntity target, Holder<Attribute> attribute) {
+    private static void applyArmorShred(LivingIncomingDamageEvent event, ServerPlayer attacker, boolean melee, boolean projectile, LivingEntity target, Entity directEntity) {
         if (target.getArmorValue() <= 0) {
-            return 1.0F;
+            return;
         }
-        double shred = clamp(attributeValue(attacker, attribute), 0.0D, 1.0D);
-        return (float) (1.0D + shred);
+        double shred = 0.0D;
+        if (melee) {
+            shred += attributeValue(attacker, AscendantAttributes.MELEE_ARMOR_SHRED);
+        }
+        if (projectile) {
+            shred += attributeValue(attacker, AscendantAttributes.RANGED_ARMOR_SHRED);
+            if (isMarkedProjectile(directEntity, MAESTRO_PROJECTILES)) {
+                shred += 0.15D;
+            }
+        }
+        double effectiveShred = clamp(shred, 0.0D, 1.0D);
+        if (effectiveShred <= 0.0D) {
+            return;
+        }
+        event.addReductionModifier(DamageContainer.Reduction.ARMOR, (container, reduction) -> (float) (reduction * (1.0D - effectiveShred)));
+    }
+
+    private static boolean isMarkedProjectile(Entity directEntity, Map<UUID, Long> projectiles) {
+        return directEntity != null && projectiles.getOrDefault(directEntity.getUUID(), 0L) >= directEntity.level().getGameTime();
     }
 
     private static float rangedAttackSpeedMultiplier(LivingEntity player) {
         return (float) (attributeValue(player, AscendantAttributes.GLOBAL_ATTACK_SPEED)
                 * attributeValue(player, AscendantAttributes.RANGED_ATTACK_SPEED));
+    }
+
+    private static double projectileVelocityMultiplier(LivingEntity player) {
+        return attributeValue(player, AscendantAttributes.PROJECTILE_VELOCITY);
     }
 
     private static float globalAttackSpeedMultiplier(LivingEntity player) {
@@ -714,6 +806,45 @@ public final class CombatPerks {
         }
     }
 
+    private static void updateBarrage(ServerPlayer player) {
+        if (!has(player, "barrage")) {
+            BARRAGE_STATES.remove(player.getUUID());
+        }
+    }
+
+    private static void updateEscaramuzador(ServerPlayer player) {
+        UUID playerId = player.getUUID();
+        if (!has(player, "escaramuzador")) {
+            ESCARAMUZADOR_STATES.remove(playerId);
+            return;
+        }
+
+        EscaramuzadorState state = ESCARAMUZADOR_STATES.computeIfAbsent(playerId, ignored -> new EscaramuzadorState(player.position(), player.level().dimension().location().toString()));
+        String dimension = player.level().dimension().location().toString();
+        if (!state.dimension.equals(dimension)) {
+            state.dimension = dimension;
+            state.lastPosition = player.position();
+            state.distance = 0.0D;
+            state.ready = false;
+            return;
+        }
+
+        Vec3 current = player.position();
+        Vec3 delta = current.subtract(state.lastPosition);
+        state.lastPosition = current;
+        if (state.ready || player.isPassenger() || player.isFallFlying()) {
+            return;
+        }
+
+        double horizontalDistance = Math.sqrt(delta.x * delta.x + delta.z * delta.z);
+        if (horizontalDistance <= 1.5D) {
+            state.distance = Math.min(ESCARAMUZADOR_REQUIRED_DISTANCE, state.distance + horizontalDistance);
+        }
+        if (state.distance >= ESCARAMUZADOR_REQUIRED_DISTANCE) {
+            state.ready = true;
+        }
+    }
+
     private static void updateLastStand(ServerPlayer player) {
         LastStandState state = LAST_STANDS.get(player.getUUID());
         if (state == null || state.activeUntilTick > player.level().getGameTime()) {
@@ -802,7 +933,17 @@ public final class CombatPerks {
                 has(player, "juggernaut") ? remainingJuggernautCooldownTicks(player) : -1,
                 has(player, "conquistador") ? conquerorStacks(player) : -1,
                 CONQUEROR_MAX_STACKS,
-                has(player, "berserker") && isLowHealth(player)
+                has(player, "berserker") && isLowHealth(player),
+                has(player, "aljaba_ligera") ? aljabaStacks(player) : -1,
+                ALJABA_MAX_STACKS,
+                has(player, "deadeye") ? deadeyeStacks(player) : -1,
+                DEADEYE_MAX_STACKS,
+                has(player, "escaramuzador") ? escaramuzadorProgress(player) : -1,
+                has(player, "escaramuzador") && escaramuzadorReady(player),
+                has(player, "maestro_tirador") ? remainingTicks(player, MAESTRO_COOLDOWNS.getOrDefault(player.getUUID(), 0L)) : -1,
+                has(player, "barrage") ? barrageHits(player) : -1,
+                BARRAGE_REQUIRED_HITS,
+                has(player, "barrage") && barrageReady(player)
         ));
     }
 
@@ -816,9 +957,34 @@ public final class CombatPerks {
         return stacks == null ? 0 : Math.max(0, stacks.stacks);
     }
 
+    private static int aljabaStacks(ServerPlayer player) {
+        StackingBuff stacks = ALJABA_STACKS.get(player.getUUID());
+        return stacks == null ? 0 : Math.max(0, stacks.stacks);
+    }
+
     private static int deadeyeStacks(ServerPlayer player) {
         DeadeyeState state = DEADEYE_STACKS.get(player.getUUID());
         return state == null ? 0 : Math.max(0, state.stacks);
+    }
+
+    private static int escaramuzadorProgress(ServerPlayer player) {
+        EscaramuzadorState state = ESCARAMUZADOR_STATES.get(player.getUUID());
+        return state == null ? 0 : (int) Math.floor(Math.min(ESCARAMUZADOR_REQUIRED_DISTANCE, state.distance));
+    }
+
+    private static boolean escaramuzadorReady(ServerPlayer player) {
+        EscaramuzadorState state = ESCARAMUZADOR_STATES.get(player.getUUID());
+        return state != null && state.ready;
+    }
+
+    private static int barrageHits(ServerPlayer player) {
+        BarrageState state = BARRAGE_STATES.get(player.getUUID());
+        return state == null ? 0 : Math.max(0, state.hits);
+    }
+
+    private static boolean barrageReady(ServerPlayer player) {
+        BarrageState state = BARRAGE_STATES.get(player.getUUID());
+        return state != null && state.chargedCrit;
     }
 
     private static int remainingJuggernautActiveTicks(ServerPlayer player) {
@@ -850,12 +1016,48 @@ public final class CombatPerks {
         }
     }
 
+    public static void resetRuntime(ServerPlayer player) {
+        UUID playerId = player.getUUID();
+        STEEL_COMBOS.remove(playerId);
+        CRITICAL_EYE_COOLDOWNS.remove(playerId);
+        VETERAN_MARKS.entrySet().removeIf(entry -> entry.getValue().targetPlayer.equals(playerId) || entry.getKey().equals(playerId));
+        JUGGERNAUTS.remove(playerId);
+        CONQUEROR_STACKS.remove(playerId);
+        FORTRESS_STACKS.remove(playerId);
+        ALJABA_STACKS.remove(playerId);
+        DEADEYE_STACKS.remove(playerId);
+        BARRAGE_STATES.remove(playerId);
+        ESCARAMUZADOR_STATES.remove(playerId);
+        MAESTRO_COOLDOWNS.remove(playerId);
+        BODYGUARD_COOLDOWNS.remove(playerId);
+        SECOND_WIND_COOLDOWNS.remove(playerId);
+        LAST_STANDS.remove(playerId);
+        RANGED_USE_SPEED.remove(playerId);
+        PROJECTILE_ORIGINS.entrySet().removeIf(entry -> entry.getValue().owner.equals(playerId));
+        MAESTRO_PROJECTILES.clear();
+        ESCARAMUZADOR_PROJECTILES.clear();
+
+        removeModifier(player, Attributes.ATTACK_SPEED, GLOBAL_ATTACK_SPEED_ATTACK_SPEED);
+        removeModifier(player, Attributes.ATTACK_SPEED, STEEL_COMBO_ATTACK_SPEED);
+        removeModifier(player, Attributes.ATTACK_SPEED, BERSERKER_ATTACK_SPEED);
+        removeModifier(player, Attributes.MOVEMENT_SPEED, MURALLA_OFFHAND_MOVE_SPEED);
+        removeModifier(player, Attributes.ATTACK_DAMAGE, MURALLA_OFFHAND_ATTACK_DAMAGE);
+        removeModifier(player, AscendantAttributes.MELEE_RESISTANCE, FORTRESS_MELEE_RESISTANCE);
+        removeModifier(player, AscendantAttributes.GLOBAL_RESISTANCE, LAST_STAND_GLOBAL_RESISTANCE);
+        removeModifier(player, AscendantAttributes.GLOBAL_RESISTANCE, TITAN_AURA_GLOBAL_RESISTANCE);
+        removeModifier(player, AscendantAttributes.RANGED_ATTACK_SPEED, ALJABA_RANGED_ATTACK_SPEED);
+    }
+
     private static void pruneExpired(ServerPlayer player) {
         long now = player.level().getGameTime();
         VETERAN_MARKS.entrySet().removeIf(entry -> entry.getValue().expiresAtTick < now);
         JUGGERNAUTS.entrySet().removeIf(entry -> entry.getValue().cooldownUntilTick < now && entry.getValue().immunityUntilTick < now);
         BODYGUARD_COOLDOWNS.entrySet().removeIf(entry -> entry.getValue() < now);
         SECOND_WIND_COOLDOWNS.entrySet().removeIf(entry -> entry.getValue() < now);
+        MAESTRO_COOLDOWNS.entrySet().removeIf(entry -> entry.getValue() < now);
+        PROJECTILE_ORIGINS.entrySet().removeIf(entry -> entry.getValue().expiresAtTick < now);
+        MAESTRO_PROJECTILES.entrySet().removeIf(entry -> entry.getValue() < now);
+        ESCARAMUZADOR_PROJECTILES.entrySet().removeIf(entry -> entry.getValue() < now);
     }
 
     private static boolean isLowHealth(ServerPlayer player) {
@@ -921,6 +1123,23 @@ public final class CombatPerks {
         private long lastDecayTick;
     }
 
+    private static final class BarrageState {
+        private int hits;
+        private boolean chargedCrit;
+    }
+
+    private static final class EscaramuzadorState {
+        private Vec3 lastPosition;
+        private String dimension;
+        private double distance;
+        private boolean ready;
+
+        private EscaramuzadorState(Vec3 lastPosition, String dimension) {
+            this.lastPosition = lastPosition;
+            this.dimension = dimension;
+        }
+    }
+
     private static final class LastStandState {
         private long activeUntilTick;
         private long cooldownUntilTick;
@@ -928,5 +1147,9 @@ public final class CombatPerks {
 
     private static final class RangedUseSpeed {
         private float extraTicks;
+        private int useTicks;
+    }
+
+    private record ProjectileOrigin(UUID owner, String dimension, Vec3 position, long expiresAtTick) {
     }
 }
