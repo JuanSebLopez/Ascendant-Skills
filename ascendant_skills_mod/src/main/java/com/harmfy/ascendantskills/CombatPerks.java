@@ -195,6 +195,7 @@ public final class CombatPerks {
             return;
         }
         if (event.getRayTraceResult() instanceof EntityHitResult) {
+            PROJECTILE_HIT_ENTITIES.put(projectile.getUUID(), projectile.level().getGameTime() + PROJECTILE_STATE_TICKS);
             return;
         }
         recordRangedMiss(owner, projectile);
@@ -307,11 +308,6 @@ public final class CombatPerks {
         }
 
         RangedUseSpeed state = RANGED_USE_SPEED.computeIfAbsent(player.getUUID(), ignored -> new RangedUseSpeed());
-        if (player instanceof ServerPlayer serverPlayer && event.getItem().getItem() instanceof BowItem && remainingTicks(serverPlayer, MAESTRO_COOLDOWNS.getOrDefault(serverPlayer.getUUID(), 0L)) == 0) {
-            state.useTicks++;
-        } else {
-            state.useTicks = 0;
-        }
         float speed = rangedAttackSpeedMultiplier(player);
         if (speed <= 1.0F) {
             return;
@@ -745,15 +741,20 @@ public final class CombatPerks {
             return;
         }
 
-        if (isChargedCrossbowInHand(player)) {
+        boolean chargingBow = player.isUsingItem() && player.getUseItem().getItem() instanceof BowItem;
+        if (chargingBow) {
             RANGED_USE_SPEED.computeIfAbsent(playerId, ignored -> new RangedUseSpeed()).useTicks++;
             return;
         }
 
-        if (!player.isUsingItem() || !(player.getUseItem().getItem() instanceof BowItem)) {
-            if (state != null) {
-                state.useTicks = 0;
-            }
+        boolean holdingReadyCrossbow = !player.isUsingItem() && isChargedCrossbowInHand(player);
+        if (holdingReadyCrossbow) {
+            RANGED_USE_SPEED.computeIfAbsent(playerId, ignored -> new RangedUseSpeed()).useTicks++;
+            return;
+        }
+
+        if (state != null) {
+            state.useTicks = 0;
         }
     }
 
