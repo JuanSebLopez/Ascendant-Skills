@@ -88,17 +88,20 @@ public final class AscendantClientHud {
         }
         if (state.deadeyeStacks() >= 0) {
             boxes.add(new HudBox("D", stackColor(state.deadeyeStacks(), state.deadeyeMaxStacks()),
-                    state.deadeyeStacks() > 0 ? compact(state.deadeyeStacks()) : ""));
+                    state.deadeyeStacks() > 0 ? Integer.toString(state.deadeyeStacks()) : ""));
         }
         if (state.escaramuzadorProgress() >= 0) {
-            int remaining = Math.max(0, 10 - state.escaramuzadorProgress());
+            int remaining = Math.max(0, 15 - state.escaramuzadorProgress());
             boxes.add(new HudBox("S", state.escaramuzadorReady() ? 0xFF31E6FF : 0xFF37404A,
                     state.escaramuzadorReady() ? "" : Integer.toString(Math.min(9, remaining))));
         }
         if (state.maestroCooldownTicks() >= 0) {
             boolean ready = state.maestroCooldownTicks() == 0;
-            boxes.add(new HudBox("M", ready ? 0xFF31E6FF : 0xFF37404A,
-                    ready ? "" : seconds(state.maestroCooldownTicks())));
+            int color = ready ? (state.maestroChargeSeconds() >= 5 ? 0xFF31E6FF : 0xFFFF7A36) : 0xFF37404A;
+            String value = ready
+                    ? (state.maestroChargeSeconds() > 0 ? Integer.toString(state.maestroChargeSeconds()) : "")
+                    : seconds(state.maestroCooldownTicks());
+            boxes.add(new HudBox("M", color, value));
         }
         if (state.barrageHits() >= 0) {
             boxes.add(new HudBox("R", state.barrageReady() ? 0xFF31E6FF : stackColor(state.barrageHits(), state.barrageRequiredHits()),
@@ -113,7 +116,8 @@ public final class AscendantClientHud {
         graphics.fill(x + 1, y + 1, x + BOX_SIZE - 1, y + BOX_SIZE - 1, 0xCC17171C);
         graphics.drawString(minecraft.font, box.label(), x + 3, y + 2, 0xFFFFFFFF, false);
         if (!box.value().isEmpty()) {
-            graphics.drawString(minecraft.font, box.value(), x + 7, y + 7, 0xFFFFFFFF, false);
+            int valueX = Math.max(x + 1, x + BOX_SIZE - minecraft.font.width(box.value()));
+            graphics.drawString(minecraft.font, box.value(), valueX, y + 7, 0xFFFFFFFF, false);
         }
     }
 
@@ -127,10 +131,6 @@ public final class AscendantClientHud {
     private static String seconds(int ticks) {
         int seconds = Math.max(1, (ticks + 19) / 20);
         return seconds > 9 ? "9" : Integer.toString(seconds);
-    }
-
-    private static String compact(int value) {
-        return value > 9 ? "9" : Integer.toString(value);
     }
 
     private record HudBox(String label, int color, String value) {

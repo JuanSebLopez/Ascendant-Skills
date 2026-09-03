@@ -30,10 +30,12 @@ public final class AscendantSkills {
         NeoForge.EVENT_BUS.addListener(CombatPerks::onLivingDeath);
         NeoForge.EVENT_BUS.addListener(CombatPerks::onLivingKnockBack);
         NeoForge.EVENT_BUS.addListener(CombatPerks::onEntityJoinLevel);
+        NeoForge.EVENT_BUS.addListener(CombatPerks::onProjectileImpact);
         NeoForge.EVENT_BUS.addListener(CombatPerks::onLivingUseItemTick);
         NeoForge.EVENT_BUS.addListener(CombatPerks::onArrowLoose);
         NeoForge.EVENT_BUS.addListener(CombatPerks::onPlayerTick);
         NeoForge.EVENT_BUS.addListener(AscendantPotions::registerBrewingRecipes);
+        NeoForge.EVENT_BUS.addListener(AscendantPotions::onPotionBrewPost);
         NeoForge.EVENT_BUS.addListener(AscendantPotions::onUseItemFinish);
         NeoForge.EVENT_BUS.addListener(CriticalControl::onCriticalHit);
         NeoForge.EVENT_BUS.addListener(CriticalControl::onEntityJoinLevel);

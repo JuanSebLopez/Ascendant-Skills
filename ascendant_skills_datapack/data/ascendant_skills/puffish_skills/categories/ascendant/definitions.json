@@ -1402,7 +1402,7 @@
           "color": "aqua"
         },
         {
-          "text": "Tiro lejano: los proyectiles ganan dano por distancia desde 10 bloques hasta +20% a 30 bloques.",
+          "text": "Tiro lejano: los proyectiles ganan daño desde más de 15 bloques hasta +40% a 40 bloques.",
           "color": "gray"
         }
       ]
@@ -1656,7 +1656,7 @@
           "color": "aqua"
         },
         {
-          "text": "Escaramuza: al moverte 10 bloques, el siguiente disparo gana +10% daño.",
+          "text": "Escaramuza: al moverte 15 bloques, el siguiente disparo gana +15% daño.",
           "color": "gray"
         }
       ]
@@ -1738,7 +1738,7 @@
           "color": "aqua"
         },
         {
-          "text": "Deadeye: cada critico aumenta +1% crit chance del siguiente disparo, max 25 cargas; pierde 1 carga en golpe normal o tras 20 seg sin critico.",
+          "text": "Deadeye: cada critico aumenta +1% crit chance del siguiente disparo, max 25 cargas; pierde 1 carga si el disparo no acierta o tras 20 seg sin critico.",
           "color": "gray"
         }
       ]

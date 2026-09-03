@@ -21,6 +21,7 @@ public record PerkHudPayload(
         int escaramuzadorProgress,
         boolean escaramuzadorReady,
         int maestroCooldownTicks,
+        int maestroChargeSeconds,
         int barrageHits,
         int barrageRequiredHits,
         boolean barrageReady
@@ -52,6 +53,7 @@ public record PerkHudPayload(
                 buffer.readVarInt(),
                 buffer.readVarInt(),
                 buffer.readVarInt(),
+                buffer.readVarInt(),
                 buffer.readBoolean()
         );
     }
@@ -72,6 +74,7 @@ public record PerkHudPayload(
         buffer.writeVarInt(payload.escaramuzadorProgress());
         buffer.writeBoolean(payload.escaramuzadorReady());
         buffer.writeVarInt(payload.maestroCooldownTicks());
+        buffer.writeVarInt(payload.maestroChargeSeconds());
         buffer.writeVarInt(payload.barrageHits());
         buffer.writeVarInt(payload.barrageRequiredHits());
         buffer.writeBoolean(payload.barrageReady());

@@ -1,8 +1,6 @@
 {
   "modmenu.nameTranslation.ascendant_skills": "Ascendant Skills",
   "item.minecraft.potion.effect.forgetfulness_elixir": "Elixir del Olvido",
-  "item.minecraft.splash_potion.effect.forgetfulness_elixir": "Splash Elixir del Olvido",
-  "item.minecraft.lingering_potion.effect.forgetfulness_elixir": "Lingering Elixir del Olvido",
   "effect.ascendant_skills.forgetfulness": "Olvido",
   "attribute.ascendant_skills.global_attack_speed": "Global Attack Speed",
   "attribute.ascendant_skills.global_damage": "Global Damage",

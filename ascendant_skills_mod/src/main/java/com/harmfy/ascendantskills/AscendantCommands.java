@@ -36,12 +36,6 @@ public final class AscendantCommands {
     }
 
     public static void register(RegisterCommandsEvent event) {
-        event.getDispatcher().register(Commands.literal("ascendant")
-                .requires(source -> source.hasPermission(2))
-                .then(Commands.literal("reset")
-                        .then(Commands.argument("player", EntityArgument.player())
-                                .executes(ctx -> resetPlayer(ctx.getSource(), EntityArgument.getPlayer(ctx, "player"))))));
-
         event.getDispatcher().register(Commands.literal("ascendant_skills")
                 .then(Commands.literal("party")
                         .then(Commands.literal("invite")

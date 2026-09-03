@@ -20,11 +20,13 @@ import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import com.harmfy.ascendantskills.mixin.AbstractArrowAccessor;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.neoforged.neoforge.common.damagesource.DamageContainer;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
+import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent;
@@ -64,7 +66,7 @@ public final class CombatPerks {
     private static final int MAESTRO_CHARGE_TICKS = 5 * TICKS_PER_SECOND;
     private static final int MAESTRO_COOLDOWN_TICKS = 10 * TICKS_PER_SECOND;
     private static final int PROJECTILE_STATE_TICKS = 30 * TICKS_PER_SECOND;
-    private static final double ESCARAMUZADOR_REQUIRED_DISTANCE = 10.0D;
+    private static final double ESCARAMUZADOR_REQUIRED_DISTANCE = 15.0D;
     private static final double WARLORD_AURA_RADIUS = 10.0D;
     private static final double BODYGUARD_RADIUS = 10.0D;
     private static final double PROVOCADOR_RADIUS = 5.0D;
@@ -78,6 +80,7 @@ public final class CombatPerks {
     private static final ResourceLocation LAST_STAND_GLOBAL_RESISTANCE = id("last_stand_global_resistance");
     private static final ResourceLocation TITAN_AURA_GLOBAL_RESISTANCE = id("titan_aura_global_resistance");
     private static final ResourceLocation ALJABA_RANGED_ATTACK_SPEED = id("aljaba_ranged_attack_speed");
+    private static final ResourceLocation DEADEYE_RANGED_CRIT_CHANCE = id("deadeye_ranged_crit_chance");
     private static final Map<UUID, SteelCombo> STEEL_COMBOS = new HashMap<>();
     private static final Map<UUID, Long> CRITICAL_EYE_COOLDOWNS = new HashMap<>();
     private static final Map<UUID, VeteranMark> VETERAN_MARKS = new HashMap<>();
@@ -96,6 +99,7 @@ public final class CombatPerks {
     private static final Map<UUID, ProjectileOrigin> PROJECTILE_ORIGINS = new HashMap<>();
     private static final Map<UUID, Long> MAESTRO_PROJECTILES = new HashMap<>();
     private static final Map<UUID, Long> ESCARAMUZADOR_PROJECTILES = new HashMap<>();
+    private static final Map<UUID, Long> BARRAGE_CONSUMED_PROJECTILES = new HashMap<>();
 
     private CombatPerks() {
     }
@@ -119,7 +123,7 @@ public final class CombatPerks {
                     multiplier *= rangedCritMultiplier(attacker);
                     attacker.crit(event.getEntity());
                 }
-                recordRangedHit(attacker, rangedCrit);
+                recordRangedHit(attacker, rangedCrit, source.getDirectEntity());
             }
         }
 
@@ -179,6 +183,17 @@ public final class CombatPerks {
             return true;
         }
         return !"cataclysm".equals(entityTypeId.getNamespace()) && !arrow.getClass().getName().contains("cataclysm");
+    }
+
+    public static void onProjectileImpact(ProjectileImpactEvent event) {
+        Projectile projectile = event.getProjectile();
+        if (projectile.level().isClientSide || !(projectile.getOwner() instanceof ServerPlayer owner)) {
+            return;
+        }
+        if (event.getRayTraceResult() instanceof EntityHitResult) {
+            return;
+        }
+        recordRangedMiss(owner);
     }
 
     public static void onLivingDamagePost(LivingDamageEvent.Post event) {
@@ -365,8 +380,8 @@ public final class CombatPerks {
             multiplier *= rangedDamageMultiplier(attacker);
             if (has(attacker, "francotirador")) {
                 double distance = rangedDistance(attacker, target, directEntity);
-                if (distance >= 10.0D) {
-                    float bonus = (float) Math.min(0.20D, (distance - 10.0D) / 20.0D * 0.20D);
+                if (distance > 15.0D) {
+                    float bonus = (float) Math.min(0.40D, (distance - 15.0D) * 0.016D);
                     multiplier *= 1.0F + bonus;
                 }
             }
@@ -374,7 +389,7 @@ public final class CombatPerks {
                 multiplier *= 1.30F;
             }
             if (isMarkedProjectile(directEntity, ESCARAMUZADOR_PROJECTILES)) {
-                multiplier *= 1.10F;
+                multiplier *= 1.15F;
             }
             if (tauntedTargetDamageBonus(attacker, target)) {
                 multiplier *= 1.05F;
@@ -514,6 +529,9 @@ public final class CombatPerks {
             if (barrage != null && barrage.chargedCrit) {
                 barrage.chargedCrit = false;
                 barrage.hits = 0;
+                if (directEntity != null) {
+                    BARRAGE_CONSUMED_PROJECTILES.put(directEntity.getUUID(), player.level().getGameTime() + PROJECTILE_STATE_TICKS);
+                }
                 return true;
             }
         }
@@ -526,14 +544,14 @@ public final class CombatPerks {
     }
 
     private static float rangedCritChance(ServerPlayer player) {
-        return (float) attributeValue(player, AscendantAttributes.RANGED_CRIT_CHANCE) + deadeyeStacks(player) * 0.01F;
+        return (float) attributeValue(player, AscendantAttributes.RANGED_CRIT_CHANCE);
     }
 
     private static float rangedCritMultiplier(ServerPlayer player) {
         return BASE_CRIT_MULTIPLIER + (float) attributeValue(player, AscendantAttributes.RANGED_CRIT_DAMAGE);
     }
 
-    private static void recordRangedHit(ServerPlayer player, boolean crit) {
+    private static void recordRangedHit(ServerPlayer player, boolean crit, Entity directEntity) {
         long now = player.level().getGameTime();
         if (has(player, "deadeye")) {
             DeadeyeState state = DEADEYE_STACKS.computeIfAbsent(player.getUUID(), ignored -> new DeadeyeState());
@@ -545,8 +563,12 @@ public final class CombatPerks {
                 state.stacks--;
                 state.lastDecayTick = now;
             }
+            updateDeadeyeModifier(player);
         }
         if (has(player, "barrage")) {
+            if (directEntity != null && BARRAGE_CONSUMED_PROJECTILES.remove(directEntity.getUUID()) != null) {
+                return;
+            }
             BarrageState barrage = BARRAGE_STATES.computeIfAbsent(player.getUUID(), ignored -> new BarrageState());
             if (!barrage.chargedCrit) {
                 barrage.hits++;
@@ -554,6 +576,24 @@ public final class CombatPerks {
                     barrage.hits = 0;
                     barrage.chargedCrit = true;
                 }
+            }
+        }
+    }
+
+    private static void recordRangedMiss(ServerPlayer player) {
+        if (has(player, "deadeye")) {
+            DeadeyeState state = DEADEYE_STACKS.get(player.getUUID());
+            if (state != null && state.stacks > 0) {
+                state.stacks--;
+                state.lastDecayTick = player.level().getGameTime();
+                updateDeadeyeModifier(player);
+            }
+        }
+        if (has(player, "barrage")) {
+            BarrageState barrage = BARRAGE_STATES.get(player.getUUID());
+            if (barrage != null) {
+                barrage.hits = 0;
+                barrage.chargedCrit = false;
             }
         }
     }
@@ -803,10 +843,12 @@ public final class CombatPerks {
     private static void updateDeadeyeStacks(ServerPlayer player) {
         if (!has(player, "deadeye")) {
             DEADEYE_STACKS.remove(player.getUUID());
+            updateDeadeyeModifier(player);
             return;
         }
         DeadeyeState state = DEADEYE_STACKS.get(player.getUUID());
         if (state == null || state.stacks <= 0) {
+            updateDeadeyeModifier(player);
             return;
         }
         long now = player.level().getGameTime();
@@ -816,7 +858,19 @@ public final class CombatPerks {
         }
         if (state.stacks <= 0) {
             DEADEYE_STACKS.remove(player.getUUID());
+            updateDeadeyeModifier(player);
+        } else {
+            updateDeadeyeModifier(player);
         }
+    }
+
+    private static void updateDeadeyeModifier(ServerPlayer player) {
+        int stacks = deadeyeStacks(player);
+        if (!has(player, "deadeye") || stacks <= 0) {
+            removeModifier(player, AscendantAttributes.RANGED_CRIT_CHANCE, DEADEYE_RANGED_CRIT_CHANCE);
+            return;
+        }
+        applyModifier(player, AscendantAttributes.RANGED_CRIT_CHANCE, DEADEYE_RANGED_CRIT_CHANCE, stacks * 0.01D, AttributeModifier.Operation.ADD_VALUE);
     }
 
     private static void updateBarrage(ServerPlayer player) {
@@ -954,6 +1008,7 @@ public final class CombatPerks {
                 has(player, "escaramuzador") ? escaramuzadorProgress(player) : -1,
                 has(player, "escaramuzador") && escaramuzadorReady(player),
                 has(player, "maestro_tirador") ? remainingTicks(player, MAESTRO_COOLDOWNS.getOrDefault(player.getUUID(), 0L)) : -1,
+                has(player, "maestro_tirador") ? maestroChargeSeconds(player) : 0,
                 has(player, "barrage") ? barrageHits(player) : -1,
                 BARRAGE_REQUIRED_HITS,
                 has(player, "barrage") && barrageReady(player)
@@ -998,6 +1053,17 @@ public final class CombatPerks {
     private static boolean barrageReady(ServerPlayer player) {
         BarrageState state = BARRAGE_STATES.get(player.getUUID());
         return state != null && state.chargedCrit;
+    }
+
+    private static int maestroChargeSeconds(ServerPlayer player) {
+        if (!player.isUsingItem() || !isRangedUseItem(player.getUseItem())) {
+            return 0;
+        }
+        RangedUseSpeed state = RANGED_USE_SPEED.get(player.getUUID());
+        if (state == null || state.useTicks <= 0) {
+            return 0;
+        }
+        return Math.min(5, (state.useTicks + TICKS_PER_SECOND - 1) / TICKS_PER_SECOND);
     }
 
     private static int remainingJuggernautActiveTicks(ServerPlayer player) {
@@ -1049,6 +1115,7 @@ public final class CombatPerks {
         PROJECTILE_ORIGINS.entrySet().removeIf(entry -> entry.getValue().owner.equals(playerId));
         MAESTRO_PROJECTILES.clear();
         ESCARAMUZADOR_PROJECTILES.clear();
+        BARRAGE_CONSUMED_PROJECTILES.clear();
 
         removeModifier(player, Attributes.ATTACK_SPEED, GLOBAL_ATTACK_SPEED_ATTACK_SPEED);
         removeModifier(player, Attributes.ATTACK_SPEED, STEEL_COMBO_ATTACK_SPEED);
@@ -1059,6 +1126,7 @@ public final class CombatPerks {
         removeModifier(player, AscendantAttributes.GLOBAL_RESISTANCE, LAST_STAND_GLOBAL_RESISTANCE);
         removeModifier(player, AscendantAttributes.GLOBAL_RESISTANCE, TITAN_AURA_GLOBAL_RESISTANCE);
         removeModifier(player, AscendantAttributes.RANGED_ATTACK_SPEED, ALJABA_RANGED_ATTACK_SPEED);
+        removeModifier(player, AscendantAttributes.RANGED_CRIT_CHANCE, DEADEYE_RANGED_CRIT_CHANCE);
     }
 
     private static void pruneExpired(ServerPlayer player) {
@@ -1071,6 +1139,7 @@ public final class CombatPerks {
         PROJECTILE_ORIGINS.entrySet().removeIf(entry -> entry.getValue().expiresAtTick < now);
         MAESTRO_PROJECTILES.entrySet().removeIf(entry -> entry.getValue() < now);
         ESCARAMUZADOR_PROJECTILES.entrySet().removeIf(entry -> entry.getValue() < now);
+        BARRAGE_CONSUMED_PROJECTILES.entrySet().removeIf(entry -> entry.getValue() < now);
     }
 
     private static boolean isLowHealth(ServerPlayer player) {
