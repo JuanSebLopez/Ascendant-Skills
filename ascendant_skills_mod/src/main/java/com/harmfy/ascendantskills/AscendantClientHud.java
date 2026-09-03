@@ -16,7 +16,7 @@ import java.util.List;
 @EventBusSubscriber(modid = AscendantSkills.MOD_ID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
 public final class AscendantClientHud {
     private static final ResourceLocation LAYER_ID = ResourceLocation.fromNamespaceAndPath(AscendantSkills.MOD_ID, "perk_hud");
-    private static final int BOX_SIZE = 12;
+    private static final int BOX_SIZE = 16;
     private static final int BOX_GAP = 3;
     private static final long STALE_AFTER_MILLIS = 2_000L;
     private static PerkHudPayload payload;
@@ -93,7 +93,7 @@ public final class AscendantClientHud {
         if (state.escaramuzadorProgress() >= 0) {
             int remaining = Math.max(0, 15 - state.escaramuzadorProgress());
             boxes.add(new HudBox("S", state.escaramuzadorReady() ? 0xFF31E6FF : 0xFF37404A,
-                    state.escaramuzadorReady() ? "" : Integer.toString(Math.min(9, remaining))));
+                    state.escaramuzadorReady() ? "" : Integer.toString(remaining)));
         }
         if (state.maestroCooldownTicks() >= 0) {
             boolean ready = state.maestroCooldownTicks() == 0;
@@ -130,7 +130,7 @@ public final class AscendantClientHud {
 
     private static String seconds(int ticks) {
         int seconds = Math.max(1, (ticks + 19) / 20);
-        return seconds > 9 ? "9" : Integer.toString(seconds);
+        return Integer.toString(seconds);
     }
 
     private record HudBox(String label, int color, String value) {
