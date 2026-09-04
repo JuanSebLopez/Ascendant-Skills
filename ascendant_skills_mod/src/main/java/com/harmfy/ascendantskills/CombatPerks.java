@@ -33,6 +33,7 @@ import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent;
+import net.neoforged.neoforge.event.entity.living.LivingHealEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingKnockBackEvent;
 import net.neoforged.neoforge.event.entity.player.ArrowLooseEvent;
@@ -118,6 +119,7 @@ public final class CombatPerks {
     private static final Map<UUID, Long> PROJECTILE_HIT_ENTITIES = new HashMap<>();
     private static final Map<UUID, Long> PROCESSED_RANGED_PROJECTILES = new HashMap<>();
     private static final Map<UUID, Float> DAMAGE_DEBUG_PRE_HEALTH = new HashMap<>();
+    private static final Map<UUID, String> ASCENDANT_HEAL_REASONS = new HashMap<>();
     private static final Set<UUID> DAMAGE_DEBUG_PLAYERS = new HashSet<>();
 
     private CombatPerks() {
@@ -281,7 +283,7 @@ public final class CombatPerks {
 
             if (has(attacker, "berserker")) {
                 float lifesteal = isLowHealth(attacker) ? 0.11F : 0.05F;
-                attacker.heal(event.getNewDamage() * lifesteal);
+                heal(attacker, event.getNewDamage() * lifesteal, "berserker_lifesteal");
             }
         }
 
@@ -323,6 +325,29 @@ public final class CombatPerks {
 
         if (has(player, "coloso")) {
             event.setStrength(event.getStrength() * 0.4F);
+        }
+    }
+
+    public static void onLivingHeal(LivingHealEvent event) {
+        if (!(event.getEntity() instanceof ServerPlayer player)) {
+            return;
+        }
+
+        float amount = event.getAmount();
+        if (!Float.isFinite(amount) || amount < 0.0F) {
+            event.setAmount(0.0F);
+            amount = 0.0F;
+        }
+
+        if (isDamageDebugEnabled(player)) {
+            String reason = ASCENDANT_HEAL_REASONS.getOrDefault(player.getUUID(), "unknown/vanilla/other_mod");
+            player.sendSystemMessage(Component.literal(String.format(Locale.ROOT,
+                    "[AS Heal] reason=%s amount=%.3f hp=%.2f/%s",
+                    reason,
+                    amount,
+                    player.getHealth(),
+                    format(player.getMaxHealth())
+            )));
         }
     }
 
@@ -1151,7 +1176,7 @@ public final class CombatPerks {
         }
         int intervalTicks = Math.max(TICKS_PER_SECOND, (int) Math.round(attributeValue(player, AscendantAttributes.PASSIVE_REGEN_INTERVAL) * TICKS_PER_SECOND));
         if (player.tickCount % intervalTicks == 0) {
-            player.heal((float) heal);
+            heal(player, (float) heal, "passive_regen");
         }
     }
 
@@ -1413,6 +1438,18 @@ public final class CombatPerks {
 
     private static boolean has(ServerPlayer player, String perkId) {
         return AscendantData.get(player.server).hasPerk(player.getUUID(), AscendantSkills.MOD_ID + ":" + perkId);
+    }
+
+    private static void heal(ServerPlayer player, float amount, String reason) {
+        if (amount <= 0.0F || !Float.isFinite(amount)) {
+            return;
+        }
+        ASCENDANT_HEAL_REASONS.put(player.getUUID(), reason);
+        try {
+            player.heal(amount);
+        } finally {
+            ASCENDANT_HEAL_REASONS.remove(player.getUUID());
+        }
     }
 
     public static boolean setDamageDebug(ServerPlayer player, boolean enabled) {
