@@ -1,6 +1,7 @@
 package com.harmfy.ascendantskills;
 
 import com.mojang.brigadier.arguments.DoubleArgumentType;
+import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
@@ -139,7 +140,20 @@ public final class AscendantCommands {
                         .then(Commands.literal("reload")
                                 .executes(ctx -> configReload(ctx.getSource())))
                         .then(Commands.literal("path")
-                                .executes(ctx -> configPath(ctx.getSource())))));
+                                .executes(ctx -> configPath(ctx.getSource()))))
+                .then(Commands.literal("debug")
+                        .requires(source -> source.hasPermission(2))
+                        .then(Commands.literal("damage")
+                                .then(Commands.argument("player", EntityArgument.player())
+                                        .then(Commands.argument("enabled", BoolArgumentType.bool())
+                                                .executes(ctx -> damageDebug(
+                                                        ctx.getSource(),
+                                                        EntityArgument.getPlayer(ctx, "player"),
+                                                        BoolArgumentType.getBool(ctx, "enabled"))))
+                                        .then(Commands.literal("status")
+                                                .executes(ctx -> damageDebugStatus(
+                                                        ctx.getSource(),
+                                                        EntityArgument.getPlayer(ctx, "player"))))))));
     }
 
     private static int partyInvite(CommandSourceStack source, ServerPlayer target) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
@@ -295,6 +309,17 @@ public final class AscendantCommands {
 
     private static int configPath(CommandSourceStack source) {
         send(source, "Config: " + AscendantConfig.configDirForDisplay(), true);
+        return 1;
+    }
+
+    private static int damageDebug(CommandSourceStack source, ServerPlayer target, boolean enabled) {
+        CombatPerks.setDamageDebug(target, enabled);
+        send(source, "Debug de dano " + (enabled ? "activado" : "desactivado") + " para " + target.getName().getString() + ".", true);
+        return 1;
+    }
+
+    private static int damageDebugStatus(CommandSourceStack source, ServerPlayer target) {
+        send(source, "Debug de dano para " + target.getName().getString() + ": " + (CombatPerks.isDamageDebugEnabled(target) ? "activo" : "inactivo") + ".", true);
         return 1;
     }
 

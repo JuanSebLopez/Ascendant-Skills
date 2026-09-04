@@ -1,6 +1,7 @@
 package com.harmfy.ascendantskills;
 
 import net.minecraft.core.Holder;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.DamageTypeTags;
@@ -39,7 +40,10 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 public final class CombatPerks {
@@ -113,15 +117,19 @@ public final class CombatPerks {
     private static final Map<UUID, Boolean> PROJECTILE_CRITS = new HashMap<>();
     private static final Map<UUID, Long> PROJECTILE_HIT_ENTITIES = new HashMap<>();
     private static final Map<UUID, Long> PROCESSED_RANGED_PROJECTILES = new HashMap<>();
+    private static final Map<UUID, Float> DAMAGE_DEBUG_PRE_HEALTH = new HashMap<>();
+    private static final Set<UUID> DAMAGE_DEBUG_PLAYERS = new HashSet<>();
 
     private CombatPerks() {
     }
 
     public static void onLivingIncomingDamage(LivingIncomingDamageEvent event) {
-        if (event.getAmount() <= 0.0F) {
-            if (event.getAmount() < 0.0F) {
-                event.setAmount(0.0F);
+        float startingAmount = event.getAmount();
+        if (!Float.isFinite(startingAmount) || startingAmount <= 0.0F) {
+            if (event.getEntity() instanceof ServerPlayer defender && isDamageDebugEnabled(defender)) {
+                debugDamage(defender, "incoming/skip", event.getSource(), event.getOriginalAmount(), startingAmount, startingAmount, false, false, false, "amount <= 0 or invalid");
             }
+            event.setAmount(0.0F);
             return;
         }
         DamageSource source = event.getSource();
@@ -157,9 +165,30 @@ public final class CombatPerks {
         float newAmount = amount * multiplier;
         if (event.getEntity() instanceof ServerPlayer defender) {
             newAmount = applySecondWind(defender, newAmount);
+            if (isDamageDebugEnabled(defender)) {
+                debugDamage(defender, "incoming", source, event.getOriginalAmount(), event.getAmount(), newAmount, melee, projectile, explosion, "before armor/shield reductions");
+            }
         }
         if (newAmount != event.getAmount()) {
             event.setAmount(Math.max(0.0F, newAmount));
+        }
+    }
+
+    public static void onLivingDamagePre(LivingDamageEvent.Pre event) {
+        if (!(event.getEntity() instanceof ServerPlayer defender)) {
+            return;
+        }
+        float damage = event.getNewDamage();
+        boolean invalid = !Float.isFinite(damage) || damage < 0.0F;
+        if (isDamageDebugEnabled(defender)) {
+            DAMAGE_DEBUG_PRE_HEALTH.put(defender.getUUID(), defender.getHealth());
+            DamageSource source = event.getSource();
+            debugDamage(defender, "pre", source, event.getOriginalDamage(), event.getOriginalDamage(), damage,
+                    isMelee(source), isProjectile(source), source.is(DamageTypeTags.IS_EXPLOSION),
+                    invalid ? "clamped final damage to 0" : "after armor/shield reductions");
+        }
+        if (invalid) {
+            event.setNewDamage(0.0F);
         }
     }
 
@@ -222,6 +251,10 @@ public final class CombatPerks {
         DamageSource source = event.getSource();
         boolean melee = isMelee(source);
         boolean projectile = isProjectile(source);
+
+        if (event.getEntity() instanceof ServerPlayer defender && isDamageDebugEnabled(defender)) {
+            debugDamagePost(defender, event);
+        }
 
         if (event.getEntity() instanceof ServerPlayer defender && melee && event.getNewDamage() > 0.0F && source.getEntity() instanceof LivingEntity attacker && !(attacker instanceof Player)) {
             addFortressStack(defender);
@@ -1380,6 +1413,62 @@ public final class CombatPerks {
 
     private static boolean has(ServerPlayer player, String perkId) {
         return AscendantData.get(player.server).hasPerk(player.getUUID(), AscendantSkills.MOD_ID + ":" + perkId);
+    }
+
+    public static boolean setDamageDebug(ServerPlayer player, boolean enabled) {
+        return enabled ? DAMAGE_DEBUG_PLAYERS.add(player.getUUID()) : DAMAGE_DEBUG_PLAYERS.remove(player.getUUID());
+    }
+
+    public static boolean isDamageDebugEnabled(ServerPlayer player) {
+        return DAMAGE_DEBUG_PLAYERS.contains(player.getUUID());
+    }
+
+    private static void debugDamage(ServerPlayer player, String stage, DamageSource source, float original, float input, float output,
+                                    boolean melee, boolean projectile, boolean explosion, String note) {
+        player.sendSystemMessage(Component.literal(String.format(Locale.ROOT,
+                "[AS Damage] %s src=%s in=%.3f original=%.3f out=%.3f flags=%s/%s/%s armor=%.2f tough=%.2f gr=%.3f mr=%.3f pr=%.3f er=%.3f hp=%.2f/%s %s",
+                stage,
+                source.getMsgId(),
+                input,
+                original,
+                output,
+                melee ? "melee" : "-",
+                projectile ? "projectile" : "-",
+                explosion ? "explosion" : "-",
+                attributeValue(player, Attributes.ARMOR),
+                attributeValue(player, Attributes.ARMOR_TOUGHNESS),
+                attributeValue(player, AscendantAttributes.GLOBAL_RESISTANCE),
+                attributeValue(player, AscendantAttributes.MELEE_RESISTANCE),
+                attributeValue(player, AscendantAttributes.PROJECTILE_RESISTANCE),
+                attributeValue(player, AscendantAttributes.EXPLOSION_RESISTANCE),
+                player.getHealth(),
+                format(player.getMaxHealth()),
+                note
+        )));
+    }
+
+    private static void debugDamagePost(ServerPlayer player, LivingDamageEvent.Post event) {
+        Float preHealth = DAMAGE_DEBUG_PRE_HEALTH.remove(player.getUUID());
+        float healthDelta = preHealth == null ? 0.0F : player.getHealth() - preHealth;
+        player.sendSystemMessage(Component.literal(String.format(Locale.ROOT,
+                "[AS Damage] post src=%s original=%.3f final=%.3f blocked=%.3f shield=%.3f armorRed=%.3f enchRed=%.3f effectsRed=%.3f absorption=%.3f hp=%.2f/%s hpDelta=%.3f",
+                event.getSource().getMsgId(),
+                event.getOriginalDamage(),
+                event.getNewDamage(),
+                event.getBlockedDamage(),
+                event.getShieldDamage(),
+                event.getReduction(DamageContainer.Reduction.ARMOR),
+                event.getReduction(DamageContainer.Reduction.ENCHANTMENTS),
+                event.getReduction(DamageContainer.Reduction.MOB_EFFECTS),
+                event.getReduction(DamageContainer.Reduction.ABSORPTION),
+                player.getHealth(),
+                format(player.getMaxHealth()),
+                healthDelta
+        )));
+    }
+
+    private static String format(float value) {
+        return String.format(Locale.ROOT, "%.2f", value);
     }
 
     private static double clamp(double value, double min, double max) {

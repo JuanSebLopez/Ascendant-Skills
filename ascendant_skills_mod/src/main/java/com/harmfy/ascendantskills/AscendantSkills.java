@@ -27,6 +27,7 @@ public final class AscendantSkills {
         NeoForge.EVENT_BUS.addListener(BossTracker::onLivingDamage);
         NeoForge.EVENT_BUS.addListener(BossTracker::onLivingDeath);
         NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, CombatPerks::onLivingIncomingDamage);
+        NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, CombatPerks::onLivingDamagePre);
         NeoForge.EVENT_BUS.addListener(CombatPerks::onLivingDamagePost);
         NeoForge.EVENT_BUS.addListener(CombatPerks::onLivingDeath);
         NeoForge.EVENT_BUS.addListener(CombatPerks::onLivingKnockBack);
