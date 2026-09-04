@@ -119,6 +119,8 @@ public final class CombatPerks {
     private static final Map<UUID, Long> PROJECTILE_HIT_ENTITIES = new HashMap<>();
     private static final Map<UUID, Long> PROCESSED_RANGED_PROJECTILES = new HashMap<>();
     private static final Map<UUID, Float> DAMAGE_DEBUG_PRE_HEALTH = new HashMap<>();
+    private static final Map<UUID, DebugHealthState> DAMAGE_DEBUG_HEALTH = new HashMap<>();
+    private static final Map<UUID, HealTrace> DAMAGE_DEBUG_LAST_HEAL = new HashMap<>();
     private static final Map<UUID, String> ASCENDANT_HEAL_REASONS = new HashMap<>();
     private static final Set<UUID> DAMAGE_DEBUG_PLAYERS = new HashSet<>();
 
@@ -341,6 +343,7 @@ public final class CombatPerks {
 
         if (isDamageDebugEnabled(player)) {
             String reason = ASCENDANT_HEAL_REASONS.getOrDefault(player.getUUID(), "unknown/vanilla/other_mod");
+            DAMAGE_DEBUG_LAST_HEAL.put(player.getUUID(), new HealTrace(player.level().getGameTime(), amount, reason));
             player.sendSystemMessage(Component.literal(String.format(Locale.ROOT,
                     "[AS Heal] reason=%s amount=%.3f hp=%.2f/%s",
                     reason,
@@ -376,6 +379,7 @@ public final class CombatPerks {
             RANGED_USE_SPEED.remove(player.getUUID());
         }
         pruneExpired(player);
+        traceDebugHealth(player);
     }
 
     public static void onLivingUseItemTick(LivingEntityUseItemEvent.Tick event) {
@@ -1453,7 +1457,15 @@ public final class CombatPerks {
     }
 
     public static boolean setDamageDebug(ServerPlayer player, boolean enabled) {
-        return enabled ? DAMAGE_DEBUG_PLAYERS.add(player.getUUID()) : DAMAGE_DEBUG_PLAYERS.remove(player.getUUID());
+        UUID playerId = player.getUUID();
+        if (enabled) {
+            DAMAGE_DEBUG_HEALTH.put(playerId, new DebugHealthState(player.getHealth(), player.getAbsorptionAmount()));
+            return DAMAGE_DEBUG_PLAYERS.add(playerId);
+        }
+        DAMAGE_DEBUG_HEALTH.remove(playerId);
+        DAMAGE_DEBUG_LAST_HEAL.remove(playerId);
+        DAMAGE_DEBUG_PRE_HEALTH.remove(playerId);
+        return DAMAGE_DEBUG_PLAYERS.remove(playerId);
     }
 
     public static boolean isDamageDebugEnabled(ServerPlayer player) {
@@ -1504,6 +1516,44 @@ public final class CombatPerks {
         )));
     }
 
+    private static void traceDebugHealth(ServerPlayer player) {
+        UUID playerId = player.getUUID();
+        if (!isDamageDebugEnabled(player)) {
+            DAMAGE_DEBUG_HEALTH.remove(playerId);
+            DAMAGE_DEBUG_LAST_HEAL.remove(playerId);
+            return;
+        }
+
+        float health = player.getHealth();
+        float absorption = player.getAbsorptionAmount();
+        DebugHealthState previous = DAMAGE_DEBUG_HEALTH.put(playerId, new DebugHealthState(health, absorption));
+        if (previous == null) {
+            return;
+        }
+
+        float healthDelta = health - previous.health;
+        float absorptionDelta = absorption - previous.absorption;
+        if (healthDelta <= 0.0001F && absorptionDelta <= 0.0001F) {
+            return;
+        }
+
+        long now = player.level().getGameTime();
+        HealTrace healTrace = DAMAGE_DEBUG_LAST_HEAL.get(playerId);
+        String healInfo = healTrace != null && now - healTrace.tick <= 1L
+                ? String.format(Locale.ROOT, "healEvent=%s/%.3f", healTrace.reason, healTrace.amount)
+                : "healEvent=none";
+        player.sendSystemMessage(Component.literal(String.format(Locale.ROOT,
+                "[AS Health] tick hp %.2f->%.2f delta=%.3f absorption %.2f->%.2f delta=%.3f %s",
+                previous.health,
+                health,
+                healthDelta,
+                previous.absorption,
+                absorption,
+                absorptionDelta,
+                healInfo
+        )));
+    }
+
     private static String format(float value) {
         return String.format(Locale.ROOT, "%.2f", value);
     }
@@ -1520,6 +1570,12 @@ public final class CombatPerks {
         private int stacks;
         private long lastHitTick;
         private long lastDecayTick;
+    }
+
+    private record DebugHealthState(float health, float absorption) {
+    }
+
+    private record HealTrace(long tick, float amount, String reason) {
     }
 
     private record VeteranMark(UUID targetPlayer, long expiresAtTick) {
