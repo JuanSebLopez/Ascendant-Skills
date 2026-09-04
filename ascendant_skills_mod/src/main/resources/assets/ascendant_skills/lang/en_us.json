@@ -4,6 +4,8 @@
   "effect.ascendant_skills.forgetfulness": "Olvido",
   "attribute.ascendant_skills.global_attack_speed": "Global Attack Speed",
   "attribute.ascendant_skills.global_damage": "Global Damage",
+  "attribute.ascendant_skills.global_crit_chance": "Global Crit Chance",
+  "attribute.ascendant_skills.global_crit_damage": "Global Crit Damage",
   "attribute.ascendant_skills.global_resistance": "Global Resistance",
   "attribute.ascendant_skills.melee_resistance": "Melee Resistance",
   "attribute.ascendant_skills.projectile_resistance": "Projectile Resistance",
@@ -18,5 +20,6 @@
   "attribute.ascendant_skills.ranged_armor_shred": "Ranged Armor Shred",
   "attribute.ascendant_skills.projectile_velocity": "Projectile Velocity",
   "attribute.ascendant_skills.passive_regen_health": "Passive Regen Health",
-  "attribute.ascendant_skills.passive_regen_interval": "Passive Regen Interval"
+  "attribute.ascendant_skills.passive_regen_interval": "Passive Regen Interval",
+  "attribute.ascendant_skills.aggro_reach": "Aggro Reach"
 }

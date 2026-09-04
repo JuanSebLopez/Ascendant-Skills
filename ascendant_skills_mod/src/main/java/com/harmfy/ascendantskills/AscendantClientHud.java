@@ -78,6 +78,41 @@ public final class AscendantClientHud {
         if (state.berserkerActive()) {
             boxes.add(new HudBox("B", 0xFFE03A3A, ""));
         }
+        if (state.murallaPosture() >= 0) {
+            boxes.add(new HudBox("M", state.murallaPosture() == 1 ? 0xFF77A7FF : 0xFF65D17A,
+                    state.murallaPosture() == 1 ? "S" : "D"));
+        }
+        if (state.fortressStacks() >= 0) {
+            boxes.add(new HudBox("F", stackColor(state.fortressStacks(), state.fortressMaxStacks()),
+                    state.fortressStacks() > 0 ? Integer.toString(state.fortressStacks()) : ""));
+        }
+        if (state.bodyguardCooldownTicks() >= 0) {
+            boxes.add(new HudBox("G", state.bodyguardCooldownTicks() == 0 ? 0xFF65D17A : 0xFF37404A,
+                    state.bodyguardCooldownTicks() == 0 ? "" : seconds(state.bodyguardCooldownTicks())));
+        }
+        if (state.secondWindCooldownTicks() >= 0) {
+            boxes.add(new HudBox("W", state.secondWindCooldownTicks() == 0 ? 0xFF65D17A : 0xFF37404A,
+                    state.secondWindCooldownTicks() == 0 ? "" : seconds(state.secondWindCooldownTicks())));
+        }
+        if (state.lastStandCooldownTicks() >= 0) {
+            if (state.lastStandActiveTicks() > 0) {
+                boxes.add(new HudBox("I", 0xFF77A7FF, seconds(state.lastStandActiveTicks())));
+            } else {
+                boxes.add(new HudBox("I", state.lastStandCooldownTicks() == 0 ? 0xFF87919E : 0xFF37404A,
+                        state.lastStandCooldownTicks() == 0 ? "" : seconds(state.lastStandCooldownTicks())));
+            }
+        }
+        if (state.absoluteBastionCooldownTicks() >= 0) {
+            boxes.add(new HudBox("L", state.absoluteBastionCooldownTicks() == 0 ? 0xFF77A7FF : 0xFF37404A,
+                    state.absoluteBastionCooldownTicks() == 0 ? "" : seconds(state.absoluteBastionCooldownTicks())));
+        }
+        if (state.provocadorActive()) {
+            boxes.add(new HudBox("P", 0xFFD86F45, ""));
+        }
+        if (state.titanStacks() >= 0) {
+            boxes.add(new HudBox("T", stackColor(state.titanStacks(), state.titanMaxStacks()),
+                    state.titanStacks() > 0 ? Integer.toString(state.titanStacks()) : ""));
+        }
         if (state.conquerorStacks() >= 0) {
             boxes.add(new HudBox("Q", stackColor(state.conquerorStacks(), state.conquerorMaxStacks()),
                     state.conquerorStacks() > 0 ? Integer.toString(state.conquerorStacks()) : ""));

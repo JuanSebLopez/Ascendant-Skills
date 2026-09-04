@@ -7,11 +7,13 @@ import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.AxeItem;
@@ -55,7 +57,7 @@ public final class CombatPerks {
     private static final int FORTRESS_DECAY_TICKS = 5 * TICKS_PER_SECOND;
     private static final int FORTRESS_MAX_STACKS = 5;
     private static final int BODYGUARD_COOLDOWN_TICKS = 10 * TICKS_PER_SECOND;
-    private static final int SECOND_WIND_COOLDOWN_TICKS = 20 * TICKS_PER_SECOND;
+    private static final int SECOND_WIND_COOLDOWN_TICKS = 30 * TICKS_PER_SECOND;
     private static final int LAST_STAND_ACTIVE_TICKS = 5 * TICKS_PER_SECOND;
     private static final int LAST_STAND_COOLDOWN_TICKS = 40 * TICKS_PER_SECOND;
     private static final int ALJABA_DECAY_TICKS = 5 * TICKS_PER_SECOND;
@@ -65,12 +67,13 @@ public final class CombatPerks {
     private static final int BARRAGE_REQUIRED_HITS = 5;
     private static final int MAESTRO_CHARGE_TICKS = 5 * TICKS_PER_SECOND;
     private static final int MAESTRO_COOLDOWN_TICKS = 10 * TICKS_PER_SECOND;
+    private static final int ABSOLUTE_BASTION_COOLDOWN_TICKS = 15 * TICKS_PER_SECOND;
     private static final int PROJECTILE_STATE_TICKS = 30 * TICKS_PER_SECOND;
     private static final double ESCARAMUZADOR_REQUIRED_DISTANCE = 15.0D;
     private static final double WARLORD_AURA_RADIUS = 10.0D;
     private static final double BODYGUARD_RADIUS = 10.0D;
     private static final double PROVOCADOR_RADIUS = 5.0D;
-    private static final double TITAN_AURA_RADIUS = 10.0D;
+    private static final double ABSOLUTE_BASTION_RADIUS = 10.0D;
     private static final ResourceLocation GLOBAL_ATTACK_SPEED_ATTACK_SPEED = id("global_attack_speed_attack_speed");
     private static final ResourceLocation STEEL_COMBO_ATTACK_SPEED = id("steel_combo_attack_speed");
     private static final ResourceLocation BERSERKER_ATTACK_SPEED = id("berserker_attack_speed");
@@ -78,7 +81,13 @@ public final class CombatPerks {
     private static final ResourceLocation MURALLA_OFFHAND_ATTACK_DAMAGE = id("muralla_offhand_attack_damage");
     private static final ResourceLocation FORTRESS_MELEE_RESISTANCE = id("fortress_melee_resistance");
     private static final ResourceLocation LAST_STAND_GLOBAL_RESISTANCE = id("last_stand_global_resistance");
-    private static final ResourceLocation TITAN_AURA_GLOBAL_RESISTANCE = id("titan_aura_global_resistance");
+    private static final ResourceLocation TITAN_GLOBAL_DAMAGE = id("titan_global_damage");
+    private static final ResourceLocation TITAN_GLOBAL_ATTACK_SPEED = id("titan_global_attack_speed");
+    private static final ResourceLocation TITAN_MOVE_SPEED = id("titan_move_speed");
+    private static final ResourceLocation TITAN_GLOBAL_RESISTANCE = id("titan_global_resistance");
+    private static final ResourceLocation TITAN_GLOBAL_CRIT_CHANCE = id("titan_global_crit_chance");
+    private static final ResourceLocation TITAN_GLOBAL_CRIT_DAMAGE = id("titan_global_crit_damage");
+    private static final ResourceLocation TITAN_MAX_HEALTH = id("titan_max_health");
     private static final ResourceLocation ALJABA_RANGED_ATTACK_SPEED = id("aljaba_ranged_attack_speed");
     private static final ResourceLocation DEADEYE_RANGED_CRIT_CHANCE = id("deadeye_ranged_crit_chance");
     private static final Map<UUID, SteelCombo> STEEL_COMBOS = new HashMap<>();
@@ -95,6 +104,7 @@ public final class CombatPerks {
     private static final Map<UUID, Long> BODYGUARD_COOLDOWNS = new HashMap<>();
     private static final Map<UUID, Long> SECOND_WIND_COOLDOWNS = new HashMap<>();
     private static final Map<UUID, LastStandState> LAST_STANDS = new HashMap<>();
+    private static final Map<UUID, Long> ABSOLUTE_BASTION_COOLDOWNS = new HashMap<>();
     private static final Map<UUID, RangedUseSpeed> RANGED_USE_SPEED = new HashMap<>();
     private static final Map<UUID, ProjectileOrigin> PROJECTILE_ORIGINS = new HashMap<>();
     private static final Map<UUID, Long> MAESTRO_PROJECTILES = new HashMap<>();
@@ -108,6 +118,12 @@ public final class CombatPerks {
     }
 
     public static void onLivingIncomingDamage(LivingIncomingDamageEvent event) {
+        if (event.getAmount() <= 0.0F) {
+            if (event.getAmount() < 0.0F) {
+                event.setAmount(0.0F);
+            }
+            return;
+        }
         DamageSource source = event.getSource();
         ServerPlayer attacker = playerAttacker(source);
         boolean melee = isMelee(source);
@@ -134,6 +150,7 @@ public final class CombatPerks {
             activateLastStand(defender, amount * multiplier);
             multiplier *= incomingDamageMultiplier(defender, source, melee, projectile, explosion, amount);
             multiplier *= bodyguardMultiplier(defender, source, melee, projectile);
+            activateAbsoluteBastion(defender, source, melee, projectile, explosion);
             activateJuggernaut(defender, melee && source.getEntity() instanceof LivingEntity);
         }
 
@@ -292,8 +309,9 @@ public final class CombatPerks {
         updateBarrage(player);
         updateEscaramuzador(player);
         updateMaestroCharge(player);
+        updateProvocadorAggro(player);
         updateLastStand(player);
-        updateTitanAura(player);
+        updateTitan(player);
         applyPassiveRegen(player);
         syncPerkHud(player);
         if (!player.isUsingItem() && !isChargedCrossbowInHand(player)) {
@@ -338,7 +356,9 @@ public final class CombatPerks {
     }
 
     public static float meleeCritMultiplier(ServerPlayer player, Entity target) {
-        return BASE_CRIT_MULTIPLIER + (float) attributeValue(player, AscendantAttributes.MELEE_CRIT_DAMAGE);
+        return BASE_CRIT_MULTIPLIER
+                + (float) attributeValue(player, AscendantAttributes.MELEE_CRIT_DAMAGE)
+                + (float) attributeValue(player, AscendantAttributes.GLOBAL_CRIT_DAMAGE);
     }
 
     public static boolean consumeCriticalEye(ServerPlayer attacker, Entity target) {
@@ -404,7 +424,7 @@ public final class CombatPerks {
     }
 
     private static float incomingDamageMultiplier(ServerPlayer defender, DamageSource source, boolean melee, boolean projectile, boolean explosion, float originalDamage) {
-        float multiplier = globalResistanceMultiplier(defender, source, originalDamage);
+        float multiplier = globalResistanceMultiplier(defender, melee || projectile || explosion, originalDamage);
         if (melee) {
             multiplier *= resistanceMultiplier(defender, AscendantAttributes.MELEE_RESISTANCE);
         }
@@ -559,15 +579,19 @@ public final class CombatPerks {
     }
 
     private static float meleeCritChance(ServerPlayer player) {
-        return (float) attributeValue(player, AscendantAttributes.MELEE_CRIT_CHANCE);
+        return (float) clamp(attributeValue(player, AscendantAttributes.MELEE_CRIT_CHANCE)
+                + attributeValue(player, AscendantAttributes.GLOBAL_CRIT_CHANCE), 0.0D, 1.0D);
     }
 
     private static float rangedCritChance(ServerPlayer player) {
-        return (float) attributeValue(player, AscendantAttributes.RANGED_CRIT_CHANCE);
+        return (float) clamp(attributeValue(player, AscendantAttributes.RANGED_CRIT_CHANCE)
+                + attributeValue(player, AscendantAttributes.GLOBAL_CRIT_CHANCE), 0.0D, 1.0D);
     }
 
     private static float rangedCritMultiplier(ServerPlayer player) {
-        return BASE_CRIT_MULTIPLIER + (float) attributeValue(player, AscendantAttributes.RANGED_CRIT_DAMAGE);
+        return BASE_CRIT_MULTIPLIER
+                + (float) attributeValue(player, AscendantAttributes.RANGED_CRIT_DAMAGE)
+                + (float) attributeValue(player, AscendantAttributes.GLOBAL_CRIT_DAMAGE);
     }
 
     private static void recordRangedHit(ServerPlayer player, boolean crit, Entity directEntity) {
@@ -649,7 +673,10 @@ public final class CombatPerks {
         return (float) attributeValue(player, AscendantAttributes.RANGED_DAMAGE);
     }
 
-    private static float globalResistanceMultiplier(ServerPlayer player, DamageSource source, float originalDamage) {
+    private static float globalResistanceMultiplier(ServerPlayer player, boolean combatDamage, float originalDamage) {
+        if (!combatDamage) {
+            return 1.0F;
+        }
         double rawResistance = Math.max(0.0D, attributeValue(player, AscendantAttributes.GLOBAL_RESISTANCE));
         if (rawResistance <= 0.0D) {
             return 1.0F;
@@ -662,15 +689,12 @@ public final class CombatPerks {
         double damageScale = clamp(originalDamage / AscendantConfig.globalResistanceFullEffectDamage(),
                 AscendantConfig.globalResistanceMinimumDamageScale(),
                 1.0D);
-        double typeMultiplier = source.getEntity() == null
-                ? AscendantConfig.globalResistanceEnvironmentalMultiplier()
-                : 1.0D;
-        double effectiveResistance = Math.min(AscendantConfig.globalResistanceHardCap(), softenedResistance * damageScale * typeMultiplier);
+        double effectiveResistance = Math.min(AscendantConfig.globalResistanceHardCap(), softenedResistance * damageScale);
         return (float) (1.0D - effectiveResistance);
     }
 
     private static float resistanceMultiplier(ServerPlayer player, Holder<Attribute> attribute) {
-        double resistance = clamp(attributeValue(player, attribute), 0.0D, 0.95D);
+        double resistance = clamp(attributeValue(player, attribute), 0.0D, AscendantConfig.specificResistanceHardCap());
         return (float) (1.0D - resistance);
     }
 
@@ -722,6 +746,10 @@ public final class CombatPerks {
 
     private static boolean isChargedCrossbow(ItemStack stack) {
         return stack.getItem() instanceof CrossbowItem && CrossbowItem.isCharged(stack);
+    }
+
+    private static boolean isBlockingWithShield(ServerPlayer player) {
+        return player.isUsingItem() && player.getUseItem().getItem() instanceof ShieldItem;
     }
 
     private static void updateMaestroCharge(ServerPlayer player) {
@@ -790,6 +818,31 @@ public final class CombatPerks {
         applyModifier(defender, AscendantAttributes.GLOBAL_RESISTANCE, LAST_STAND_GLOBAL_RESISTANCE, 0.50D, AttributeModifier.Operation.ADD_VALUE);
     }
 
+    private static void activateAbsoluteBastion(ServerPlayer defender, DamageSource source, boolean melee, boolean projectile, boolean explosion) {
+        if (!has(defender, "bastion_absoluto") || !(melee || projectile || explosion) || !isBlockingWithShield(defender)) {
+            return;
+        }
+        long now = defender.level().getGameTime();
+        UUID defenderId = defender.getUUID();
+        if (ABSOLUTE_BASTION_COOLDOWNS.getOrDefault(defenderId, 0L) > now) {
+            return;
+        }
+        ABSOLUTE_BASTION_COOLDOWNS.put(defenderId, now + ABSOLUTE_BASTION_COOLDOWN_TICKS);
+        for (LivingEntity target : defender.level().getEntitiesOfClass(LivingEntity.class, defender.getBoundingBox().inflate(ABSOLUTE_BASTION_RADIUS))) {
+            if (target == defender || target instanceof Player) {
+                continue;
+            }
+            Vec3 direction = target.position().subtract(defender.position());
+            double horizontalLength = Math.sqrt(direction.x * direction.x + direction.z * direction.z);
+            if (horizontalLength <= 0.001D) {
+                continue;
+            }
+            Vec3 push = new Vec3(direction.x / horizontalLength * 1.1D, 0.35D, direction.z / horizontalLength * 1.1D);
+            target.setDeltaMovement(target.getDeltaMovement().add(push));
+            target.hasImpulse = true;
+        }
+    }
+
     private static float applySecondWind(ServerPlayer defender, float damage) {
         if (!has(defender, "regenerador")) {
             return damage;
@@ -805,11 +858,10 @@ public final class CombatPerks {
             return damage;
         }
         SECOND_WIND_COOLDOWNS.put(defenderId, now + SECOND_WIND_COOLDOWN_TICKS);
-        defender.heal(defender.getMaxHealth() * 0.15F);
-        if (predictedHealth <= 0.0F) {
-            return Math.min(damage, Math.max(0.0F, defender.getHealth() - 1.0F));
-        }
-        return damage;
+        float heal = defender.getMaxHealth() * 0.20F;
+        float healthFloor = predictedHealth <= 0.0F ? 1.0F : predictedHealth;
+        float desiredHealth = Math.min(defender.getMaxHealth(), healthFloor + heal);
+        return Math.max(0.0F, defender.getHealth() - desiredHealth);
     }
 
     private static void addFortressStack(ServerPlayer defender) {
@@ -995,26 +1047,68 @@ public final class CombatPerks {
         removeModifier(player, AscendantAttributes.GLOBAL_RESISTANCE, LAST_STAND_GLOBAL_RESISTANCE);
     }
 
-    private static void updateTitanAura(ServerPlayer player) {
-        boolean hasAura = false;
+    private static void updateProvocadorAggro(ServerPlayer player) {
+        if (!has(player, "provocador")) {
+            return;
+        }
+        double radius = AscendantConfig.provocadorBaseAggroRange() * (1.0D + attributeValue(player, AscendantAttributes.AGGRO_REACH));
+        for (Mob mob : player.level().getEntitiesOfClass(Mob.class, player.getBoundingBox().inflate(radius))) {
+            if (!(mob instanceof Enemy) || !mob.isAlive() || mob.isNoAi() || mob.getTarget() != null) {
+                continue;
+            }
+            if (mob.distanceToSqr(player) <= radius * radius && mob.hasLineOfSight(player)) {
+                mob.setTarget(player);
+            }
+        }
+    }
+
+    private static void updateTitan(ServerPlayer player) {
+        int stacks = titanStacks(player);
+        if (!has(player, "titan") || stacks <= 0) {
+            removeTitanModifiers(player);
+            return;
+        }
+        applyModifier(player, AscendantAttributes.GLOBAL_DAMAGE, TITAN_GLOBAL_DAMAGE,
+                stacks * AscendantConfig.titanGlobalDamagePerStack(), AttributeModifier.Operation.ADD_VALUE);
+        applyModifier(player, AscendantAttributes.GLOBAL_ATTACK_SPEED, TITAN_GLOBAL_ATTACK_SPEED,
+                stacks * AscendantConfig.titanGlobalAttackSpeedPerStack(), AttributeModifier.Operation.ADD_VALUE);
+        applyModifier(player, Attributes.MOVEMENT_SPEED, TITAN_MOVE_SPEED,
+                stacks * AscendantConfig.titanMoveSpeedPerStack(), AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+        applyModifier(player, AscendantAttributes.GLOBAL_RESISTANCE, TITAN_GLOBAL_RESISTANCE,
+                stacks * AscendantConfig.titanGlobalResistancePerStack(), AttributeModifier.Operation.ADD_VALUE);
+        applyModifier(player, AscendantAttributes.GLOBAL_CRIT_CHANCE, TITAN_GLOBAL_CRIT_CHANCE,
+                stacks * AscendantConfig.titanGlobalCritChancePerStack(), AttributeModifier.Operation.ADD_VALUE);
+        applyModifier(player, AscendantAttributes.GLOBAL_CRIT_DAMAGE, TITAN_GLOBAL_CRIT_DAMAGE,
+                stacks * AscendantConfig.titanGlobalCritDamagePerStack(), AttributeModifier.Operation.ADD_VALUE);
+        applyModifier(player, Attributes.MAX_HEALTH, TITAN_MAX_HEALTH,
+                stacks * AscendantConfig.titanHealthPerStack(), AttributeModifier.Operation.ADD_VALUE);
+    }
+
+    private static void removeTitanModifiers(ServerPlayer player) {
+        removeModifier(player, AscendantAttributes.GLOBAL_DAMAGE, TITAN_GLOBAL_DAMAGE);
+        removeModifier(player, AscendantAttributes.GLOBAL_ATTACK_SPEED, TITAN_GLOBAL_ATTACK_SPEED);
+        removeModifier(player, Attributes.MOVEMENT_SPEED, TITAN_MOVE_SPEED);
+        removeModifier(player, AscendantAttributes.GLOBAL_RESISTANCE, TITAN_GLOBAL_RESISTANCE);
+        removeModifier(player, AscendantAttributes.GLOBAL_CRIT_CHANCE, TITAN_GLOBAL_CRIT_CHANCE);
+        removeModifier(player, AscendantAttributes.GLOBAL_CRIT_DAMAGE, TITAN_GLOBAL_CRIT_DAMAGE);
+        removeModifier(player, Attributes.MAX_HEALTH, TITAN_MAX_HEALTH);
+    }
+
+    private static int titanStacks(ServerPlayer player) {
+        if (!has(player, "titan")) {
+            return 0;
+        }
+        int stacks = 1;
         AscendantData.Party party = AscendantData.get(player.server).partyOf(player.getUUID()).orElse(null);
         if (party != null) {
+            stacks = 0;
             for (UUID memberId : party.members) {
-                if (memberId.equals(player.getUUID())) {
-                    continue;
-                }
-                ServerPlayer titan = player.server.getPlayerList().getPlayer(memberId);
-                if (titan != null && titan.level().dimension().equals(player.level().dimension()) && has(titan, "titan") && titan.distanceTo(player) <= TITAN_AURA_RADIUS) {
-                    hasAura = true;
-                    break;
+                if (player.server.getPlayerList().getPlayer(memberId) != null) {
+                    stacks++;
                 }
             }
         }
-        if (hasAura) {
-            applyModifier(player, AscendantAttributes.GLOBAL_RESISTANCE, TITAN_AURA_GLOBAL_RESISTANCE, 0.05D, AttributeModifier.Operation.ADD_VALUE);
-        } else {
-            removeModifier(player, AscendantAttributes.GLOBAL_RESISTANCE, TITAN_AURA_GLOBAL_RESISTANCE);
-        }
+        return Math.min(AscendantConfig.titanMaxStacks(), Math.max(1, stacks));
     }
 
     private static void applyPassiveRegen(ServerPlayer player) {
@@ -1086,7 +1180,18 @@ public final class CombatPerks {
                 has(player, "maestro_tirador") ? maestroChargeSeconds(player) : 0,
                 has(player, "barrage") ? barrageHits(player) : -1,
                 BARRAGE_REQUIRED_HITS,
-                has(player, "barrage") && barrageReady(player)
+                has(player, "barrage") && barrageReady(player),
+                has(player, "muralla") ? murallaPosture(player) : -1,
+                has(player, "fortaleza") ? fortressStacks(player) : -1,
+                FORTRESS_MAX_STACKS,
+                has(player, "guardaespaldas") ? remainingTicks(player, BODYGUARD_COOLDOWNS.getOrDefault(player.getUUID(), 0L)) : -1,
+                has(player, "regenerador") ? remainingTicks(player, SECOND_WIND_COOLDOWNS.getOrDefault(player.getUUID(), 0L)) : -1,
+                has(player, "invencible") ? remainingLastStandActiveTicks(player) : -1,
+                has(player, "invencible") ? remainingLastStandCooldownTicks(player) : -1,
+                has(player, "bastion_absoluto") ? remainingTicks(player, ABSOLUTE_BASTION_COOLDOWNS.getOrDefault(player.getUUID(), 0L)) : -1,
+                has(player, "provocador"),
+                has(player, "titan") ? titanStacks(player) : -1,
+                AscendantConfig.titanMaxStacks()
         ));
     }
 
@@ -1098,6 +1203,15 @@ public final class CombatPerks {
     private static int conquerorStacks(ServerPlayer player) {
         StackingBuff stacks = CONQUEROR_STACKS.get(player.getUUID());
         return stacks == null ? 0 : Math.max(0, stacks.stacks);
+    }
+
+    private static int fortressStacks(ServerPlayer player) {
+        StackingBuff stacks = FORTRESS_STACKS.get(player.getUUID());
+        return stacks == null ? 0 : Math.max(0, stacks.stacks);
+    }
+
+    private static int murallaPosture(ServerPlayer player) {
+        return player.getOffhandItem().getItem() instanceof ShieldItem ? 1 : 0;
     }
 
     private static int aljabaStacks(ServerPlayer player) {
@@ -1155,6 +1269,16 @@ public final class CombatPerks {
         return state == null ? 0 : remainingTicks(player, state.cooldownUntilTick);
     }
 
+    private static int remainingLastStandActiveTicks(ServerPlayer player) {
+        LastStandState state = LAST_STANDS.get(player.getUUID());
+        return state == null ? 0 : remainingTicks(player, state.activeUntilTick);
+    }
+
+    private static int remainingLastStandCooldownTicks(ServerPlayer player) {
+        LastStandState state = LAST_STANDS.get(player.getUUID());
+        return state == null ? 0 : remainingTicks(player, state.cooldownUntilTick);
+    }
+
     private static int remainingTicks(ServerPlayer player, long readyAtTick) {
         long remaining = readyAtTick - player.level().getGameTime();
         return remaining <= 0L ? 0 : (int) Math.min(Integer.MAX_VALUE, remaining);
@@ -1190,6 +1314,7 @@ public final class CombatPerks {
         BODYGUARD_COOLDOWNS.remove(playerId);
         SECOND_WIND_COOLDOWNS.remove(playerId);
         LAST_STANDS.remove(playerId);
+        ABSOLUTE_BASTION_COOLDOWNS.remove(playerId);
         RANGED_USE_SPEED.remove(playerId);
         PROJECTILE_ORIGINS.entrySet().removeIf(entry -> entry.getValue().owner.equals(playerId));
         MAESTRO_PROJECTILES.clear();
@@ -1206,9 +1331,9 @@ public final class CombatPerks {
         removeModifier(player, Attributes.ATTACK_DAMAGE, MURALLA_OFFHAND_ATTACK_DAMAGE);
         removeModifier(player, AscendantAttributes.MELEE_RESISTANCE, FORTRESS_MELEE_RESISTANCE);
         removeModifier(player, AscendantAttributes.GLOBAL_RESISTANCE, LAST_STAND_GLOBAL_RESISTANCE);
-        removeModifier(player, AscendantAttributes.GLOBAL_RESISTANCE, TITAN_AURA_GLOBAL_RESISTANCE);
         removeModifier(player, AscendantAttributes.RANGED_ATTACK_SPEED, ALJABA_RANGED_ATTACK_SPEED);
         removeModifier(player, AscendantAttributes.RANGED_CRIT_CHANCE, DEADEYE_RANGED_CRIT_CHANCE);
+        removeTitanModifiers(player);
     }
 
     private static void pruneExpired(ServerPlayer player) {
@@ -1217,6 +1342,7 @@ public final class CombatPerks {
         JUGGERNAUTS.entrySet().removeIf(entry -> entry.getValue().cooldownUntilTick < now && entry.getValue().immunityUntilTick < now);
         BODYGUARD_COOLDOWNS.entrySet().removeIf(entry -> entry.getValue() < now);
         SECOND_WIND_COOLDOWNS.entrySet().removeIf(entry -> entry.getValue() < now);
+        ABSOLUTE_BASTION_COOLDOWNS.entrySet().removeIf(entry -> entry.getValue() < now);
         MAESTRO_COOLDOWNS.entrySet().removeIf(entry -> entry.getValue() < now);
         PROJECTILE_ORIGINS.entrySet().removeIf(entry -> entry.getValue().expiresAtTick < now);
         MAESTRO_PROJECTILES.entrySet().removeIf(entry -> entry.getValue() < now);

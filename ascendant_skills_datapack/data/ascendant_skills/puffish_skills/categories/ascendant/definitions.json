@@ -2533,6 +2533,14 @@
           "value": 0.05,
           "operation": "addition"
         }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:aggro_reach",
+          "value": 0.2,
+          "operation": "addition"
+        }
       }
     ]
   },
@@ -2575,7 +2583,7 @@
           "color": "aqua"
         },
         {
-          "text": "Segundo Aliento: al recibir un golpe mortal o bajar de 30% HP max, te curas 15% HP max. CD 20 seg.",
+          "text": "Segundo Aliento: al recibir un golpe mortal o bajar de 30% HP max, te curas 20% HP max. CD 30 seg.",
           "color": "gray"
         }
       ]
@@ -2755,7 +2763,7 @@
           "color": "aqua"
         },
         {
-          "text": "Ultima Linea: cuando se rompa tu guardia, empuja enemigos cercanos. CD 10 seg.",
+          "text": "Ultima Linea: cuando se rompa tu guardia, empuja enemigos en 10 bloques. CD 15 seg.",
           "color": "gray"
         }
       ]
@@ -2848,7 +2856,7 @@
           "color": "aqua"
         },
         {
-          "text": "Aura del Titan: aliados cercanos obtienen +5% global resist y enemigos -10% move speed. Radio 10 bloques.",
+          "text": "Aura del Titan: por cada miembro online de tu party, contandote siempre a ti, obtienes +2.5% global dmg y global crit dmg, +1.25% global attack speed, move speed, global resist y global crit chance, y +1 HP. Max configurable.",
           "color": "gray"
         }
       ]

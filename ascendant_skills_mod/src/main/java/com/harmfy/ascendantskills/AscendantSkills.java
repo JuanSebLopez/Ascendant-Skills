@@ -2,6 +2,7 @@ package com.harmfy.ascendantskills;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
@@ -25,7 +26,7 @@ public final class AscendantSkills {
         NeoForge.EVENT_BUS.addListener(AscendantCommands::register);
         NeoForge.EVENT_BUS.addListener(BossTracker::onLivingDamage);
         NeoForge.EVENT_BUS.addListener(BossTracker::onLivingDeath);
-        NeoForge.EVENT_BUS.addListener(CombatPerks::onLivingIncomingDamage);
+        NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, CombatPerks::onLivingIncomingDamage);
         NeoForge.EVENT_BUS.addListener(CombatPerks::onLivingDamagePost);
         NeoForge.EVENT_BUS.addListener(CombatPerks::onLivingDeath);
         NeoForge.EVENT_BUS.addListener(CombatPerks::onLivingKnockBack);

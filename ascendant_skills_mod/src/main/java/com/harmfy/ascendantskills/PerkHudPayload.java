@@ -24,7 +24,18 @@ public record PerkHudPayload(
         int maestroChargeSeconds,
         int barrageHits,
         int barrageRequiredHits,
-        boolean barrageReady
+        boolean barrageReady,
+        int murallaPosture,
+        int fortressStacks,
+        int fortressMaxStacks,
+        int bodyguardCooldownTicks,
+        int secondWindCooldownTicks,
+        int lastStandActiveTicks,
+        int lastStandCooldownTicks,
+        int absoluteBastionCooldownTicks,
+        boolean provocadorActive,
+        int titanStacks,
+        int titanMaxStacks
 ) implements CustomPacketPayload {
     public static final CustomPacketPayload.Type<PerkHudPayload> TYPE = new CustomPacketPayload.Type<>(
             ResourceLocation.fromNamespaceAndPath(AscendantSkills.MOD_ID, "perk_hud")
@@ -54,7 +65,18 @@ public record PerkHudPayload(
                 buffer.readVarInt(),
                 buffer.readVarInt(),
                 buffer.readVarInt(),
-                buffer.readBoolean()
+                buffer.readBoolean(),
+                buffer.readVarInt(),
+                buffer.readVarInt(),
+                buffer.readVarInt(),
+                buffer.readVarInt(),
+                buffer.readVarInt(),
+                buffer.readVarInt(),
+                buffer.readVarInt(),
+                buffer.readVarInt(),
+                buffer.readBoolean(),
+                buffer.readVarInt(),
+                buffer.readVarInt()
         );
     }
 
@@ -78,6 +100,17 @@ public record PerkHudPayload(
         buffer.writeVarInt(payload.barrageHits());
         buffer.writeVarInt(payload.barrageRequiredHits());
         buffer.writeBoolean(payload.barrageReady());
+        buffer.writeVarInt(payload.murallaPosture());
+        buffer.writeVarInt(payload.fortressStacks());
+        buffer.writeVarInt(payload.fortressMaxStacks());
+        buffer.writeVarInt(payload.bodyguardCooldownTicks());
+        buffer.writeVarInt(payload.secondWindCooldownTicks());
+        buffer.writeVarInt(payload.lastStandActiveTicks());
+        buffer.writeVarInt(payload.lastStandCooldownTicks());
+        buffer.writeVarInt(payload.absoluteBastionCooldownTicks());
+        buffer.writeBoolean(payload.provocadorActive());
+        buffer.writeVarInt(payload.titanStacks());
+        buffer.writeVarInt(payload.titanMaxStacks());
     }
 
     @Override

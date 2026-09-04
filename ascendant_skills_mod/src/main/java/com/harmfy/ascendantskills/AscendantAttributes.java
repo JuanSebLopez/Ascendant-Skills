@@ -20,6 +20,14 @@ public final class AscendantAttributes {
             "global_attack_speed",
             () -> new RangedAttribute("attribute.ascendant_skills.global_attack_speed", 1.0D, 0.0D, 100.0D).setSyncable(true)
     );
+    public static final DeferredHolder<Attribute, Attribute> GLOBAL_CRIT_CHANCE = ATTRIBUTES.register(
+            "global_crit_chance",
+            () -> new RangedAttribute("attribute.ascendant_skills.global_crit_chance", 0.0D, 0.0D, 1.0D).setSyncable(true)
+    );
+    public static final DeferredHolder<Attribute, Attribute> GLOBAL_CRIT_DAMAGE = ATTRIBUTES.register(
+            "global_crit_damage",
+            () -> new RangedAttribute("attribute.ascendant_skills.global_crit_damage", 0.0D, -10.0D, 10.0D).setSyncable(true)
+    );
     public static final DeferredHolder<Attribute, Attribute> GLOBAL_RESISTANCE = ATTRIBUTES.register(
             "global_resistance",
             () -> new RangedAttribute("attribute.ascendant_skills.global_resistance", 0.0D, -1.0D, 0.95D).setSyncable(true)
@@ -80,6 +88,10 @@ public final class AscendantAttributes {
             "passive_regen_interval",
             () -> new RangedAttribute("attribute.ascendant_skills.passive_regen_interval", 10.0D, 1.0D, 120.0D).setSyncable(true)
     );
+    public static final DeferredHolder<Attribute, Attribute> AGGRO_REACH = ATTRIBUTES.register(
+            "aggro_reach",
+            () -> new RangedAttribute("attribute.ascendant_skills.aggro_reach", 0.0D, 0.0D, 10.0D).setSyncable(true)
+    );
 
     private AscendantAttributes() {
     }
@@ -87,6 +99,8 @@ public final class AscendantAttributes {
     public static void addPlayerAttributes(EntityAttributeModificationEvent event) {
         event.add(EntityType.PLAYER, GLOBAL_DAMAGE);
         event.add(EntityType.PLAYER, GLOBAL_ATTACK_SPEED);
+        event.add(EntityType.PLAYER, GLOBAL_CRIT_CHANCE);
+        event.add(EntityType.PLAYER, GLOBAL_CRIT_DAMAGE);
         event.add(EntityType.PLAYER, GLOBAL_RESISTANCE);
         event.add(EntityType.PLAYER, MELEE_RESISTANCE);
         event.add(EntityType.PLAYER, PROJECTILE_RESISTANCE);
@@ -102,12 +116,15 @@ public final class AscendantAttributes {
         event.add(EntityType.PLAYER, PROJECTILE_VELOCITY);
         event.add(EntityType.PLAYER, PASSIVE_REGEN_HEALTH);
         event.add(EntityType.PLAYER, PASSIVE_REGEN_INTERVAL);
+        event.add(EntityType.PLAYER, AGGRO_REACH);
     }
 
     public static int resetAscendantBaseValues(ServerPlayer player) {
         int changed = 0;
         changed += reset(player, GLOBAL_DAMAGE);
         changed += reset(player, GLOBAL_ATTACK_SPEED);
+        changed += reset(player, GLOBAL_CRIT_CHANCE);
+        changed += reset(player, GLOBAL_CRIT_DAMAGE);
         changed += reset(player, GLOBAL_RESISTANCE);
         changed += reset(player, MELEE_RESISTANCE);
         changed += reset(player, PROJECTILE_RESISTANCE);
@@ -123,6 +140,7 @@ public final class AscendantAttributes {
         changed += reset(player, PROJECTILE_VELOCITY);
         changed += reset(player, PASSIVE_REGEN_HEALTH);
         changed += reset(player, PASSIVE_REGEN_INTERVAL);
+        changed += reset(player, AGGRO_REACH);
         return changed;
     }
 

@@ -116,6 +116,46 @@ public final class AscendantConfig {
         return clamp(orDefault(gameplay.globalResistanceEnvironmentalMultiplier, 0.25D), 0.0D, 1.0D);
     }
 
+    public static double specificResistanceHardCap() {
+        return clamp(orDefault(gameplay.specificResistanceHardCap, 0.85D), 0.0D, 0.95D);
+    }
+
+    public static double provocadorBaseAggroRange() {
+        return Math.max(1.0D, orDefault(gameplay.provocadorBaseAggroRange, 15.0D));
+    }
+
+    public static int titanMaxStacks() {
+        return Math.max(1, gameplay.titanMaxStacks == null ? maxPartySize() : gameplay.titanMaxStacks);
+    }
+
+    public static double titanGlobalDamagePerStack() {
+        return orDefault(gameplay.titanGlobalDamagePerStack, 0.025D);
+    }
+
+    public static double titanGlobalCritDamagePerStack() {
+        return orDefault(gameplay.titanGlobalCritDamagePerStack, 0.025D);
+    }
+
+    public static double titanGlobalAttackSpeedPerStack() {
+        return orDefault(gameplay.titanGlobalAttackSpeedPerStack, 0.0125D);
+    }
+
+    public static double titanMoveSpeedPerStack() {
+        return orDefault(gameplay.titanMoveSpeedPerStack, 0.0125D);
+    }
+
+    public static double titanGlobalResistancePerStack() {
+        return orDefault(gameplay.titanGlobalResistancePerStack, 0.0125D);
+    }
+
+    public static double titanGlobalCritChancePerStack() {
+        return orDefault(gameplay.titanGlobalCritChancePerStack, 0.0125D);
+    }
+
+    public static double titanHealthPerStack() {
+        return orDefault(gameplay.titanHealthPerStack, 1.0D);
+    }
+
     public static String configDirForDisplay() {
         return CONFIG_DIR.toString();
     }
@@ -229,6 +269,16 @@ public final class AscendantConfig {
         file.globalResistanceFullEffectDamage = 8.0D;
         file.globalResistanceMinimumDamageScale = 0.25D;
         file.globalResistanceEnvironmentalMultiplier = 0.25D;
+        file.specificResistanceHardCap = 0.85D;
+        file.provocadorBaseAggroRange = 15.0D;
+        file.titanMaxStacks = 4;
+        file.titanGlobalDamagePerStack = 0.025D;
+        file.titanGlobalCritDamagePerStack = 0.025D;
+        file.titanGlobalAttackSpeedPerStack = 0.0125D;
+        file.titanMoveSpeedPerStack = 0.0125D;
+        file.titanGlobalResistancePerStack = 0.0125D;
+        file.titanGlobalCritChancePerStack = 0.0125D;
+        file.titanHealthPerStack = 1.0D;
         return file;
     }
 
@@ -286,5 +336,25 @@ public final class AscendantConfig {
         private Double globalResistanceMinimumDamageScale;
         @SerializedName(value = "global_resistance_environmental_multiplier", alternate = "globalResistanceEnvironmentalMultiplier")
         private Double globalResistanceEnvironmentalMultiplier;
+        @SerializedName(value = "specific_resistance_hard_cap", alternate = "specificResistanceHardCap")
+        private Double specificResistanceHardCap;
+        @SerializedName(value = "provocador_base_aggro_range", alternate = "provocadorBaseAggroRange")
+        private Double provocadorBaseAggroRange;
+        @SerializedName(value = "titan_max_stacks", alternate = "titanMaxStacks")
+        private Integer titanMaxStacks;
+        @SerializedName(value = "titan_global_damage_per_stack", alternate = "titanGlobalDamagePerStack")
+        private Double titanGlobalDamagePerStack;
+        @SerializedName(value = "titan_global_crit_damage_per_stack", alternate = "titanGlobalCritDamagePerStack")
+        private Double titanGlobalCritDamagePerStack;
+        @SerializedName(value = "titan_global_attack_speed_per_stack", alternate = "titanGlobalAttackSpeedPerStack")
+        private Double titanGlobalAttackSpeedPerStack;
+        @SerializedName(value = "titan_move_speed_per_stack", alternate = "titanMoveSpeedPerStack")
+        private Double titanMoveSpeedPerStack;
+        @SerializedName(value = "titan_global_resistance_per_stack", alternate = "titanGlobalResistancePerStack")
+        private Double titanGlobalResistancePerStack;
+        @SerializedName(value = "titan_global_crit_chance_per_stack", alternate = "titanGlobalCritChancePerStack")
+        private Double titanGlobalCritChancePerStack;
+        @SerializedName(value = "titan_health_per_stack", alternate = "titanHealthPerStack")
+        private Double titanHealthPerStack;
     }
 }
