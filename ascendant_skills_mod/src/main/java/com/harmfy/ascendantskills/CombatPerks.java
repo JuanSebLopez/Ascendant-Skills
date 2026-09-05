@@ -74,6 +74,7 @@ public final class CombatPerks {
     private static final int MAESTRO_COOLDOWN_TICKS = 10 * TICKS_PER_SECOND;
     private static final int ABSOLUTE_BASTION_COOLDOWN_TICKS = 15 * TICKS_PER_SECOND;
     private static final int PROJECTILE_STATE_TICKS = 30 * TICKS_PER_SECOND;
+    private static final int SILENT_DAMAGE_HEAL_GUARD_TICKS = 3;
     private static final double ESCARAMUZADOR_REQUIRED_DISTANCE = 15.0D;
     private static final double WARLORD_AURA_RADIUS = 10.0D;
     private static final double BODYGUARD_RADIUS = 10.0D;
@@ -121,6 +122,7 @@ public final class CombatPerks {
     private static final Map<UUID, Float> DAMAGE_DEBUG_PRE_HEALTH = new HashMap<>();
     private static final Map<UUID, DebugHealthState> DAMAGE_DEBUG_HEALTH = new HashMap<>();
     private static final Map<UUID, HealTrace> DAMAGE_DEBUG_LAST_HEAL = new HashMap<>();
+    private static final Map<UUID, DamageHealthFloor> DAMAGE_HEALTH_FLOORS = new HashMap<>();
     private static final Map<UUID, String> ASCENDANT_HEAL_REASONS = new HashMap<>();
     private static final Set<UUID> DAMAGE_DEBUG_PLAYERS = new HashSet<>();
 
@@ -256,8 +258,11 @@ public final class CombatPerks {
         boolean melee = isMelee(source);
         boolean projectile = isProjectile(source);
 
-        if (event.getEntity() instanceof ServerPlayer defender && isDamageDebugEnabled(defender)) {
-            debugDamagePost(defender, event);
+        if (event.getEntity() instanceof ServerPlayer defender) {
+            if (isDamageDebugEnabled(defender)) {
+                debugDamagePost(defender, event);
+            }
+            recordDamageHealthFloor(defender, event.getNewDamage());
         }
 
         if (event.getEntity() instanceof ServerPlayer defender && melee && event.getNewDamage() > 0.0F && source.getEntity() instanceof LivingEntity attacker && !(attacker instanceof Player)) {
@@ -352,6 +357,9 @@ public final class CombatPerks {
                     format(player.getMaxHealth())
             )));
         }
+        if (amount > 0.0F) {
+            DAMAGE_HEALTH_FLOORS.remove(player.getUUID());
+        }
     }
 
     public static void onPlayerTick(PlayerTickEvent.Post event) {
@@ -375,6 +383,7 @@ public final class CombatPerks {
         updateTitan(player);
         applyPassiveRegen(player);
         syncPerkHud(player);
+        enforceSilentDamageHealGuard(player);
         if (!player.isUsingItem() && !isChargedCrossbowInHand(player)) {
             RANGED_USE_SPEED.remove(player.getUUID());
         }
@@ -1465,6 +1474,7 @@ public final class CombatPerks {
         DAMAGE_DEBUG_HEALTH.remove(playerId);
         DAMAGE_DEBUG_LAST_HEAL.remove(playerId);
         DAMAGE_DEBUG_PRE_HEALTH.remove(playerId);
+        DAMAGE_HEALTH_FLOORS.remove(playerId);
         return DAMAGE_DEBUG_PLAYERS.remove(playerId);
     }
 
@@ -1514,6 +1524,53 @@ public final class CombatPerks {
                 format(player.getMaxHealth()),
                 healthDelta
         )));
+    }
+
+    private static void recordDamageHealthFloor(ServerPlayer player, float damage) {
+        if (damage <= 0.0F || !Float.isFinite(damage)) {
+            return;
+        }
+        DAMAGE_HEALTH_FLOORS.put(player.getUUID(), new DamageHealthFloor(
+                player.getHealth(),
+                player.getAbsorptionAmount(),
+                player.level().getGameTime() + SILENT_DAMAGE_HEAL_GUARD_TICKS
+        ));
+    }
+
+    private static void enforceSilentDamageHealGuard(ServerPlayer player) {
+        UUID playerId = player.getUUID();
+        DamageHealthFloor floor = DAMAGE_HEALTH_FLOORS.get(playerId);
+        if (floor == null) {
+            return;
+        }
+
+        long now = player.level().getGameTime();
+        if (floor.expiresAtTick < now) {
+            DAMAGE_HEALTH_FLOORS.remove(playerId);
+            return;
+        }
+
+        if (player.getHealth() <= floor.health + 0.0001F && player.getAbsorptionAmount() <= floor.absorption + 0.0001F) {
+            return;
+        }
+
+        float currentHealth = player.getHealth();
+        float currentAbsorption = player.getAbsorptionAmount();
+        if (currentHealth > floor.health + 0.0001F) {
+            player.setHealth(Math.min(floor.health, player.getMaxHealth()));
+        }
+        if (currentAbsorption > floor.absorption + 0.0001F) {
+            player.setAbsorptionAmount(floor.absorption);
+        }
+        if (isDamageDebugEnabled(player)) {
+            player.sendSystemMessage(Component.literal(String.format(Locale.ROOT,
+                    "[AS Guard] blocked silent post-damage heal hp %.2f->%.2f absorption %.2f->%.2f",
+                    currentHealth,
+                    player.getHealth(),
+                    currentAbsorption,
+                    player.getAbsorptionAmount()
+            )));
+        }
     }
 
     private static void traceDebugHealth(ServerPlayer player) {
@@ -1576,6 +1633,9 @@ public final class CombatPerks {
     }
 
     private record HealTrace(long tick, float amount, String reason) {
+    }
+
+    private record DamageHealthFloor(float health, float absorption, long expiresAtTick) {
     }
 
     private record VeteranMark(UUID targetPlayer, long expiresAtTick) {
