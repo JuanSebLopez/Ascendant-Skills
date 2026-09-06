@@ -119,6 +119,7 @@ public final class CombatPerks {
     private static final Map<UUID, Boolean> PROJECTILE_CRITS = new HashMap<>();
     private static final Map<UUID, Long> PROJECTILE_HIT_ENTITIES = new HashMap<>();
     private static final Map<UUID, Long> PROCESSED_RANGED_PROJECTILES = new HashMap<>();
+    private static final Map<UUID, Float> DAMAGE_PRE_HEALTH = new HashMap<>();
     private static final Map<UUID, Float> DAMAGE_DEBUG_PRE_HEALTH = new HashMap<>();
     private static final Map<UUID, DebugHealthState> DAMAGE_DEBUG_HEALTH = new HashMap<>();
     private static final Map<UUID, HealTrace> DAMAGE_DEBUG_LAST_HEAL = new HashMap<>();
@@ -186,6 +187,7 @@ public final class CombatPerks {
         }
         float damage = event.getNewDamage();
         boolean invalid = !Float.isFinite(damage) || damage < 0.0F;
+        DAMAGE_PRE_HEALTH.put(defender.getUUID(), defender.getHealth());
         if (isDamageDebugEnabled(defender)) {
             DAMAGE_DEBUG_PRE_HEALTH.put(defender.getUUID(), defender.getHealth());
             DamageSource source = event.getSource();
@@ -300,6 +302,10 @@ public final class CombatPerks {
     }
 
     public static void onLivingDeath(LivingDeathEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player) {
+            clearDamageGuards(player.getUUID());
+        }
+
         ServerPlayer attacker = playerAttacker(event.getSource());
         if (attacker == null) {
             return;
@@ -1474,7 +1480,7 @@ public final class CombatPerks {
         DAMAGE_DEBUG_HEALTH.remove(playerId);
         DAMAGE_DEBUG_LAST_HEAL.remove(playerId);
         DAMAGE_DEBUG_PRE_HEALTH.remove(playerId);
-        DAMAGE_HEALTH_FLOORS.remove(playerId);
+        clearDamageGuards(playerId);
         return DAMAGE_DEBUG_PLAYERS.remove(playerId);
     }
 
@@ -1530,7 +1536,13 @@ public final class CombatPerks {
         if (damage <= 0.0F || !Float.isFinite(damage)) {
             return;
         }
-        DAMAGE_HEALTH_FLOORS.put(player.getUUID(), new DamageHealthFloor(
+        UUID playerId = player.getUUID();
+        Float healthBeforeDamage = DAMAGE_PRE_HEALTH.remove(playerId);
+        if (healthBeforeDamage == null || damage >= healthBeforeDamage - 0.0001F || player.isDeadOrDying() || player.getHealth() <= 0.0F) {
+            DAMAGE_HEALTH_FLOORS.remove(playerId);
+            return;
+        }
+        DAMAGE_HEALTH_FLOORS.put(playerId, new DamageHealthFloor(
                 player.getHealth(),
                 player.getAbsorptionAmount(),
                 player.level().getGameTime() + SILENT_DAMAGE_HEAL_GUARD_TICKS
@@ -1609,6 +1621,11 @@ public final class CombatPerks {
                 absorptionDelta,
                 healInfo
         )));
+    }
+
+    private static void clearDamageGuards(UUID playerId) {
+        DAMAGE_PRE_HEALTH.remove(playerId);
+        DAMAGE_HEALTH_FLOORS.remove(playerId);
     }
 
     private static String format(float value) {
