@@ -1,0 +1,21 @@
+{
+  "pack_name": "Harmfy",
+  "pack_version": "0.6.5",
+  "download_url": "PEGA_AQUI_EL_LINK_DE_DRIVE_O_DIRECTO_DEL_ZIP",
+  "sha256": "",
+  "profile_folder_name": "Harmfy",
+  "replace_folders": [
+    "mods",
+    "config",
+    "defaultconfigs",
+    "datapacks",
+    "resourcepacks",
+    "shaderpacks"
+  ],
+  "also_replace_if_present": [
+    "kubejs",
+    "scripts"
+  ],
+  "backup_before_update": true,
+  "skip_if_same_version": true
+}
