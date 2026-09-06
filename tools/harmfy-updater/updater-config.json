@@ -1,20 +1,55 @@
 {
   "pack_name": "Harmfy",
-  "pack_version": "0.6.5",
-  "download_url": "PEGA_AQUI_EL_LINK_DE_DRIVE_O_DIRECTO_DEL_ZIP",
-  "sha256": "",
+  "pack_version": "0.6.6",
+  "updater_version": "0.2.0",
   "profile_folder_name": "Harmfy",
-  "replace_folders": [
-    "mods",
-    "config",
-    "defaultconfigs",
-    "datapacks",
-    "resourcepacks",
-    "shaderpacks"
+  "ask_variant_each_update": true,
+  "common_archives": [
+    {
+      "name": "Config",
+      "download_url": "PEGA_AQUI_LINK_CONFIG_RAR",
+      "sha256": "",
+      "required": true,
+      "folders": [
+        "config",
+        "defaultconfigs",
+        "datapacks"
+      ]
+    }
   ],
-  "also_replace_if_present": [
-    "kubejs",
-    "scripts"
+  "variants": [
+    {
+      "id": "gpu",
+      "label": "Con tarjeta grafica",
+      "description": "Para PCs con buena GPU. Descarga solo mods (con tarjeta grafica).rar.",
+      "archives": [
+        {
+          "name": "Mods con tarjeta grafica",
+          "download_url": "PEGA_AQUI_LINK_MODS_CON_TARJETA_RAR",
+          "sha256": "",
+          "required": true,
+          "folders": [
+            "mods"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "performance",
+      "label": "Sin tarjeta grafica",
+      "description": "Version ligera. Descarga solo mods (no tarjeta grafica).rar.",
+      "archives": [
+        {
+          "name": "Mods sin tarjeta grafica",
+          "download_url": "PEGA_AQUI_LINK_MODS_SIN_TARJETA_RAR",
+          "sha256": "",
+          "required": true,
+          "folders": [
+            "mods"
+          ]
+        }
+      ]
+    }
   ],
   "backup_before_update": true,
   "skip_if_same_version": true
