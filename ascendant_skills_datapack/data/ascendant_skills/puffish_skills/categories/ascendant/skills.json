@@ -1,7 +1,7 @@
 {
   "inicio": {
     "x": 0,
-    "y": 120,
+    "y": 180,
     "definition": "inicio",
     "root": true
   },
@@ -164,5 +164,80 @@
     "x": 350,
     "y": -220,
     "definition": "titan"
+  },
+  "naturaleza": {
+    "x": 120,
+    "y": 180,
+    "definition": "naturaleza"
+  },
+  "pacto_natural": {
+    "x": 180,
+    "y": 180,
+    "definition": "pacto_natural"
+  },
+  "ganadero": {
+    "x": 225,
+    "y": 125,
+    "definition": "ganadero"
+  },
+  "herbolario": {
+    "x": 225,
+    "y": 235,
+    "definition": "herbolario"
+  },
+  "el_buen_vaquero": {
+    "x": 285,
+    "y": 110,
+    "definition": "el_buen_vaquero"
+  },
+  "el_don_del_ratel": {
+    "x": 285,
+    "y": 250,
+    "definition": "el_don_del_ratel"
+  },
+  "apex_predator": {
+    "x": 360,
+    "y": 126,
+    "definition": "apex_predator"
+  },
+  "druida": {
+    "x": 360,
+    "y": 234,
+    "definition": "druida"
+  },
+  "guardian_natural": {
+    "x": 435,
+    "y": 180,
+    "definition": "guardian_natural"
+  },
+  "avatar_de_la_naturaleza": {
+    "x": 360,
+    "y": 180,
+    "definition": "avatar_de_la_naturaleza"
+  },
+  "senor_de_las_bestias": {
+    "x": 295,
+    "y": 145,
+    "definition": "senor_de_las_bestias"
+  },
+  "espiritu_del_bosque": {
+    "x": 295,
+    "y": 210,
+    "definition": "espiritu_del_bosque"
+  },
+  "minerales": {
+    "x": 0,
+    "y": 300,
+    "definition": "minerales"
+  },
+  "minero": {
+    "x": 0,
+    "y": 330,
+    "definition": "minero"
+  },
+  "exploracion": {
+    "x": -120,
+    "y": 180,
+    "definition": "exploracion"
   }
 }

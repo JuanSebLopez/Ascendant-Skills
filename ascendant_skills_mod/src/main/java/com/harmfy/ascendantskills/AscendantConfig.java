@@ -252,6 +252,19 @@ public final class AscendantConfig {
         put(file, "invencible", 25);
         put(file, "bastion_absoluto", 30, "cataclysm:scylla");
         put(file, "titan", 35, "minecraft:wither");
+
+        put(file, "naturaleza", 3);
+        put(file, "pacto_natural", 7);
+        put(file, "ganadero", 10);
+        put(file, "herbolario", 10);
+        put(file, "el_buen_vaquero", 15);
+        put(file, "el_don_del_ratel", 15, "cataclysm:netherite_monstrosity");
+        put(file, "apex_predator", 20);
+        put(file, "druida", 20);
+        put(file, "guardian_natural", 25);
+        put(file, "avatar_de_la_naturaleza", 30, "cataclysm:maledictus");
+        put(file, "senor_de_las_bestias", 35, "minecraft:ender_dragon");
+        put(file, "espiritu_del_bosque", 35);
         return file;
     }
 

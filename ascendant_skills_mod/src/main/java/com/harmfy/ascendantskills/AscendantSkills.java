@@ -37,6 +37,15 @@ public final class AscendantSkills {
         NeoForge.EVENT_BUS.addListener(CombatPerks::onLivingUseItemTick);
         NeoForge.EVENT_BUS.addListener(CombatPerks::onArrowLoose);
         NeoForge.EVENT_BUS.addListener(CombatPerks::onPlayerTick);
+        NeoForge.EVENT_BUS.addListener(NaturePerks::onCropGrowPre);
+        NeoForge.EVENT_BUS.addListener(NaturePerks::onFarmlandTrample);
+        NeoForge.EVENT_BUS.addListener(NaturePerks::onLivingUseItemFinish);
+        NeoForge.EVENT_BUS.addListener(NaturePerks::onMobEffectApplicable);
+        NeoForge.EVENT_BUS.addListener(NaturePerks::onLivingChangeTarget);
+        NeoForge.EVENT_BUS.addListener(NaturePerks::onBlockBreak);
+        NeoForge.EVENT_BUS.addListener(NaturePerks::onLivingDamagePre);
+        NeoForge.EVENT_BUS.addListener(NaturePerks::onLivingDamagePost);
+        NeoForge.EVENT_BUS.addListener(NaturePerks::onPlayerTick);
         NeoForge.EVENT_BUS.addListener(AscendantPotions::registerBrewingRecipes);
         NeoForge.EVENT_BUS.addListener(AscendantPotions::onPotionBrewPost);
         NeoForge.EVENT_BUS.addListener(AscendantPotions::onUseItemFinish);

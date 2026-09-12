@@ -21,5 +21,14 @@
   "attribute.ascendant_skills.projectile_velocity": "Projectile Velocity",
   "attribute.ascendant_skills.passive_regen_health": "Passive Regen Health",
   "attribute.ascendant_skills.passive_regen_interval": "Passive Regen Interval",
-  "attribute.ascendant_skills.aggro_reach": "Aggro Reach"
+  "attribute.ascendant_skills.aggro_reach": "Aggro Reach",
+  "attribute.ascendant_skills.crop_growth_speed": "Crop Growth Speed",
+  "attribute.ascendant_skills.crop_growth_radius": "Crop Growth Radius",
+  "attribute.ascendant_skills.breeding_speed": "Breeding Speed",
+  "attribute.ascendant_skills.breeding_radius": "Breeding Radius",
+  "attribute.ascendant_skills.animal_product_bonus": "Animal Product Bonus",
+  "attribute.ascendant_skills.crop_harvest_bonus": "Crop Harvest Bonus",
+  "attribute.ascendant_skills.raw_food_saturation": "Raw Food Saturation",
+  "attribute.ascendant_skills.hoe_damage": "Hoe Damage",
+  "attribute.ascendant_skills.global_life_steal": "Global Life Steal"
 }

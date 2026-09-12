@@ -92,6 +92,42 @@ public final class AscendantAttributes {
             "aggro_reach",
             () -> new RangedAttribute("attribute.ascendant_skills.aggro_reach", 0.0D, 0.0D, 10.0D).setSyncable(true)
     );
+    public static final DeferredHolder<Attribute, Attribute> CROP_GROWTH_SPEED = ATTRIBUTES.register(
+            "crop_growth_speed",
+            () -> new RangedAttribute("attribute.ascendant_skills.crop_growth_speed", 0.0D, 0.0D, 10.0D).setSyncable(true)
+    );
+    public static final DeferredHolder<Attribute, Attribute> CROP_GROWTH_RADIUS = ATTRIBUTES.register(
+            "crop_growth_radius",
+            () -> new RangedAttribute("attribute.ascendant_skills.crop_growth_radius", 0.0D, 0.0D, 64.0D).setSyncable(true)
+    );
+    public static final DeferredHolder<Attribute, Attribute> BREEDING_SPEED = ATTRIBUTES.register(
+            "breeding_speed",
+            () -> new RangedAttribute("attribute.ascendant_skills.breeding_speed", 0.0D, 0.0D, 10.0D).setSyncable(true)
+    );
+    public static final DeferredHolder<Attribute, Attribute> BREEDING_RADIUS = ATTRIBUTES.register(
+            "breeding_radius",
+            () -> new RangedAttribute("attribute.ascendant_skills.breeding_radius", 0.0D, 0.0D, 64.0D).setSyncable(true)
+    );
+    public static final DeferredHolder<Attribute, Attribute> ANIMAL_PRODUCT_BONUS = ATTRIBUTES.register(
+            "animal_product_bonus",
+            () -> new RangedAttribute("attribute.ascendant_skills.animal_product_bonus", 0.0D, 0.0D, 100.0D).setSyncable(true)
+    );
+    public static final DeferredHolder<Attribute, Attribute> CROP_HARVEST_BONUS = ATTRIBUTES.register(
+            "crop_harvest_bonus",
+            () -> new RangedAttribute("attribute.ascendant_skills.crop_harvest_bonus", 0.0D, 0.0D, 100.0D).setSyncable(true)
+    );
+    public static final DeferredHolder<Attribute, Attribute> RAW_FOOD_SATURATION = ATTRIBUTES.register(
+            "raw_food_saturation",
+            () -> new RangedAttribute("attribute.ascendant_skills.raw_food_saturation", 0.0D, 0.0D, 10.0D).setSyncable(true)
+    );
+    public static final DeferredHolder<Attribute, Attribute> HOE_DAMAGE = ATTRIBUTES.register(
+            "hoe_damage",
+            () -> new RangedAttribute("attribute.ascendant_skills.hoe_damage", 0.0D, 0.0D, 100.0D).setSyncable(true)
+    );
+    public static final DeferredHolder<Attribute, Attribute> GLOBAL_LIFE_STEAL = ATTRIBUTES.register(
+            "global_life_steal",
+            () -> new RangedAttribute("attribute.ascendant_skills.global_life_steal", 0.0D, 0.0D, 10.0D).setSyncable(true)
+    );
 
     private AscendantAttributes() {
     }
@@ -117,6 +153,15 @@ public final class AscendantAttributes {
         event.add(EntityType.PLAYER, PASSIVE_REGEN_HEALTH);
         event.add(EntityType.PLAYER, PASSIVE_REGEN_INTERVAL);
         event.add(EntityType.PLAYER, AGGRO_REACH);
+        event.add(EntityType.PLAYER, CROP_GROWTH_SPEED);
+        event.add(EntityType.PLAYER, CROP_GROWTH_RADIUS);
+        event.add(EntityType.PLAYER, BREEDING_SPEED);
+        event.add(EntityType.PLAYER, BREEDING_RADIUS);
+        event.add(EntityType.PLAYER, ANIMAL_PRODUCT_BONUS);
+        event.add(EntityType.PLAYER, CROP_HARVEST_BONUS);
+        event.add(EntityType.PLAYER, RAW_FOOD_SATURATION);
+        event.add(EntityType.PLAYER, HOE_DAMAGE);
+        event.add(EntityType.PLAYER, GLOBAL_LIFE_STEAL);
     }
 
     public static int resetAscendantBaseValues(ServerPlayer player) {
@@ -141,6 +186,15 @@ public final class AscendantAttributes {
         changed += reset(player, PASSIVE_REGEN_HEALTH);
         changed += reset(player, PASSIVE_REGEN_INTERVAL);
         changed += reset(player, AGGRO_REACH);
+        changed += reset(player, CROP_GROWTH_SPEED);
+        changed += reset(player, CROP_GROWTH_RADIUS);
+        changed += reset(player, BREEDING_SPEED);
+        changed += reset(player, BREEDING_RADIUS);
+        changed += reset(player, ANIMAL_PRODUCT_BONUS);
+        changed += reset(player, CROP_HARVEST_BONUS);
+        changed += reset(player, RAW_FOOD_SATURATION);
+        changed += reset(player, HOE_DAMAGE);
+        changed += reset(player, GLOBAL_LIFE_STEAL);
         return changed;
     }
 

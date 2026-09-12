@@ -1,190 +1,77 @@
 {
   "normal": {
     "bidirectional": [
-      [
-        "inicio",
-        "combate"
-      ],
-      [
-        "combate",
-        "cazador"
-      ],
-      [
-        "combate",
-        "luchador"
-      ],
-      [
-        "combate",
-        "bastion"
-      ],
-      [
-        "luchador",
-        "coraza_de_acero"
-      ],
-      [
-        "coraza_de_acero",
-        "danzante_de_acero"
-      ],
-      [
-        "coraza_de_acero",
-        "verdugo"
-      ],
-      [
-        "danzante_de_acero",
-        "inamovible"
-      ],
-      [
-        "verdugo",
-        "inamovible"
-      ],
-      [
-        "inamovible",
-        "veterano_de_guerra"
-      ],
-      [
-        "inamovible",
-        "berserker"
-      ],
-      [
-        "inamovible",
-        "juggernaut"
-      ],
-      [
-        "juggernaut",
-        "conquistador"
-      ],
-      [
-        "conquistador",
-        "senor_de_la_guerra"
-      ],
-      [
-        "cazador",
-        "punteria"
-      ],
-      [
-        "punteria",
-        "ojo_certero"
-      ],
-      [
-        "punteria",
-        "tiro_rapido"
-      ],
-      [
-        "ojo_certero",
-        "francotirador"
-      ],
-      [
-        "tiro_rapido",
-        "aljaba_ligera"
-      ],
-      [
-        "francotirador",
-        "perforador"
-      ],
-      [
-        "aljaba_ligera",
-        "escaramuzador"
-      ],
-      [
-        "perforador",
-        "deadeye"
-      ],
-      [
-        "escaramuzador",
-        "barrage"
-      ],
-      [
-        "deadeye",
-        "maestro_tirador"
-      ],
-      [
-        "barrage",
-        "maestro_tirador"
-      ],
-      [
-        "bastion",
-        "muralla"
-      ],
-      [
-        "muralla",
-        "fortaleza"
-      ],
-      [
-        "muralla",
-        "guardaespaldas"
-      ],
-      [
-        "fortaleza",
-        "coloso"
-      ],
-      [
-        "guardaespaldas",
-        "provocador"
-      ],
-      [
-        "coloso",
-        "regenerador"
-      ],
-      [
-        "coloso",
-        "bastion_absoluto"
-      ],
-      [
-        "provocador",
-        "invencible"
-      ],
-      [
-        "provocador",
-        "bastion_absoluto"
-      ],
-      [
-        "bastion_absoluto",
-        "titan"
-      ]
+      ["inicio", "combate"],
+      ["combate", "cazador"],
+      ["combate", "luchador"],
+      ["combate", "bastion"],
+      ["luchador", "coraza_de_acero"],
+      ["coraza_de_acero", "danzante_de_acero"],
+      ["coraza_de_acero", "verdugo"],
+      ["danzante_de_acero", "inamovible"],
+      ["verdugo", "inamovible"],
+      ["inamovible", "veterano_de_guerra"],
+      ["inamovible", "berserker"],
+      ["inamovible", "juggernaut"],
+      ["juggernaut", "conquistador"],
+      ["conquistador", "senor_de_la_guerra"],
+      ["cazador", "punteria"],
+      ["punteria", "ojo_certero"],
+      ["punteria", "tiro_rapido"],
+      ["ojo_certero", "francotirador"],
+      ["tiro_rapido", "aljaba_ligera"],
+      ["francotirador", "perforador"],
+      ["aljaba_ligera", "escaramuzador"],
+      ["perforador", "deadeye"],
+      ["escaramuzador", "barrage"],
+      ["deadeye", "maestro_tirador"],
+      ["barrage", "maestro_tirador"],
+      ["bastion", "muralla"],
+      ["muralla", "fortaleza"],
+      ["muralla", "guardaespaldas"],
+      ["fortaleza", "coloso"],
+      ["guardaespaldas", "provocador"],
+      ["coloso", "regenerador"],
+      ["coloso", "bastion_absoluto"],
+      ["provocador", "invencible"],
+      ["provocador", "bastion_absoluto"],
+      ["bastion_absoluto", "titan"],
+      ["naturaleza", "pacto_natural"],
+      ["pacto_natural", "ganadero"],
+      ["pacto_natural", "herbolario"],
+      ["inicio", "naturaleza"],
+      ["ganadero", "el_buen_vaquero"],
+      ["herbolario", "el_don_del_ratel"],
+      ["el_buen_vaquero", "apex_predator"],
+      ["el_don_del_ratel", "druida"],
+      ["apex_predator", "guardian_natural"],
+      ["druida", "guardian_natural"],
+      ["guardian_natural", "avatar_de_la_naturaleza"],
+      ["avatar_de_la_naturaleza", "senor_de_las_bestias"],
+      ["avatar_de_la_naturaleza", "espiritu_del_bosque"],
+      ["minerales", "minero"]
     ]
   },
   "exclusive": {
     "bidirectional": [
-      [
-        "luchador",
-        "cazador"
-      ],
-      [
-        "luchador",
-        "bastion"
-      ],
-      [
-        "cazador",
-        "bastion"
-      ],
-      [
-        "danzante_de_acero",
-        "verdugo"
-      ],
-      [
-        "berserker",
-        "juggernaut"
-      ],
-      [
-        "ojo_certero",
-        "tiro_rapido"
-      ],
-      [
-        "francotirador",
-        "aljaba_ligera"
-      ],
-      [
-        "perforador",
-        "escaramuzador"
-      ],
-      [
-        "fortaleza",
-        "guardaespaldas"
-      ],
-      [
-        "deadeye",
-        "barrage"
-      ]
+      ["luchador", "cazador"],
+      ["luchador", "bastion"],
+      ["cazador", "bastion"],
+      ["danzante_de_acero", "verdugo"],
+      ["berserker", "juggernaut"],
+      ["ojo_certero", "tiro_rapido"],
+      ["francotirador", "aljaba_ligera"],
+      ["perforador", "escaramuzador"],
+      ["coloso", "provocador"],
+      ["fortaleza", "guardaespaldas"],
+      ["deadeye", "barrage"],
+      ["ganadero", "herbolario"],
+      ["combate", "naturaleza"],
+      ["naturaleza", "minerales"],
+      ["naturaleza", "exploracion"],
+      ["el_buen_vaquero", "el_don_del_ratel"],
+      ["apex_predator", "druida"],
+      ["senor_de_las_bestias", "espiritu_del_bosque"]
     ]
   }
 }

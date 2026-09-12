@@ -39,7 +39,7 @@
           "color": "aqua"
         },
         {
-          "text": "Bonificaciones pasivas del nodo.",
+          "text": "-",
           "color": "gray"
         }
       ]
@@ -55,7 +55,7 @@
           "color": "green"
         },
         {
-          "text": "+5% global DMG, +5% global AS, +1 HP.",
+          "text": "+5% daño global, +5% velocidad de ataque global, +1 HP.",
           "color": "gray"
         }
       ]
@@ -145,7 +145,7 @@
           "color": "green"
         },
         {
-          "text": "+5% melee dmg, +5% AS melee, +5% knockback resist.",
+          "text": "+5% daño, +5% velocidad de ataque, +5% resistencia al empuje.",
           "color": "gray"
         }
       ]
@@ -166,7 +166,7 @@
           "color": "dark_purple"
         },
         {
-          "text": "Matar a 5 zombies\n",
+          "text": "-\n",
           "color": "light_purple"
         },
         {
@@ -235,7 +235,7 @@
           "color": "green"
         },
         {
-          "text": "+0.75 toughness, +2 armor, +2 HP.",
+          "text": "+0.75 tenacidad, +2 armadura, +2 HP.",
           "color": "gray"
         }
       ]
@@ -325,7 +325,7 @@
           "color": "green"
         },
         {
-          "text": "+0.25 melee reach, +5% move speed, +50% sweep dmg.",
+          "text": "+0.25 alcance, +5% velocidad, +50% daño de barrido.",
           "color": "gray"
         }
       ]
@@ -354,7 +354,7 @@
           "color": "aqua"
         },
         {
-          "text": "Combo de acero: cada ataque aumenta +2% AS melee (max +10%) y pierde 1 carga cada 3 seg sin golpear.",
+          "text": "Combo de acero: cada ataque aumenta +2% velocidad de ataque (max +10%) y pierde 1 carga cada 3 seg sin golpear.",
           "color": "gray"
         }
       ]
@@ -415,7 +415,7 @@
           "color": "green"
         },
         {
-          "text": "+15% crit dmg, +5% prob crit melee.",
+          "text": "+15% daño crítico, +5% probabilidad de crítico en ataques.",
           "color": "gray"
         }
       ]
@@ -444,7 +444,7 @@
           "color": "aqua"
         },
         {
-          "text": "Ojo Critico: el proximo ataque inflige critico y +15% dmg melee si el enemigo esta bajo 30% HP. CD 10 seg; se reinicia si matas al enemigo.",
+          "text": "Ojo Critico: el proximo ataque inflige critico y +15% de daño si el enemigo esta por debajo del 30% HP. CD 10 seg; se reinicia si matas al enemigo.",
           "color": "gray"
         }
       ]
@@ -497,7 +497,7 @@
           "color": "green"
         },
         {
-          "text": "+10% global resist, +10% knockback resist.",
+          "text": "+10% resistencia global, +10% resistencia al empuje.",
           "color": "gray"
         }
       ]
@@ -579,7 +579,7 @@
           "color": "green"
         },
         {
-          "text": "+10% melee dmg, +2 HP.",
+          "text": "+10% daño, +2 HP.",
           "color": "gray"
         }
       ]
@@ -608,7 +608,7 @@
           "color": "aqua"
         },
         {
-          "text": "Veterano de Guerra: los enemigos golpeados hacen -10% dmg contra ti durante 5 seg.",
+          "text": "Veterano de Guerra: los enemigos golpeados hacen -10% de daño contra ti durante 5 seg.",
           "color": "gray"
         }
       ]
@@ -661,7 +661,7 @@
           "color": "green"
         },
         {
-          "text": "+5% life steal, +3% AS, +2 dmg con espada/hacha, -1.5 armor.",
+          "text": "+5% robo de vida, +3% velocidad de ataque, +2 de daño con espada/hacha, -1.5 de armadura.",
           "color": "gray"
         }
       ]
@@ -690,7 +690,7 @@
           "color": "aqua"
         },
         {
-          "text": "Berserker: mientras tengas menos del 20% de vida infliges +15% dmg melee, +12% AS y +6% life steal.",
+          "text": "Berserker: mientras tengas menos del 20% de vida obtienes +15% daño, +12% velocidad de ataque y +6% robo de vida.",
           "color": "gray"
         }
       ]
@@ -743,7 +743,7 @@
           "color": "green"
         },
         {
-          "text": "-5% melee dmg, +3 armor, +10% melee resist.",
+          "text": "-5% daño cuerpo a cuerpo, +3 armadura, +10% resistencia cuerpo a cuerpo.",
           "color": "gray"
         }
       ]
@@ -772,7 +772,7 @@
           "color": "aqua"
         },
         {
-          "text": "Juggernaut: al recibir melee dmg obtienes 5 seg de inmunidad al knockback melee. CD 15 seg.",
+          "text": "Juggernaut: al recibir daño cuerpo a cuerpo, obtienes 5 seg de inmunidad al knockback melee. CD 15 seg.",
           "color": "gray"
         }
       ]
@@ -833,7 +833,7 @@
           "color": "green"
         },
         {
-          "text": "+5% armor shred melee, +5% melee dmg, +0.75 toughness, +3 HP, +5% melee resist.",
+          "text": "+5% penetración de armadura, +5% daño, +0.75 tenacidad, +3 HP, +5% resistencia cuerpo a cuerpo.",
           "color": "gray"
         }
       ]
@@ -862,7 +862,7 @@
           "color": "aqua"
         },
         {
-          "text": "Conquistador: al matar un mob hostil obtienes +3% melee dmg durante 5 seg, acumulable 5 veces; pierde 1 carga cada 5 seg sin matar.",
+          "text": "Conquistador: al matar un mob hostil obtienes +3% de daño durante 5 seg, acumulable 5 veces; pierde 1 carga cada 5 seg sin matar a nadie.",
           "color": "gray"
         }
       ]
@@ -939,7 +939,7 @@
           "color": "green"
         },
         {
-          "text": "+20% melee dmg, +10% AS melee, +4 HP.",
+          "text": "+20% daño, +10% velocidad de ataque, +4 HP.",
           "color": "gray"
         }
       ]
@@ -1029,7 +1029,7 @@
           "color": "green"
         },
         {
-          "text": "+5% projectile damage, +5% prob crit ranged, +5% move speed.",
+          "text": "+5% daño de proyectil, +5% probabilidad de crítico, +5% velocidad.",
           "color": "gray"
         }
       ]
@@ -1119,7 +1119,7 @@
           "color": "green"
         },
         {
-          "text": "+10% crit dmg ranged, +5% prob crit ranged.",
+          "text": "+10% daño crítico, +5% probabilidad de crítico.",
           "color": "gray"
         }
       ]
@@ -1201,7 +1201,7 @@
           "color": "green"
         },
         {
-          "text": "+15% crit dmg ranged, +5% prob crit ranged, -5% AS ranged.",
+          "text": "+15% daño crítico, +5% probabilidad de crítico, -5% velocidad de ataque.",
           "color": "gray"
         }
       ]
@@ -1291,7 +1291,7 @@
           "color": "green"
         },
         {
-          "text": "+10% AS ranged, -10% crit dmg ranged.",
+          "text": "+10% velocidad de ataque, -10% de daño crítico.",
           "color": "gray"
         }
       ]
@@ -1373,7 +1373,7 @@
           "color": "green"
         },
         {
-          "text": "+15% crit dmg ranged, +5% prob crit ranged, -5% AS ranged.",
+          "text": "+15% daño crítico, +5% probabilidad de crítico, -5% velocidad de ataque.",
           "color": "gray"
         }
       ]
@@ -1463,7 +1463,7 @@
           "color": "green"
         },
         {
-          "text": "+10% projectile velocity, +10% prob de no consumir flechas, -10% crit dmg ranged.",
+          "text": "+10% velocidad de proyectil, +10% probabilidad de no consumir flechas, -10% daño crítico.",
           "color": "gray"
         }
       ]
@@ -1492,7 +1492,7 @@
           "color": "aqua"
         },
         {
-          "text": "Cadencia ligera: cada impacto aumenta +2% AS ranged, max +10%; pierde 1 carga cada 5 seg sin impactar.",
+          "text": "Cadencia ligera: cada impacto aumenta +2% velocidad de ataque, max +10%; pierde 1 carga cada 5 seg sin impactar.",
           "color": "gray"
         }
       ]
@@ -1545,7 +1545,7 @@
           "color": "green"
         },
         {
-          "text": "+5% projectile damage, +5% armor shred ranged.",
+          "text": "+5% daño de proyectil, +5% penetración de armadura.",
           "color": "gray"
         }
       ]
@@ -1574,7 +1574,7 @@
           "color": "aqua"
         },
         {
-          "text": "Perforador: tus flechas obtienen +1 piercing. Cada objetivo muerto en trayectoria aumenta +15% el daño de la trayectoria restante de la flecha.",
+          "text": "Perforador: tus flechas obtienen +1 perforación. Cada objetivo muerto en trayectoria aumenta +15% el daño de la trayectoria restante de la flecha.",
           "color": "gray"
         }
       ]
@@ -1627,7 +1627,7 @@
           "color": "green"
         },
         {
-          "text": "+5% AS ranged, +10% move speed.",
+          "text": "+5% velocidad de ataque, +10% velocidad.",
           "color": "gray"
         }
       ]
@@ -1709,7 +1709,7 @@
           "color": "green"
         },
         {
-          "text": "+5% crit chance ranged, +15% crit dmg ranged, -5% AS ranged.",
+          "text": "+5% probabilidad de crítico, +15% daño crítico, -5% velocidad de ataque.",
           "color": "gray"
         }
       ]
@@ -1738,7 +1738,7 @@
           "color": "aqua"
         },
         {
-          "text": "Deadeye: cada critico aumenta +1% crit chance del siguiente disparo, max 25 cargas; pierde 1 carga si el disparo no acierta o tras 20 seg sin critico.",
+          "text": "Deadeye: cada critico aumenta en +1% la prob. crítica del siguiente disparo, max 25 cargas; pierde 1 carga si el disparo no acierta o al no acertar un critico.",
           "color": "gray"
         }
       ]
@@ -1799,7 +1799,7 @@
           "color": "green"
         },
         {
-          "text": "+5% projectile damage, +10% projectile velocity, +10% AS ranged, -10% crit dmg ranged.",
+          "text": "+5% daño de proyectil, +10% velocidad de proyectil, +10% velocidad de ataque, -10% daño crítico.",
           "color": "gray"
         }
       ]
@@ -1897,7 +1897,7 @@
           "color": "green"
         },
         {
-          "text": "+20% projectile damage, +20% crit dmg ranged, +15% armor shred ranged, +20% AS ranged, +4 HP.",
+          "text": "+20% daño de proyectil, +20% daño crítico, +15% penetración de armadura, +20% velocidad de ataque, +4 HP.",
           "color": "gray"
         }
       ]
@@ -1926,7 +1926,7 @@
           "color": "aqua"
         },
         {
-          "text": "Disparo perfecto: apuntar/cargar 5 seg da +30% dano e ignora 15% armor. CD 10 seg.",
+          "text": "Disparo perfecto: apuntar/cargar 5 seg da +30% daño e ignora 15% armdura. CD 10 seg.",
           "color": "gray"
         }
       ]
@@ -2003,7 +2003,7 @@
           "color": "green"
         },
         {
-          "text": "+5% global resist, +4 HP, -5% move speed.",
+          "text": "+5% resistencia global, +4 HP, -5% velocidad.",
           "color": "gray"
         }
       ]
@@ -2093,7 +2093,7 @@
           "color": "green"
         },
         {
-          "text": "+3 armor, +1 toughness, +10% knockback resist.",
+          "text": "+3 armadura, +1 tenacidad, +10% resistencia al empuje.",
           "color": "gray"
         }
       ]
@@ -2122,7 +2122,7 @@
           "color": "aqua"
         },
         {
-          "text": "Postura del Baluarte: con escudo en mano izquierda obtienes +10% melee, projectile y explosion resist. Sin escudo obtienes +10% move speed y +10% melee dmg.",
+          "text": "Postura del Baluarte: con escudo en mano izquierda obtienes +10% resistencia global. Sin escudo obtienes +10% velocidad y +10% daño.",
           "color": "gray"
         }
       ]
@@ -2186,7 +2186,7 @@
           "color": "green"
         },
         {
-          "text": "+5 HP, +4 armor, +10% melee resist, +10% projectile resist, -5% move speed.",
+          "text": "+5 HP, +4 armadura, +10% resistencia cuerpo a cuerpo, +10% resistencia a proyectiles, -5% velocidad.",
           "color": "gray"
         }
       ]
@@ -2215,7 +2215,7 @@
           "color": "aqua"
         },
         {
-          "text": "Piel de acero: golpes melee de mobs aumentan +2% melee resist, max 5 cargas; pierde 1 carga cada 5 seg sin recibir golpe melee.",
+          "text": "Piel de acero: golpes melee de mobs aumentan +2% resistencia cuerpo a cuerpo, max 5 cargas; pierde 1 carga cada 5 seg sin recibir golpe.",
           "color": "gray"
         }
       ]
@@ -2321,7 +2321,7 @@
           "color": "aqua"
         },
         {
-          "text": "Intercepcion: si estas en party, reduces 30% el dano final del siguiente golpe/proyectil que recibe el aliado mas cercano en 10 bloques. CD 10 seg.",
+          "text": "Intercepcion: si estas en party, reduces 30% el daño final del siguiente golpe/proyectil que recibe el aliado mas cercano en 10 bloques. CD 10 seg.",
           "color": "gray"
         }
       ]
@@ -2366,7 +2366,7 @@
           "color": "green"
         },
         {
-          "text": "+10% size, +6 HP, +1 toughness, +15% explosion resist, -5% move speed.",
+          "text": "+10% de tamaño, +6 HP, +1 tenacidad, +15% resistencia a explosiones, -5% velocidad.",
           "color": "gray"
         }
       ]
@@ -2395,7 +2395,7 @@
           "color": "aqua"
         },
         {
-          "text": "Anclado: reduce 60% el knockback.",
+          "text": "Anclado: reduce 60% el empuje hacia a ti.",
           "color": "gray"
         }
       ]
@@ -2472,7 +2472,7 @@
           "color": "green"
         },
         {
-          "text": "+20% aggro reach, +5% global resist.",
+          "text": "+20% visibilidad, +5% resistencia global.",
           "color": "gray"
         }
       ]
@@ -2501,7 +2501,7 @@
           "color": "aqua"
         },
         {
-          "text": "Desafio: enemigos cercanos hacen -10% dano a tus aliados y reciben +5% dano de tus aliados. Radio 5 bloques.",
+          "text": "Desafio: enemigos cercanos hacen -10% daño a tus aliados y reciben +5% daño de tus aliados. Radio 5 bloques.",
           "color": "gray"
         }
       ]
@@ -2509,7 +2509,7 @@
     "icon": {
       "type": "item",
       "data": {
-        "item": "bosses_of_mass_destruction:crystal_fruit"
+        "item": "dummmmmmy:target_dummy"
       }
     },
     "frame": {
@@ -2554,7 +2554,7 @@
           "color": "green"
         },
         {
-          "text": "+0.5 HP de regen pasiva, -2 seg de intervalo, -5% melee dmg.",
+          "text": "+0.5 HP de regen pasiva, -2 seg de intervalo, -5% de daño.",
           "color": "gray"
         }
       ]
@@ -2644,7 +2644,7 @@
           "color": "green"
         },
         {
-          "text": "+5 HP, +5% global resist, +2 seg de intervalo de curacion pasiva.",
+          "text": "+5 HP, +5% resistencia global, +2 seg de intervalo de curacion pasiva.",
           "color": "gray"
         }
       ]
@@ -2673,7 +2673,7 @@
           "color": "aqua"
         },
         {
-          "text": "Ultimo Bastion: al bajar de 30% HP max obtienes +50% global resist por 5 seg. CD 40 seg.",
+          "text": "Ultimo Bastion: al bajar de 30% HP max obtienes +50% resistencia global por 5 seg. CD 40 seg.",
           "color": "gray"
         }
       ]
@@ -2734,7 +2734,7 @@
           "color": "green"
         },
         {
-          "text": "+1 toughness, +5% melee resist, +5% projectile resist.",
+          "text": "+1 tenacidad, +5% resistencia cuerpo a cuerpo, +5% resistencia a proyectiles.",
           "color": "gray"
         }
       ]
@@ -2827,7 +2827,7 @@
           "color": "green"
         },
         {
-          "text": "+10 HP, +3 armor, +2 toughness, +5% global resist.",
+          "text": "+10 HP, +3 armor, +2 tenacidad, +5% resistencia global.",
           "color": "gray"
         }
       ]
@@ -2856,7 +2856,7 @@
           "color": "aqua"
         },
         {
-          "text": "Aura del Titan: por cada miembro online de tu party, contandote siempre a ti, obtienes +2.5% global dmg y global crit dmg, +1.25% global attack speed, move speed, global resist y global crit chance, y +1 HP. Max configurable.",
+          "text": "Aura del Titan: por cada miembro de tu party, contandote siempre a ti, obtienes +2.5% daño global y daño crítico global, +1.25% velocidad de ataque global, velocidad, resistencia global y prob. crítico global, y +1 HP.",
           "color": "gray"
         }
       ]
@@ -2914,5 +2914,1254 @@
         }
       }
     ]
+  },
+  "naturaleza": {
+    "title": "Naturaleza",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+5% velocidad de crecimiento de cultivos en radio, +5% velocidad de crianza en radio, +2 HP.",
+          "color": "gray"
+        }
+      ]
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:grass_block"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "task"
+      }
+    },
+    "cost": 3,
+    "rewards": [
+      {
+        "type": "puffish_skills:tag",
+        "data": {
+          "tag": "ascendant_nature_naturaleza"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "generic.max_health",
+          "value": 2,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:crop_growth_speed",
+          "value": 0.05,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:crop_growth_radius",
+          "value": 2,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:breeding_speed",
+          "value": 0.05,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:breeding_radius",
+          "value": 2,
+          "operation": "addition"
+        }
+      }
+    ],
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "3 niveles de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "-\n",
+          "color": "gray"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "-",
+          "color": "dark_gray"
+        }
+      ]
+    }
+  },
+  "pacto_natural": {
+    "title": "Pacto Natural",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+0.5 regeneración natural, +25% saciedad por alimentos crudos.",
+          "color": "gray"
+        }
+      ]
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:apple"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "goal"
+      }
+    },
+    "cost": 7,
+    "rewards": [
+      {
+        "type": "puffish_skills:tag",
+        "data": {
+          "tag": "ascendant_nature_pacto_natural"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:passive_regen_health",
+          "value": 0.5,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:raw_food_saturation",
+          "value": 0.25,
+          "operation": "addition"
+        }
+      }
+    ],
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "7 niveles de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "-\n",
+          "color": "gray"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Alma del Bosque: +5% velocidad de movimiento sobre bloques naturales.",
+          "color": "gray"
+        }
+      ]
+    }
+  },
+  "ganadero": {
+    "title": "Ganadero",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+3 radio de crianza, +5% velocidad de crianza, +1 producción animal dentro del radio.",
+          "color": "gray"
+        }
+      ]
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "vinery:straw_hat"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "goal"
+      }
+    },
+    "cost": 10,
+    "rewards": [
+      {
+        "type": "puffish_skills:tag",
+        "data": {
+          "tag": "ascendant_nature_ganadero"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:breeding_radius",
+          "value": 3,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:breeding_speed",
+          "value": 0.05,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:animal_product_bonus",
+          "value": 1,
+          "operation": "addition"
+        }
+      }
+    ],
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "10 niveles de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "The Parrots and the Bats\n",
+          "color": "light_purple"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Vínculo Animal: las criaturas de la naturaleza no serán hostiles salvo que las ataques primero.",
+          "color": "gray"
+        }
+      ]
+    }
+  },
+  "herbolario": {
+    "title": "Herbolario",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+3 radio de cultivos, +1 cosecha, +0.5 rango de interacción.",
+          "color": "gray"
+        }
+      ]
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:iron_hoe"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "goal"
+      }
+    },
+    "cost": 10,
+    "rewards": [
+      {
+        "type": "puffish_skills:tag",
+        "data": {
+          "tag": "ascendant_nature_herbolario"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:crop_growth_radius",
+          "value": 3,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:crop_harvest_bonus",
+          "value": 1,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "player.entity_interaction_range",
+          "value": 0.5,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:hoe_damage",
+          "value": 2,
+          "operation": "addition"
+        }
+      }
+    ],
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "10 niveles de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "-\n",
+          "color": "gray"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Destreza del Agricultor: tus saltos no destruyen cultivos, tus azadas hacen más daño y ganas +0.5 rango de interacción adicional con una azada en la mano principal.",
+          "color": "gray"
+        }
+      ]
+    }
+  },
+  "el_buen_vaquero": {
+    "title": "El Buen Vaquero",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+3 radio de crianza, +1 producción animal, +0.5 rango de interacción, +5% velocidad, +0.25 altura de paso.",
+          "color": "gray"
+        }
+      ]
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:saddle"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "goal"
+      }
+    },
+    "cost": 15,
+    "rewards": [
+      {
+        "type": "puffish_skills:tag",
+        "data": {
+          "tag": "ascendant_nature_el_buen_vaquero"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:breeding_radius",
+          "value": 3,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:animal_product_bonus",
+          "value": 1,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "player.entity_interaction_range",
+          "value": 0.5,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "generic.movement_speed",
+          "value": 0.05,
+          "operation": "multiply_total"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "generic.step_height",
+          "value": 0.25,
+          "operation": "addition"
+        }
+      }
+    ],
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "15 niveles de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "Aparear 2 vacas, ovejas, cerdos y gallinas\n",
+          "color": "light_purple"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "-",
+          "color": "dark_gray"
+        }
+      ]
+    }
+  },
+  "el_don_del_ratel": {
+    "title": "Don del Ratel",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "Inmunidad al veneno y al hambre.",
+          "color": "gray"
+        }
+      ]
+    },
+    "icon": {
+      "type": "effect",
+      "data": {
+        "effect": "minecraft:poison"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "challenge"
+      }
+    },
+    "cost": 15,
+    "rewards": [
+      {
+        "type": "puffish_skills:tag",
+        "data": {
+          "tag": "ascendant_nature_el_don_del_ratel"
+        }
+      }
+    ],
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "15 niveles de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "Participar en matar al Netherite Monstrosity\n",
+          "color": "light_purple"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "-",
+          "color": "dark_gray"
+        }
+      ]
+    }
+  },
+  "apex_predator": {
+    "title": "Apex Predator",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+4 HP, +10% daño global, +5% velocidad, +1 tenacidad, +5% resistencia global.",
+          "color": "gray"
+        }
+      ]
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "betterarcheology:wolf_fossil"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "challenge"
+      }
+    },
+    "cost": 20,
+    "rewards": [
+      {
+        "type": "puffish_skills:tag",
+        "data": {
+          "tag": "ascendant_nature_apex_predator"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "generic.max_health",
+          "value": 4,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:global_damage",
+          "value": 0.1,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "generic.movement_speed",
+          "value": 0.05,
+          "operation": "multiply_total"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "generic.armor_toughness",
+          "value": 1,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:global_resistance",
+          "value": 0.05,
+          "operation": "addition"
+        }
+      }
+    ],
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "20 niveles de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "Domesticar 5 lobos\n",
+          "color": "light_purple"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Sentidos Felinos: obtienes visión nocturna permanente y los creepers huyen de ti hasta que sean golpeados.",
+          "color": "gray"
+        }
+      ]
+    }
+  },
+  "druida": {
+    "title": "Druida",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+3 radio de cultivos, +5% velocidad en el Overworld, +1 cosecha, +0.25 altura de paso.",
+          "color": "gray"
+        }
+      ]
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "artifacts:rooted_boots"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "goal"
+      }
+    },
+    "cost": 20,
+    "rewards": [
+      {
+        "type": "puffish_skills:tag",
+        "data": {
+          "tag": "ascendant_nature_druida"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:crop_growth_radius",
+          "value": 3,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:crop_harvest_bonus",
+          "value": 1,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "generic.movement_speed",
+          "value": 0.05,
+          "operation": "multiply_total"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "generic.step_height",
+          "value": 0.25,
+          "operation": "addition"
+        }
+      }
+    ],
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "20 niveles de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "-\n",
+          "color": "gray"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Senda de Conservación: caminar sobre hojas otorga +5% velocidad, +1 bloque de salto e inmunidad al daño de caída hasta 30 bloques si caes en hojas.",
+          "color": "gray"
+        }
+      ]
+    }
+  },
+  "guardian_natural": {
+    "title": "Guardián Natural",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+4 HP, +5% resistencia global, -2 seg de intervalo de regeneración pasiva.",
+          "color": "gray"
+        }
+      ]
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "ribbits:swamp_daisy"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "goal"
+      }
+    },
+    "cost": 25,
+    "rewards": [
+      {
+        "type": "puffish_skills:tag",
+        "data": {
+          "tag": "ascendant_nature_guardian_natural"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "generic.max_health",
+          "value": 4,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:global_resistance",
+          "value": 0.05,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:passive_regen_interval",
+          "value": -2,
+          "operation": "addition"
+        }
+      }
+    ],
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "25 niveles de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "-\n",
+          "color": "gray"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Espíritu Protector: aliados en 10 bloques obtienen +5% resistencia global, +0.5 regeneración natural y -2 seg de intervalo de regeneración.",
+          "color": "gray"
+        }
+      ]
+    }
+  },
+  "avatar_de_la_naturaleza": {
+    "title": "Avatar de la Naturaleza",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+5 HP, +15 seg de respiración bajo el agua, +25% velocidad al ir agachado.",
+          "color": "gray"
+        }
+      ]
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "bosses_of_mass_destruction:crystal_fruit"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "challenge"
+      }
+    },
+    "cost": 30,
+    "rewards": [
+      {
+        "type": "puffish_skills:tag",
+        "data": {
+          "tag": "ascendant_nature_avatar_de_la_naturaleza"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "generic.max_health",
+          "value": 5,
+          "operation": "addition"
+        }
+      }
+    ],
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "30 niveles de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "Participar en matar a Maledictus\n",
+          "color": "light_purple"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "-",
+          "color": "dark_gray"
+        }
+      ]
+    }
+  },
+  "senor_de_las_bestias": {
+    "title": "Señor de las Bestias",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "Criaturas domesticadas obtienen +12 HP, +30% daño, +6 armadura y +2 tenacidad.",
+          "color": "gray"
+        }
+      ]
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "endermanoverhaul:enderman_tooth"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "challenge"
+      }
+    },
+    "cost": 35,
+    "rewards": [
+      {
+        "type": "puffish_skills:tag",
+        "data": {
+          "tag": "ascendant_nature_senor_de_las_bestias"
+        }
+      }
+    ],
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "35 niveles de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "Participar en matar al Ender Dragon\n",
+          "color": "light_purple"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Manada: cada criatura domesticada cercana otorga +1% daño global, +0.25 armadura, +0.5% velocidad y +1% velocidad de ataque global. Máx. 10 acumulaciones.",
+          "color": "gray"
+        }
+      ]
+    }
+  },
+  "espiritu_del_bosque": {
+    "title": "Espíritu del Bosque",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+5% robo de vida, +5% daño global, +5% velocidad.",
+          "color": "gray"
+        }
+      ]
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:cherry_sapling"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "challenge"
+      }
+    },
+    "cost": 35,
+    "rewards": [
+      {
+        "type": "puffish_skills:tag",
+        "data": {
+          "tag": "ascendant_nature_espiritu_del_bosque"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:global_life_steal",
+          "value": 0.05,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:global_damage",
+          "value": 0.05,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "generic.movement_speed",
+          "value": 0.05,
+          "operation": "multiply_total"
+        }
+      }
+    ],
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "35 niveles de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "-\n",
+          "color": "gray"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Corazón Verde: inmunidad a cambios de temperatura. Clima despejado: +5% velocidad y +1 altura de paso. Lluvia: +0.5 regeneración natural y -2 seg de intervalo. Nieve: +1 tenacidad y +2 armadura. Tormenta: +5% velocidad de ataque global y daño.",
+          "color": "gray"
+        }
+      ]
+    }
+  },
+  "minerales": {
+    "title": "Minerales",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "",
+          "color": "gray"
+        }
+      ]
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:coal"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "task"
+      }
+    },
+    "cost": 3,
+    "rewards": [],
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "3 niveles de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "-\n",
+          "color": "gray"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "-",
+          "color": "dark_gray"
+        }
+      ]
+    }
+  },
+  "minero": {
+    "title": "Minero",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+5% velocidad al minar con picos, +0.5 rango de interacción con picos",
+          "color": "gray"
+        }
+      ]
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:stone_pickaxe"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "task"
+      }
+    },
+    "cost": 3,
+    "rewards": [],
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "7 niveles de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "-\n",
+          "color": "gray"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "-",
+          "color": "dark_gray"
+        }
+      ]
+    }
+  },
+  "exploracion": {
+    "title": "Exploración",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "",
+          "color": "gray"
+        }
+      ]
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "map_atlases:atlas"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "task"
+      }
+    },
+    "cost": 3,
+    "rewards": [],
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "3 niveles de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "-\n",
+          "color": "gray"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "-",
+          "color": "dark_gray"
+        }
+      ]
+    }
   }
 }
