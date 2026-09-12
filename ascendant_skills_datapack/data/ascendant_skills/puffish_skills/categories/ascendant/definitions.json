@@ -3661,7 +3661,7 @@
           "color": "aqua"
         },
         {
-          "text": "Senda de Conservación: caminar sobre hojas otorga +5% velocidad, +1 bloque de salto e inmunidad al daño de caída hasta 30 bloques si caes en hojas.",
+          "text": "Senda de Conservación: caminar sobre hojas otorga +10% velocidad, salto suave adicional e inmunidad al daño de caída hasta 30 bloques si caes en hojas.",
           "color": "gray"
         }
       ]
@@ -3797,6 +3797,14 @@
         "data": {
           "attribute": "generic.max_health",
           "value": 5,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:underwater_breath_seconds",
+          "value": 15,
           "operation": "addition"
         }
       }

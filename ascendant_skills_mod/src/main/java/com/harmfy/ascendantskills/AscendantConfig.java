@@ -13,6 +13,7 @@ import java.io.Reader;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -24,8 +25,10 @@ public final class AscendantConfig {
     private static final Path CONFIG_DIR = FMLPaths.CONFIGDIR.get().resolve(AscendantSkills.MOD_ID);
     private static final Path REQUIREMENTS_PATH = CONFIG_DIR.resolve("requirements.json");
     private static final Path GAMEPLAY_PATH = CONFIG_DIR.resolve("gameplay.json");
+    private static final Path NATURE_PATH = CONFIG_DIR.resolve("nature.json");
     private static Map<String, RequirementEntry> requirements = defaultRequirements();
     private static GameplayFile gameplay = defaultGameplay();
+    private static NatureFile nature = defaultNature();
 
     private AscendantConfig() {
     }
@@ -35,11 +38,13 @@ public final class AscendantConfig {
             Files.createDirectories(CONFIG_DIR);
             requirements = loadOrWriteDefaultRequirements();
             gameplay = sanitize(loadOrWriteDefault(GAMEPLAY_PATH, GameplayFile.class, defaultGameplay()), defaultGameplay());
+            nature = sanitizeNature(loadOrWriteDefault(NATURE_PATH, NatureFile.class, defaultNature()), defaultNature());
             AscendantSkills.LOGGER.info("Loaded Ascendant Skills config from {}", CONFIG_DIR);
         } catch (IOException | RuntimeException ex) {
             AscendantSkills.LOGGER.error("Failed to load Ascendant Skills config. Using in-memory defaults.", ex);
             requirements = defaultRequirements();
             gameplay = defaultGameplay();
+            nature = defaultNature();
         }
     }
 
@@ -160,6 +165,82 @@ public final class AscendantConfig {
         return CONFIG_DIR.toString();
     }
 
+    public static Set<String> natureRawFoodItems() {
+        return Set.copyOf(nature.rawFoodItems);
+    }
+
+    public static Set<String> natureNeutralMobs() {
+        return Set.copyOf(nature.neutralMobs);
+    }
+
+    public static Set<String> natureCreeperAvoidMobs() {
+        return Set.copyOf(nature.apexPredatorAvoidMobs);
+    }
+
+    public static Set<String> natureCropBonusDrops() {
+        return Set.copyOf(nature.cropBonusDrops);
+    }
+
+    public static Set<String> natureGrowableCropBlocks() {
+        return Set.copyOf(nature.growableCropBlocks);
+    }
+
+    public static Set<String> natureNaturalGroundBlocks() {
+        return Set.copyOf(nature.naturalGroundBlocks);
+    }
+
+    public static Set<String> natureMilkableMobs() {
+        return Set.copyOf(nature.milkableMobs);
+    }
+
+    public static int natureCropScanIntervalTicks() {
+        return Math.max(1, nature.cropScanIntervalTicks);
+    }
+
+    public static int natureMaxCropsAdvancedPerScan() {
+        return Math.max(1, nature.maxCropsAdvancedPerScan);
+    }
+
+    public static double natureCropSecondsPerStageAtSpeedOne() {
+        return Math.max(1.0D, nature.cropSecondsPerStageAtSpeedOne);
+    }
+
+    public static int natureAnimalScanIntervalTicks() {
+        return Math.max(1, nature.animalScanIntervalTicks);
+    }
+
+    public static int natureMaxAnimalAccelerationsPerScan() {
+        return Math.max(1, nature.maxAnimalAccelerationsPerScan);
+    }
+
+    public static double natureBreedingSpeedScale() {
+        return Math.max(0.0D, nature.breedingSpeedScale);
+    }
+
+    public static double natureForestSoulSpeed() {
+        return nature.forestSoulSpeed;
+    }
+
+    public static int natureLongEffectRefreshTicks() {
+        return Math.max(20, nature.longEffectRefreshTicks);
+    }
+
+    public static double natureDruidLeafSpeed() {
+        return nature.druidLeafSpeed;
+    }
+
+    public static double natureDruidLeafJumpStrength() {
+        return nature.druidLeafJumpStrength;
+    }
+
+    public static double natureAvatarCrouchSpeed() {
+        return nature.avatarCrouchSpeed;
+    }
+
+    public static int natureRatelRetaliationTicks() {
+        return Math.max(20, nature.retaliationTicks);
+    }
+
     private static <T> T loadOrWriteDefault(Path path, Class<T> type, T defaultValue) throws IOException {
         if (!Files.exists(path)) {
             try (Writer writer = Files.newBufferedWriter(path)) {
@@ -208,6 +289,28 @@ public final class AscendantConfig {
 
     private static GameplayFile sanitize(GameplayFile loaded, GameplayFile fallback) {
         return loaded == null ? fallback : loaded;
+    }
+
+    private static NatureFile sanitizeNature(NatureFile loaded, NatureFile fallback) {
+        if (loaded == null) {
+            return fallback;
+        }
+        if (loaded.rawFoodItems == null || loaded.rawFoodItems.isEmpty()) loaded.rawFoodItems = fallback.rawFoodItems;
+        if (loaded.neutralMobs == null || loaded.neutralMobs.isEmpty()) loaded.neutralMobs = fallback.neutralMobs;
+        if (loaded.apexPredatorAvoidMobs == null || loaded.apexPredatorAvoidMobs.isEmpty()) loaded.apexPredatorAvoidMobs = fallback.apexPredatorAvoidMobs;
+        if (loaded.cropBonusDrops == null || loaded.cropBonusDrops.isEmpty()) loaded.cropBonusDrops = fallback.cropBonusDrops;
+        if (loaded.growableCropBlocks == null || loaded.growableCropBlocks.isEmpty()) loaded.growableCropBlocks = fallback.growableCropBlocks;
+        if (loaded.naturalGroundBlocks == null || loaded.naturalGroundBlocks.isEmpty()) loaded.naturalGroundBlocks = fallback.naturalGroundBlocks;
+        if (loaded.milkableMobs == null || loaded.milkableMobs.isEmpty()) loaded.milkableMobs = fallback.milkableMobs;
+        if (loaded.cropScanIntervalTicks <= 0) loaded.cropScanIntervalTicks = fallback.cropScanIntervalTicks;
+        if (loaded.maxCropsAdvancedPerScan <= 0) loaded.maxCropsAdvancedPerScan = fallback.maxCropsAdvancedPerScan;
+        if (loaded.cropSecondsPerStageAtSpeedOne <= 0.0D) loaded.cropSecondsPerStageAtSpeedOne = fallback.cropSecondsPerStageAtSpeedOne;
+        if (loaded.animalScanIntervalTicks <= 0) loaded.animalScanIntervalTicks = fallback.animalScanIntervalTicks;
+        if (loaded.maxAnimalAccelerationsPerScan <= 0) loaded.maxAnimalAccelerationsPerScan = fallback.maxAnimalAccelerationsPerScan;
+        if (loaded.breedingSpeedScale < 0.0D) loaded.breedingSpeedScale = fallback.breedingSpeedScale;
+        if (loaded.longEffectRefreshTicks <= 0) loaded.longEffectRefreshTicks = fallback.longEffectRefreshTicks;
+        if (loaded.retaliationTicks <= 0) loaded.retaliationTicks = fallback.retaliationTicks;
+        return loaded;
     }
 
     private static String blankToNull(String value) {
@@ -295,6 +398,81 @@ public final class AscendantConfig {
         return file;
     }
 
+    private static NatureFile defaultNature() {
+        NatureFile file = new NatureFile();
+        file.rawFoodItems = List.of(
+                "minecraft:apple",
+                "minecraft:carrot",
+                "minecraft:potato",
+                "minecraft:beetroot"
+        );
+        file.neutralMobs = List.of(
+                "minecraft:bee",
+                "minecraft:cave_spider",
+                "minecraft:dolphin",
+                "minecraft:enderman",
+                "minecraft:fox",
+                "minecraft:goat",
+                "minecraft:iron_golem",
+                "minecraft:llama",
+                "minecraft:panda",
+                "minecraft:polar_bear",
+                "minecraft:spider",
+                "minecraft:wolf",
+                "minecraft:zombified_piglin"
+        );
+        file.apexPredatorAvoidMobs = List.of("minecraft:creeper");
+        file.cropBonusDrops = List.of(
+                "minecraft:wheat",
+                "minecraft:carrot",
+                "minecraft:potato",
+                "minecraft:beetroot",
+                "minecraft:nether_wart",
+                "minecraft:cocoa_beans",
+                "minecraft:sweet_berries",
+                "minecraft:glow_berries"
+        );
+        file.growableCropBlocks = List.of(
+                "minecraft:wheat",
+                "minecraft:carrots",
+                "minecraft:potatoes",
+                "minecraft:beetroots",
+                "minecraft:nether_wart",
+                "minecraft:cocoa",
+                "minecraft:sweet_berry_bush",
+                "minecraft:cave_vines",
+                "minecraft:cave_vines_plant"
+        );
+        file.naturalGroundBlocks = List.of(
+                "minecraft:grass_block",
+                "minecraft:podzol",
+                "minecraft:mycelium",
+                "minecraft:dirt",
+                "minecraft:coarse_dirt",
+                "minecraft:rooted_dirt",
+                "minecraft:farmland",
+                "minecraft:moss_block"
+        );
+        file.milkableMobs = List.of(
+                "minecraft:cow",
+                "minecraft:goat",
+                "minecraft:mooshroom"
+        );
+        file.cropScanIntervalTicks = 20;
+        file.maxCropsAdvancedPerScan = 64;
+        file.cropSecondsPerStageAtSpeedOne = 60.0D;
+        file.animalScanIntervalTicks = 20;
+        file.maxAnimalAccelerationsPerScan = 32;
+        file.breedingSpeedScale = 1.0D;
+        file.forestSoulSpeed = 0.05D;
+        file.druidLeafSpeed = 0.10D;
+        file.druidLeafJumpStrength = 0.12D;
+        file.avatarCrouchSpeed = 0.25D;
+        file.longEffectRefreshTicks = 200;
+        file.retaliationTicks = 600;
+        return file;
+    }
+
     private static void put(Map<String, RequirementEntry> file, String skillId, int levels) {
         file.put(skillId, new RequirementEntry(levels, null));
     }
@@ -369,5 +547,46 @@ public final class AscendantConfig {
         private Double titanGlobalCritChancePerStack;
         @SerializedName(value = "titan_health_per_stack", alternate = "titanHealthPerStack")
         private Double titanHealthPerStack;
+    }
+
+    private static final class NatureFile {
+        @SerializedName(value = "raw_food_items", alternate = "rawFoodItems")
+        private List<String> rawFoodItems;
+        @SerializedName(value = "neutral_mobs", alternate = "neutralMobs")
+        private List<String> neutralMobs;
+        @SerializedName(value = "apex_predator_avoid_mobs", alternate = "apexPredatorAvoidMobs")
+        private List<String> apexPredatorAvoidMobs;
+        @SerializedName(value = "crop_bonus_drops", alternate = "cropBonusDrops")
+        private List<String> cropBonusDrops;
+        @SerializedName(value = "growable_crop_blocks", alternate = "growableCropBlocks")
+        private List<String> growableCropBlocks;
+        @SerializedName(value = "natural_ground_blocks", alternate = "naturalGroundBlocks")
+        private List<String> naturalGroundBlocks;
+        @SerializedName(value = "milkable_mobs", alternate = "milkableMobs")
+        private List<String> milkableMobs;
+        @SerializedName(value = "crop_scan_interval_ticks", alternate = "cropScanIntervalTicks")
+        private int cropScanIntervalTicks;
+        @SerializedName(value = "max_crops_advanced_per_scan", alternate = "maxCropsAdvancedPerScan")
+        private int maxCropsAdvancedPerScan;
+        @SerializedName(value = "crop_seconds_per_stage_at_speed_one", alternate = "cropSecondsPerStageAtSpeedOne")
+        private double cropSecondsPerStageAtSpeedOne;
+        @SerializedName(value = "animal_scan_interval_ticks", alternate = "animalScanIntervalTicks")
+        private int animalScanIntervalTicks;
+        @SerializedName(value = "max_animal_accelerations_per_scan", alternate = "maxAnimalAccelerationsPerScan")
+        private int maxAnimalAccelerationsPerScan;
+        @SerializedName(value = "breeding_speed_scale", alternate = "breedingSpeedScale")
+        private double breedingSpeedScale;
+        @SerializedName(value = "forest_soul_speed", alternate = "forestSoulSpeed")
+        private double forestSoulSpeed;
+        @SerializedName(value = "druid_leaf_speed", alternate = "druidLeafSpeed")
+        private double druidLeafSpeed;
+        @SerializedName(value = "druid_leaf_jump_strength", alternate = "druidLeafJumpStrength")
+        private double druidLeafJumpStrength;
+        @SerializedName(value = "avatar_crouch_speed", alternate = "avatarCrouchSpeed")
+        private double avatarCrouchSpeed;
+        @SerializedName(value = "long_effect_refresh_ticks", alternate = "longEffectRefreshTicks")
+        private int longEffectRefreshTicks;
+        @SerializedName(value = "retaliation_ticks", alternate = "retaliationTicks")
+        private int retaliationTicks;
     }
 }

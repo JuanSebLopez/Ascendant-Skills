@@ -94,7 +94,7 @@ public final class AscendantAttributes {
     );
     public static final DeferredHolder<Attribute, Attribute> CROP_GROWTH_SPEED = ATTRIBUTES.register(
             "crop_growth_speed",
-            () -> new RangedAttribute("attribute.ascendant_skills.crop_growth_speed", 0.0D, 0.0D, 10.0D).setSyncable(true)
+            () -> new RangedAttribute("attribute.ascendant_skills.crop_growth_speed", 0.0D, 0.0D, 100.0D).setSyncable(true)
     );
     public static final DeferredHolder<Attribute, Attribute> CROP_GROWTH_RADIUS = ATTRIBUTES.register(
             "crop_growth_radius",
@@ -127,6 +127,10 @@ public final class AscendantAttributes {
     public static final DeferredHolder<Attribute, Attribute> GLOBAL_LIFE_STEAL = ATTRIBUTES.register(
             "global_life_steal",
             () -> new RangedAttribute("attribute.ascendant_skills.global_life_steal", 0.0D, 0.0D, 10.0D).setSyncable(true)
+    );
+    public static final DeferredHolder<Attribute, Attribute> UNDERWATER_BREATH_SECONDS = ATTRIBUTES.register(
+            "underwater_breath_seconds",
+            () -> new RangedAttribute("attribute.ascendant_skills.underwater_breath_seconds", 0.0D, 0.0D, 300.0D).setSyncable(true)
     );
 
     private AscendantAttributes() {
@@ -162,6 +166,7 @@ public final class AscendantAttributes {
         event.add(EntityType.PLAYER, RAW_FOOD_SATURATION);
         event.add(EntityType.PLAYER, HOE_DAMAGE);
         event.add(EntityType.PLAYER, GLOBAL_LIFE_STEAL);
+        event.add(EntityType.PLAYER, UNDERWATER_BREATH_SECONDS);
     }
 
     public static int resetAscendantBaseValues(ServerPlayer player) {
@@ -195,6 +200,7 @@ public final class AscendantAttributes {
         changed += reset(player, RAW_FOOD_SATURATION);
         changed += reset(player, HOE_DAMAGE);
         changed += reset(player, GLOBAL_LIFE_STEAL);
+        changed += reset(player, UNDERWATER_BREATH_SECONDS);
         return changed;
     }
 

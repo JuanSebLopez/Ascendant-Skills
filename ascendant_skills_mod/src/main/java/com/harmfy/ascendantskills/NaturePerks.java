@@ -18,12 +18,14 @@ import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.HoeItem;
@@ -34,6 +36,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.neoforged.neoforge.common.IShearable;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.entity.living.LivingChangeTargetEvent;
@@ -51,49 +55,14 @@ import java.util.UUID;
 
 public final class NaturePerks {
     private static final int TICKS_PER_SECOND = 20;
-    private static final int SHORT_EFFECT_TICKS = 12 * TICKS_PER_SECOND;
-    private static final int NATURE_SCAN_TICKS = TICKS_PER_SECOND;
-    private static final int NATURE_RETALIATION_TICKS = 30 * TICKS_PER_SECOND;
-    private static final int MAX_CROP_RANDOM_TICKS_PER_SCAN = 8;
-    private static final int MAX_ANIMAL_ACCELERATIONS_PER_SCAN = 32;
     private static final ResourceLocation FOREST_SOUL_SPEED = id("forest_soul_speed");
     private static final ResourceLocation DRUID_LEAF_SPEED = id("druid_leaf_speed");
     private static final ResourceLocation DRUID_LEAF_JUMP = id("druid_leaf_jump");
     private static final ResourceLocation AVATAR_CROUCH_SPEED = id("avatar_crouch_speed");
     private static final Set<Holder<MobEffect>> RATEL_BLOCKED_EFFECTS = Set.of(MobEffects.POISON, MobEffects.HUNGER);
-    private static final Set<String> RAW_FOOD_ITEMS = Set.of(
-            "minecraft:apple",
-            "minecraft:carrot",
-            "minecraft:potato",
-            "minecraft:beetroot"
-    );
-    private static final Set<String> NATURE_NEUTRAL_MOBS = Set.of(
-            "minecraft:bee",
-            "minecraft:cave_spider",
-            "minecraft:dolphin",
-            "minecraft:enderman",
-            "minecraft:fox",
-            "minecraft:goat",
-            "minecraft:iron_golem",
-            "minecraft:llama",
-            "minecraft:panda",
-            "minecraft:polar_bear",
-            "minecraft:spider",
-            "minecraft:wolf",
-            "minecraft:zombified_piglin"
-    );
-    private static final Set<String> BASE_CROP_DROPS = Set.of(
-            "minecraft:wheat",
-            "minecraft:carrot",
-            "minecraft:potato",
-            "minecraft:beetroot",
-            "minecraft:nether_wart",
-            "minecraft:cocoa_beans",
-            "minecraft:sweet_berries",
-            "minecraft:glow_berries"
-    );
     private static final Map<UUID, Map<UUID, Long>> NATURE_RETALIATION = new HashMap<>();
-    private static final Map<UUID, Double> CROP_GROWTH_ATTEMPT_PROGRESS = new HashMap<>();
+    private static final Map<String, Double> CROP_GROWTH_PROGRESS = new HashMap<>();
+    private static final Set<UUID> PLAYERS_UNDERWATER = new java.util.HashSet<>();
 
     private NaturePerks() {
     }
@@ -146,7 +115,10 @@ public final class NaturePerks {
 
         float extraSaturation = (float) (food.nutrition() * food.saturation() * 2.0F * bonus);
         if (extraSaturation > 0.0F) {
-            player.getFoodData().setSaturation(Math.min(player.getFoodData().getFoodLevel(), player.getFoodData().getSaturationLevel() + extraSaturation));
+            int foodLevel = player.getFoodData().getFoodLevel();
+            float saturation = player.getFoodData().getSaturationLevel();
+            player.getFoodData().setSaturation(Math.min(foodLevel, saturation + extraSaturation));
+            player.getFoodData().setFoodLevel(foodLevel);
         }
     }
 
@@ -162,10 +134,10 @@ public final class NaturePerks {
     }
 
     public static void onLivingChangeTarget(LivingChangeTargetEvent event) {
-        if (!(event.getNewAboutToBeSetTarget() instanceof ServerPlayer player) || !has(player, "ganadero")) {
+        if (!(event.getNewAboutToBeSetTarget() instanceof ServerPlayer player)) {
             return;
         }
-        if (event.getEntity() instanceof LivingEntity attacker && isNatureNeutral(attacker) && !canRetaliateAgainst(player, attacker)) {
+        if (event.getEntity() instanceof LivingEntity attacker && isProtectedByNature(player, attacker) && !canRetaliateAgainst(player, attacker)) {
             event.setCanceled(true);
             event.setNewAboutToBeSetTarget(null);
         }
@@ -219,7 +191,7 @@ public final class NaturePerks {
             return;
         }
 
-        if (has(attacker, "ganadero") && isNatureNeutral(event.getEntity())) {
+        if (isProtectedByNature(attacker, event.getEntity())) {
             rememberRetaliation(attacker, event.getEntity());
         }
 
@@ -238,6 +210,8 @@ public final class NaturePerks {
         updateDruidLeafPerk(player);
         updateAvatarCrouchSpeed(player);
         applyLongNatureEffects(player);
+        updateNatureMobTargets(player);
+        updateUnderwaterBreath(player);
         accelerateNearbyCrops(player);
         accelerateNearbyAnimals(player);
         pruneRetaliation(player);
@@ -245,7 +219,7 @@ public final class NaturePerks {
 
     private static void updateForestSoul(ServerPlayer player) {
         if (has(player, "pacto_natural") && isNaturalGround(player)) {
-            applyModifier(player, Attributes.MOVEMENT_SPEED, FOREST_SOUL_SPEED, 0.05D, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+            applyModifier(player, Attributes.MOVEMENT_SPEED, FOREST_SOUL_SPEED, AscendantConfig.natureForestSoulSpeed(), AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
         } else {
             removeModifier(player, Attributes.MOVEMENT_SPEED, FOREST_SOUL_SPEED);
         }
@@ -253,8 +227,8 @@ public final class NaturePerks {
 
     private static void updateDruidLeafPerk(ServerPlayer player) {
         if (has(player, "druida") && isStandingOnLeaves(player)) {
-            applyModifier(player, Attributes.MOVEMENT_SPEED, DRUID_LEAF_SPEED, 0.05D, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
-            applyModifier(player, Attributes.JUMP_STRENGTH, DRUID_LEAF_JUMP, 0.42D, AttributeModifier.Operation.ADD_VALUE);
+            applyModifier(player, Attributes.MOVEMENT_SPEED, DRUID_LEAF_SPEED, AscendantConfig.natureDruidLeafSpeed(), AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+            applyModifier(player, Attributes.JUMP_STRENGTH, DRUID_LEAF_JUMP, AscendantConfig.natureDruidLeafJumpStrength(), AttributeModifier.Operation.ADD_VALUE);
         } else {
             removeModifier(player, Attributes.MOVEMENT_SPEED, DRUID_LEAF_SPEED);
             removeModifier(player, Attributes.JUMP_STRENGTH, DRUID_LEAF_JUMP);
@@ -263,14 +237,14 @@ public final class NaturePerks {
 
     private static void updateAvatarCrouchSpeed(ServerPlayer player) {
         if (has(player, "avatar_de_la_naturaleza") && player.isCrouching()) {
-            applyModifier(player, Attributes.MOVEMENT_SPEED, AVATAR_CROUCH_SPEED, 0.25D, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+            applyModifier(player, Attributes.MOVEMENT_SPEED, AVATAR_CROUCH_SPEED, AscendantConfig.natureAvatarCrouchSpeed(), AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
         } else {
             removeModifier(player, Attributes.MOVEMENT_SPEED, AVATAR_CROUCH_SPEED);
         }
     }
 
     private static void applyLongNatureEffects(ServerPlayer player) {
-        if (player.tickCount % 100 != 0) {
+        if (player.tickCount % AscendantConfig.natureLongEffectRefreshTicks() != 0) {
             return;
         }
 
@@ -281,16 +255,13 @@ public final class NaturePerks {
         }
 
         if (has(player, "apex_predator")) {
-            player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, SHORT_EFFECT_TICKS, 0, true, false, true));
-        }
-
-        if (has(player, "avatar_de_la_naturaleza")) {
-            player.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, SHORT_EFFECT_TICKS, 0, true, false, true));
+            player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, MobEffectInstance.INFINITE_DURATION, 0, true, false, true));
         }
     }
 
     private static void accelerateNearbyAnimals(ServerPlayer player) {
-        if (player.tickCount % NATURE_SCAN_TICKS != 0) {
+        int scanTicks = AscendantConfig.natureAnimalScanIntervalTicks();
+        if (player.tickCount % scanTicks != 0) {
             return;
         }
 
@@ -300,7 +271,7 @@ public final class NaturePerks {
             return;
         }
 
-        int bonusAgeTicks = Math.max(1, (int) Math.round(NATURE_SCAN_TICKS * speed));
+        int bonusAgeTicks = Math.max(1, (int) Math.round(scanTicks * speed * AscendantConfig.natureBreedingSpeedScale()));
         int accelerated = 0;
         for (AgeableMob mob : player.level().getEntitiesOfClass(AgeableMob.class, player.getBoundingBox().inflate(radius))) {
             if (!(mob instanceof Animal) || !mob.isAlive() || mob.distanceToSqr(player) > radius * radius) {
@@ -309,52 +280,68 @@ public final class NaturePerks {
 
             int age = mob.getAge();
             if (age < 0) {
-                mob.ageUp(bonusAgeTicks, true);
+                mob.setAge(Math.min(0, age + bonusAgeTicks));
                 accelerated++;
             } else if (age > 0) {
                 mob.setAge(Math.max(0, age - bonusAgeTicks));
                 accelerated++;
             }
 
-            if (accelerated >= MAX_ANIMAL_ACCELERATIONS_PER_SCAN) {
+            if (accelerated >= AscendantConfig.natureMaxAnimalAccelerationsPerScan()) {
                 break;
             }
         }
     }
 
     private static void accelerateNearbyCrops(ServerPlayer player) {
-        if (player.tickCount % NATURE_SCAN_TICKS != 0 || !(player.level() instanceof ServerLevel level)) {
+        int scanTicks = AscendantConfig.natureCropScanIntervalTicks();
+        if (player.tickCount % scanTicks != 0 || !(player.level() instanceof ServerLevel level)) {
             return;
         }
 
         double radius = attributeValue(player, AscendantAttributes.CROP_GROWTH_RADIUS);
         double speed = attributeValue(player, AscendantAttributes.CROP_GROWTH_SPEED);
         if (radius <= 0.0D || speed <= 0.0D) {
-            CROP_GROWTH_ATTEMPT_PROGRESS.remove(player.getUUID());
             return;
         }
 
-        double attemptsPerScan = speed * Math.max(1.0D, radius * radius * 0.6D);
-        double progress = CROP_GROWTH_ATTEMPT_PROGRESS.getOrDefault(player.getUUID(), 0.0D) + attemptsPerScan;
-        int attempts = Math.min(MAX_CROP_RANDOM_TICKS_PER_SCAN, (int) Math.floor(progress));
-        CROP_GROWTH_ATTEMPT_PROGRESS.put(player.getUUID(), progress - attempts);
-
         int wholeRadius = Math.max(1, (int) Math.ceil(radius));
         BlockPos center = player.blockPosition();
-        for (int i = 0; i < attempts; i++) {
-            int x = center.getX() + level.random.nextInt(wholeRadius * 2 + 1) - wholeRadius;
-            int y = center.getY() + level.random.nextInt(5) - 2;
-            int z = center.getZ() + level.random.nextInt(wholeRadius * 2 + 1) - wholeRadius;
-            BlockPos pos = new BlockPos(x, y, z);
-            if (pos.distSqr(center) > radius * radius) {
-                continue;
-            }
-
-            BlockState state = level.getBlockState(pos);
-            if (isGrowableCropLike(state)) {
-                state.randomTick(level, pos, level.random);
+        int advanced = 0;
+        for (BlockPos pos : BlockPos.betweenClosed(center.offset(-wholeRadius, -2, -wholeRadius), center.offset(wholeRadius, 2, wholeRadius))) {
+            if (pos.distSqr(center) <= radius * radius && advanceCropGradually(level, pos.immutable(), speed, scanTicks)) {
+                advanced++;
+                if (advanced >= AscendantConfig.natureMaxCropsAdvancedPerScan()) {
+                    return;
+                }
             }
         }
+    }
+
+    private static boolean advanceCropGradually(ServerLevel level, BlockPos pos, double speed, int scanTicks) {
+        BlockState state = level.getBlockState(pos);
+        if (!isGrowableCropLike(state)) {
+            CROP_GROWTH_PROGRESS.remove(cropProgressKey(level, pos));
+            return false;
+        }
+
+        String key = cropProgressKey(level, pos);
+        double progress = CROP_GROWTH_PROGRESS.getOrDefault(key, 0.0D);
+        progress += speed * (scanTicks / (double) TICKS_PER_SECOND) / AscendantConfig.natureCropSecondsPerStageAtSpeedOne();
+        if (progress < 1.0D) {
+            CROP_GROWTH_PROGRESS.put(key, progress);
+            return false;
+        }
+
+        BlockState nextState = nextGrowthStage(state);
+        if (nextState == state) {
+            CROP_GROWTH_PROGRESS.remove(key);
+            return false;
+        }
+
+        CROP_GROWTH_PROGRESS.put(key, progress - 1.0D);
+        level.setBlock(pos, nextState, Block.UPDATE_CLIENTS);
+        return true;
     }
 
     private static void handleShearingBonus(PlayerInteractEvent.EntityInteract event, ServerPlayer player, Entity target, ItemStack stack, IShearable shearable, int extraProducts) {
@@ -391,9 +378,7 @@ public final class NaturePerks {
 
     private static boolean isMilkable(Entity entity) {
         ResourceLocation id = BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType());
-        return id.toString().equals("minecraft:cow")
-                || id.toString().equals("minecraft:goat")
-                || id.toString().equals("minecraft:mooshroom");
+        return AscendantConfig.natureMilkableMobs().contains(id.toString());
     }
 
     private static void giveOrDrop(ServerPlayer player, ItemStack stack) {
@@ -408,16 +393,26 @@ public final class NaturePerks {
 
     private static boolean isRawNatureFood(ItemStack stack) {
         ResourceLocation id = BuiltInRegistries.ITEM.getKey(stack.getItem());
-        return RAW_FOOD_ITEMS.contains(id.toString());
+        return AscendantConfig.natureRawFoodItems().contains(id.toString());
     }
 
     private static boolean isNatureNeutral(LivingEntity entity) {
         ResourceLocation id = BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType());
-        return NATURE_NEUTRAL_MOBS.contains(id.toString());
+        return AscendantConfig.natureNeutralMobs().contains(id.toString());
+    }
+
+    private static boolean isApexAvoidMob(LivingEntity entity) {
+        ResourceLocation id = BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType());
+        return AscendantConfig.natureCreeperAvoidMobs().contains(id.toString());
+    }
+
+    private static boolean isProtectedByNature(ServerPlayer player, LivingEntity attacker) {
+        return has(player, "ganadero") && isNatureNeutral(attacker)
+                || has(player, "apex_predator") && isApexAvoidMob(attacker);
     }
 
     private static void rememberRetaliation(ServerPlayer player, LivingEntity entity) {
-        long expiresAt = player.level().getGameTime() + NATURE_RETALIATION_TICKS;
+        long expiresAt = player.level().getGameTime() + AscendantConfig.natureRatelRetaliationTicks();
         NATURE_RETALIATION.computeIfAbsent(player.getUUID(), ignored -> new HashMap<>()).put(entity.getUUID(), expiresAt);
     }
 
@@ -451,14 +446,8 @@ public final class NaturePerks {
 
     private static boolean isNaturalGround(ServerPlayer player) {
         BlockState state = player.level().getBlockState(player.blockPosition().below());
-        return state.is(Blocks.GRASS_BLOCK)
-                || state.is(Blocks.PODZOL)
-                || state.is(Blocks.MYCELIUM)
-                || state.is(Blocks.DIRT)
-                || state.is(Blocks.COARSE_DIRT)
-                || state.is(Blocks.ROOTED_DIRT)
-                || state.is(Blocks.FARMLAND)
-                || state.is(Blocks.MOSS_BLOCK);
+        ResourceLocation id = BuiltInRegistries.BLOCK.getKey(state.getBlock());
+        return AscendantConfig.natureNaturalGroundBlocks().contains(id.toString());
     }
 
     private static boolean isStandingOnLeaves(ServerPlayer player) {
@@ -471,18 +460,70 @@ public final class NaturePerks {
     }
 
     private static boolean isGrowableCropLike(BlockState state) {
-        return state.isRandomlyTicking()
-                && (state.getBlock() instanceof CropBlock crop && !crop.isMaxAge(state)
-                || state.is(Blocks.NETHER_WART)
-                || state.is(Blocks.COCOA)
-                || state.is(Blocks.SWEET_BERRY_BUSH)
-                || state.is(Blocks.CAVE_VINES)
-                || state.is(Blocks.CAVE_VINES_PLANT));
+        ResourceLocation id = BuiltInRegistries.BLOCK.getKey(state.getBlock());
+        return AscendantConfig.natureGrowableCropBlocks().contains(id.toString()) && nextGrowthStage(state) != state;
+    }
+
+    private static BlockState nextGrowthStage(BlockState state) {
+        if (state.getBlock() instanceof CropBlock crop) {
+            int age = crop.getAge(state);
+            return age >= crop.getMaxAge() ? state : crop.getStateForAge(age + 1);
+        }
+
+        for (Property<?> property : state.getProperties()) {
+            if (property instanceof IntegerProperty integerProperty && "age".equals(integerProperty.getName())) {
+                int current = state.getValue(integerProperty);
+                int max = integerProperty.getPossibleValues().stream().mapToInt(Integer::intValue).max().orElse(current);
+                return current >= max ? state : state.setValue(integerProperty, current + 1);
+            }
+        }
+        return state;
     }
 
     private static boolean isConfiguredCropDrop(ItemStack stack) {
         ResourceLocation id = BuiltInRegistries.ITEM.getKey(stack.getItem());
-        return BASE_CROP_DROPS.contains(id.toString());
+        return AscendantConfig.natureCropBonusDrops().contains(id.toString());
+    }
+
+    private static void updateNatureMobTargets(ServerPlayer player) {
+        if (player.tickCount % AscendantConfig.natureAnimalScanIntervalTicks() != 0) {
+            return;
+        }
+
+        double radius = Math.max(8.0D, Math.max(
+                attributeValue(player, AscendantAttributes.BREEDING_RADIUS),
+                attributeValue(player, AscendantAttributes.CROP_GROWTH_RADIUS)
+        ) + 8.0D);
+        for (Mob mob : player.level().getEntitiesOfClass(Mob.class, player.getBoundingBox().inflate(radius))) {
+            if (mob.getTarget() != player || !isProtectedByNature(player, mob) || canRetaliateAgainst(player, mob)) {
+                continue;
+            }
+            mob.setTarget(null);
+            if (mob instanceof Creeper creeper) {
+                creeper.setSwellDir(-1);
+            }
+        }
+    }
+
+    private static void updateUnderwaterBreath(ServerPlayer player) {
+        double extraSeconds = attributeValue(player, AscendantAttributes.UNDERWATER_BREATH_SECONDS);
+        if (extraSeconds <= 0.0D || !player.isUnderWater()) {
+            PLAYERS_UNDERWATER.remove(player.getUUID());
+            return;
+        }
+
+        if (!PLAYERS_UNDERWATER.add(player.getUUID())) {
+            return;
+        }
+        int extraAirTicks = (int) Math.round(extraSeconds * TICKS_PER_SECOND);
+        int boostedAir = Math.max(player.getAirSupply(), player.getMaxAirSupply()) + extraAirTicks;
+        if (player.getAirSupply() < boostedAir) {
+            player.setAirSupply(boostedAir);
+        }
+    }
+
+    private static String cropProgressKey(ServerLevel level, BlockPos pos) {
+        return level.dimension().location() + ":" + pos.asLong();
     }
 
     private static boolean has(ServerPlayer player, String perkId) {

@@ -30,5 +30,6 @@
   "attribute.ascendant_skills.crop_harvest_bonus": "Crop Harvest Bonus",
   "attribute.ascendant_skills.raw_food_saturation": "Raw Food Saturation",
   "attribute.ascendant_skills.hoe_damage": "Hoe Damage",
-  "attribute.ascendant_skills.global_life_steal": "Global Life Steal"
+  "attribute.ascendant_skills.global_life_steal": "Global Life Steal",
+  "attribute.ascendant_skills.underwater_breath_seconds": "Underwater Breath Seconds"
 }
