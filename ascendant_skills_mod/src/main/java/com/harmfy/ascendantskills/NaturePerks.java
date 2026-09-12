@@ -9,6 +9,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -16,29 +17,33 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.common.IShearable;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.entity.living.LivingChangeTargetEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent;
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
-import net.neoforged.neoforge.event.level.block.CropGrowEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
-import java.util.Optional;
+import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -49,6 +54,8 @@ public final class NaturePerks {
     private static final int SHORT_EFFECT_TICKS = 12 * TICKS_PER_SECOND;
     private static final int NATURE_SCAN_TICKS = TICKS_PER_SECOND;
     private static final int NATURE_RETALIATION_TICKS = 30 * TICKS_PER_SECOND;
+    private static final int MAX_CROP_RANDOM_TICKS_PER_SCAN = 8;
+    private static final int MAX_ANIMAL_ACCELERATIONS_PER_SCAN = 32;
     private static final ResourceLocation FOREST_SOUL_SPEED = id("forest_soul_speed");
     private static final ResourceLocation DRUID_LEAF_SPEED = id("druid_leaf_speed");
     private static final ResourceLocation DRUID_LEAF_JUMP = id("druid_leaf_jump");
@@ -86,30 +93,39 @@ public final class NaturePerks {
             "minecraft:glow_berries"
     );
     private static final Map<UUID, Map<UUID, Long>> NATURE_RETALIATION = new HashMap<>();
+    private static final Map<UUID, Double> CROP_GROWTH_ATTEMPT_PROGRESS = new HashMap<>();
 
     private NaturePerks() {
-    }
-
-    public static void onCropGrowPre(CropGrowEvent.Pre event) {
-        if (!(event.getLevel() instanceof ServerLevel level)) {
-            return;
-        }
-
-        ServerPlayer player = strongestNaturePlayer(level, event.getPos(), AscendantAttributes.CROP_GROWTH_RADIUS, AscendantAttributes.CROP_GROWTH_SPEED).orElse(null);
-        if (player == null) {
-            return;
-        }
-
-        double speed = attributeValue(player, AscendantAttributes.CROP_GROWTH_SPEED);
-        if (speed > 0.0D && player.getRandom().nextDouble() < Math.min(0.95D, speed)) {
-            event.setResult(CropGrowEvent.Pre.Result.GROW);
-        }
     }
 
     public static void onFarmlandTrample(BlockEvent.FarmlandTrampleEvent event) {
         Entity entity = event.getEntity();
         if (entity instanceof ServerPlayer player && has(player, "herbolario")) {
             event.setCanceled(true);
+        }
+    }
+
+    public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
+        if (!(event.getEntity() instanceof ServerPlayer player) || player.level().isClientSide()) {
+            return;
+        }
+
+        Entity target = event.getTarget();
+        ItemStack stack = event.getItemStack();
+        int extraProducts = productBonus(player, target);
+        if (extraProducts <= 0) {
+            return;
+        }
+
+        if (stack.is(Items.SHEARS) && target instanceof IShearable shearable) {
+            handleShearingBonus(event, player, target, stack, shearable, extraProducts);
+            return;
+        }
+
+        if (stack.is(Items.BUCKET) && isMilkable(target)) {
+            for (int i = 0; i < extraProducts; i++) {
+                giveOrDrop(player, new ItemStack(Items.MILK_BUCKET));
+            }
         }
     }
 
@@ -222,6 +238,7 @@ public final class NaturePerks {
         updateDruidLeafPerk(player);
         updateAvatarCrouchSpeed(player);
         applyLongNatureEffects(player);
+        accelerateNearbyCrops(player);
         accelerateNearbyAnimals(player);
         pruneRetaliation(player);
     }
@@ -284,6 +301,7 @@ public final class NaturePerks {
         }
 
         int bonusAgeTicks = Math.max(1, (int) Math.round(NATURE_SCAN_TICKS * speed));
+        int accelerated = 0;
         for (AgeableMob mob : player.level().getEntitiesOfClass(AgeableMob.class, player.getBoundingBox().inflate(radius))) {
             if (!(mob instanceof Animal) || !mob.isAlive() || mob.distanceToSqr(player) > radius * radius) {
                 continue;
@@ -292,27 +310,100 @@ public final class NaturePerks {
             int age = mob.getAge();
             if (age < 0) {
                 mob.ageUp(bonusAgeTicks, true);
+                accelerated++;
             } else if (age > 0) {
                 mob.setAge(Math.max(0, age - bonusAgeTicks));
+                accelerated++;
+            }
+
+            if (accelerated >= MAX_ANIMAL_ACCELERATIONS_PER_SCAN) {
+                break;
             }
         }
     }
 
-    private static Optional<ServerPlayer> strongestNaturePlayer(ServerLevel level, BlockPos pos, Holder<Attribute> radiusAttribute, Holder<Attribute> speedAttribute) {
-        ServerPlayer bestPlayer = null;
-        double bestSpeed = 0.0D;
-        for (ServerPlayer player : level.players()) {
-            double speed = attributeValue(player, speedAttribute);
-            double radius = attributeValue(player, radiusAttribute);
-            if (speed <= 0.0D || radius <= 0.0D || player.distanceToSqr(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D) > radius * radius) {
+    private static void accelerateNearbyCrops(ServerPlayer player) {
+        if (player.tickCount % NATURE_SCAN_TICKS != 0 || !(player.level() instanceof ServerLevel level)) {
+            return;
+        }
+
+        double radius = attributeValue(player, AscendantAttributes.CROP_GROWTH_RADIUS);
+        double speed = attributeValue(player, AscendantAttributes.CROP_GROWTH_SPEED);
+        if (radius <= 0.0D || speed <= 0.0D) {
+            CROP_GROWTH_ATTEMPT_PROGRESS.remove(player.getUUID());
+            return;
+        }
+
+        double attemptsPerScan = speed * Math.max(1.0D, radius * radius * 0.6D);
+        double progress = CROP_GROWTH_ATTEMPT_PROGRESS.getOrDefault(player.getUUID(), 0.0D) + attemptsPerScan;
+        int attempts = Math.min(MAX_CROP_RANDOM_TICKS_PER_SCAN, (int) Math.floor(progress));
+        CROP_GROWTH_ATTEMPT_PROGRESS.put(player.getUUID(), progress - attempts);
+
+        int wholeRadius = Math.max(1, (int) Math.ceil(radius));
+        BlockPos center = player.blockPosition();
+        for (int i = 0; i < attempts; i++) {
+            int x = center.getX() + level.random.nextInt(wholeRadius * 2 + 1) - wholeRadius;
+            int y = center.getY() + level.random.nextInt(5) - 2;
+            int z = center.getZ() + level.random.nextInt(wholeRadius * 2 + 1) - wholeRadius;
+            BlockPos pos = new BlockPos(x, y, z);
+            if (pos.distSqr(center) > radius * radius) {
                 continue;
             }
-            if (speed > bestSpeed) {
-                bestSpeed = speed;
-                bestPlayer = player;
+
+            BlockState state = level.getBlockState(pos);
+            if (isGrowableCropLike(state)) {
+                state.randomTick(level, pos, level.random);
             }
         }
-        return Optional.ofNullable(bestPlayer);
+    }
+
+    private static void handleShearingBonus(PlayerInteractEvent.EntityInteract event, ServerPlayer player, Entity target, ItemStack stack, IShearable shearable, int extraProducts) {
+        if (!(player.level() instanceof ServerLevel level) || !shearable.isShearable(player, stack, level, target.blockPosition())) {
+            return;
+        }
+
+        List<ItemStack> drops = shearable.onSheared(player, stack, level, target.blockPosition());
+        if (drops.isEmpty()) {
+            return;
+        }
+
+        for (ItemStack drop : drops) {
+            shearable.spawnShearedDrop(level, target.blockPosition(), drop.copy());
+            for (int i = 0; i < extraProducts; i++) {
+                shearable.spawnShearedDrop(level, target.blockPosition(), drop.copy());
+            }
+        }
+
+        EquipmentSlot slot = LivingEntity.getSlotForHand(event.getHand());
+        stack.hurtAndBreak(1, player, slot);
+        event.setCanceled(true);
+        event.setCancellationResult(InteractionResult.SUCCESS);
+    }
+
+    private static int productBonus(ServerPlayer player, Entity target) {
+        double radius = attributeValue(player, AscendantAttributes.BREEDING_RADIUS);
+        double bonus = attributeValue(player, AscendantAttributes.ANIMAL_PRODUCT_BONUS);
+        if (radius <= 0.0D || bonus < 1.0D || target.distanceToSqr(player) > radius * radius) {
+            return 0;
+        }
+        return Math.min(16, (int) Math.floor(bonus));
+    }
+
+    private static boolean isMilkable(Entity entity) {
+        ResourceLocation id = BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType());
+        return id.toString().equals("minecraft:cow")
+                || id.toString().equals("minecraft:goat")
+                || id.toString().equals("minecraft:mooshroom");
+    }
+
+    private static void giveOrDrop(ServerPlayer player, ItemStack stack) {
+        if (!player.getInventory().add(stack)) {
+            ItemEntity itemEntity = player.drop(stack, false);
+            if (itemEntity != null) {
+                itemEntity.setNoPickUpDelay();
+                itemEntity.setTarget(player.getUUID());
+            }
+        }
     }
 
     private static boolean isRawNatureFood(ItemStack stack) {
@@ -377,6 +468,16 @@ public final class NaturePerks {
 
     private static boolean isMatureCrop(BlockState state) {
         return state.getBlock() instanceof CropBlock crop && crop.isMaxAge(state);
+    }
+
+    private static boolean isGrowableCropLike(BlockState state) {
+        return state.isRandomlyTicking()
+                && (state.getBlock() instanceof CropBlock crop && !crop.isMaxAge(state)
+                || state.is(Blocks.NETHER_WART)
+                || state.is(Blocks.COCOA)
+                || state.is(Blocks.SWEET_BERRY_BUSH)
+                || state.is(Blocks.CAVE_VINES)
+                || state.is(Blocks.CAVE_VINES_PLANT));
     }
 
     private static boolean isConfiguredCropDrop(ItemStack stack) {
