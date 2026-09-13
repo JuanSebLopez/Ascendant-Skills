@@ -226,6 +226,10 @@ public final class AscendantConfig {
         return Math.max(20, nature.longEffectRefreshTicks);
     }
 
+    public static int natureDetectionIntervalTicks() {
+        return Math.max(1, nature.detectionIntervalTicks);
+    }
+
     public static double natureDruidLeafSpeed() {
         return nature.druidLeafSpeed;
     }
@@ -314,6 +318,22 @@ public final class AscendantConfig {
         return nature.beastMasterPetToughness;
     }
 
+    public static double natureGuardianRadius() {
+        return Math.max(1.0D, nature.guardianRadius);
+    }
+
+    public static double natureGuardianResistance() {
+        return nature.guardianResistance;
+    }
+
+    public static double natureGuardianRegen() {
+        return nature.guardianRegen;
+    }
+
+    public static double natureGuardianRegenIntervalReduction() {
+        return Math.max(0.0D, nature.guardianRegenIntervalReduction);
+    }
+
     private static <T> T loadOrWriteDefault(Path path, Class<T> type, T defaultValue) throws IOException {
         if (!Files.exists(path)) {
             try (Writer writer = Files.newBufferedWriter(path)) {
@@ -388,6 +408,7 @@ public final class AscendantConfig {
         if (loaded.maxAnimalAccelerationsPerScan <= 0) loaded.maxAnimalAccelerationsPerScan = fallback.maxAnimalAccelerationsPerScan;
         if (loaded.breedingSpeedScale < 0.0D) loaded.breedingSpeedScale = fallback.breedingSpeedScale;
         if (loaded.longEffectRefreshTicks <= 0) loaded.longEffectRefreshTicks = fallback.longEffectRefreshTicks;
+        if (loaded.detectionIntervalTicks <= 0) loaded.detectionIntervalTicks = fallback.detectionIntervalTicks;
         if (loaded.retaliationTicks <= 0) loaded.retaliationTicks = fallback.retaliationTicks;
         if (loaded.greenHeartClearMoveSpeed == 0.0D) loaded.greenHeartClearMoveSpeed = fallback.greenHeartClearMoveSpeed;
         if (loaded.greenHeartClearStepHeight == 0.0D) loaded.greenHeartClearStepHeight = fallback.greenHeartClearStepHeight;
@@ -407,6 +428,10 @@ public final class AscendantConfig {
         if (loaded.beastMasterPetDamage == 0.0D) loaded.beastMasterPetDamage = fallback.beastMasterPetDamage;
         if (loaded.beastMasterPetArmor == 0.0D) loaded.beastMasterPetArmor = fallback.beastMasterPetArmor;
         if (loaded.beastMasterPetToughness == 0.0D) loaded.beastMasterPetToughness = fallback.beastMasterPetToughness;
+        if (loaded.guardianRadius <= 0.0D) loaded.guardianRadius = fallback.guardianRadius;
+        if (loaded.guardianResistance == 0.0D) loaded.guardianResistance = fallback.guardianResistance;
+        if (loaded.guardianRegen == 0.0D) loaded.guardianRegen = fallback.guardianRegen;
+        if (loaded.guardianRegenIntervalReduction == 0.0D) loaded.guardianRegenIntervalReduction = fallback.guardianRegenIntervalReduction;
         return loaded;
     }
 
@@ -566,6 +591,7 @@ public final class AscendantConfig {
         file.druidLeafJumpStrength = 0.12D;
         file.avatarCrouchSpeed = 0.25D;
         file.longEffectRefreshTicks = 200;
+        file.detectionIntervalTicks = 5;
         file.retaliationTicks = 600;
         file.greenHeartClearMoveSpeed = 0.05D;
         file.greenHeartClearStepHeight = 1.0D;
@@ -585,6 +611,10 @@ public final class AscendantConfig {
         file.beastMasterPetDamage = 0.30D;
         file.beastMasterPetArmor = 6.0D;
         file.beastMasterPetToughness = 2.0D;
+        file.guardianRadius = 10.0D;
+        file.guardianResistance = 0.05D;
+        file.guardianRegen = 0.5D;
+        file.guardianRegenIntervalReduction = 2.0D;
         return file;
     }
 
@@ -701,6 +731,8 @@ public final class AscendantConfig {
         private double avatarCrouchSpeed;
         @SerializedName(value = "long_effect_refresh_ticks", alternate = "longEffectRefreshTicks")
         private int longEffectRefreshTicks;
+        @SerializedName(value = "detection_interval_ticks", alternate = "detectionIntervalTicks")
+        private int detectionIntervalTicks;
         @SerializedName(value = "retaliation_ticks", alternate = "retaliationTicks")
         private int retaliationTicks;
         @SerializedName(value = "green_heart_clear_move_speed", alternate = "greenHeartClearMoveSpeed")
@@ -739,5 +771,13 @@ public final class AscendantConfig {
         private double beastMasterPetArmor;
         @SerializedName(value = "beast_master_pet_toughness", alternate = "beastMasterPetToughness")
         private double beastMasterPetToughness;
+        @SerializedName(value = "guardian_radius", alternate = "guardianRadius")
+        private double guardianRadius;
+        @SerializedName(value = "guardian_resistance", alternate = "guardianResistance")
+        private double guardianResistance;
+        @SerializedName(value = "guardian_regen", alternate = "guardianRegen")
+        private double guardianRegen;
+        @SerializedName(value = "guardian_regen_interval_reduction", alternate = "guardianRegenIntervalReduction")
+        private double guardianRegenIntervalReduction;
     }
 }

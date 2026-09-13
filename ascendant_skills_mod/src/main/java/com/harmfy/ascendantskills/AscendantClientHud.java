@@ -113,6 +113,23 @@ public final class AscendantClientHud {
             boxes.add(new HudBox("T", stackColor(state.titanStacks(), state.titanMaxStacks()),
                     state.titanStacks() > 0 ? Integer.toString(state.titanStacks()) : ""));
         }
+        if (state.farmerDexterityActive()) {
+            boxes.add(new HudBox("H", 0xFF65D17A, ""));
+        }
+        if (state.greenHeartClimate() >= 0) {
+            boxes.add(new HudBox("V", greenHeartColor(state.greenHeartClimate()), Integer.toString(state.greenHeartClimate())));
+        }
+        if (state.felineSensesActive()) {
+            boxes.add(new HudBox("N", 0xFF77A7FF, ""));
+        }
+        if (state.guardianAllies() > 0) {
+            boxes.add(new HudBox("G", stackColor(state.guardianAllies(), state.guardianMaxAllies()),
+                    Integer.toString(state.guardianAllies())));
+        }
+        if (state.beastMasterPets() >= 0) {
+            boxes.add(new HudBox("SB", stackColor(state.beastMasterPets(), state.beastMasterMaxPets()),
+                    Integer.toString(state.beastMasterPets())));
+        }
         if (state.conquerorStacks() >= 0) {
             boxes.add(new HudBox("Q", stackColor(state.conquerorStacks(), state.conquerorMaxStacks()),
                     state.conquerorStacks() > 0 ? Integer.toString(state.conquerorStacks()) : ""));
@@ -161,6 +178,16 @@ public final class AscendantClientHud {
             return 0xFF37404A;
         }
         return stacks >= maxStacks ? 0xFFFFC857 : 0xFFFF7A36;
+    }
+
+    private static int greenHeartColor(int climate) {
+        return switch (climate) {
+            case 1 -> 0xFF65D17A;
+            case 2 -> 0xFF31A8FF;
+            case 3 -> 0xFFD86F45;
+            case 4 -> 0xFFBFE8FF;
+            default -> 0xFF37404A;
+        };
     }
 
     private static String seconds(int ticks) {

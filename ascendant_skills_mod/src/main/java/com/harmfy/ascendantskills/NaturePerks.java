@@ -28,6 +28,7 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.food.FoodData;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.ItemStack;
@@ -77,6 +78,9 @@ public final class NaturePerks {
     private static final ResourceLocation BEAST_PET_DAMAGE = id("beast_pet_damage");
     private static final ResourceLocation BEAST_PET_ARMOR = id("beast_pet_armor");
     private static final ResourceLocation BEAST_PET_TOUGHNESS = id("beast_pet_toughness");
+    private static final ResourceLocation GUARDIAN_RESISTANCE = id("guardian_natural_resistance");
+    private static final ResourceLocation GUARDIAN_REGEN = id("guardian_natural_regen");
+    private static final ResourceLocation GUARDIAN_REGEN_INTERVAL = id("guardian_natural_regen_interval");
     private static final ResourceLocation TAN_CLIMATE_CLEMENCY = ResourceLocation.fromNamespaceAndPath("toughasnails", "climate_clemency");
     private static final Set<Holder<MobEffect>> RATEL_BLOCKED_EFFECTS = Set.of(MobEffects.POISON, MobEffects.HUNGER);
     private static final Map<UUID, Map<UUID, Long>> NATURE_RETALIATION = new HashMap<>();
@@ -85,6 +89,7 @@ public final class NaturePerks {
     private static final Set<UUID> APEX_NIGHT_VISION_PLAYERS = new java.util.HashSet<>();
     private static final Set<UUID> GREEN_HEART_CLEMENCY_PLAYERS = new java.util.HashSet<>();
     private static final Map<UUID, Double> BEAST_BUFFED_PETS = new HashMap<>();
+    private static final Map<UUID, UUID> BEAST_PET_OWNERS = new HashMap<>();
 
     private NaturePerks() {
     }
@@ -135,12 +140,13 @@ public final class NaturePerks {
             return;
         }
 
-        float extraSaturation = (float) (food.nutrition() * food.saturation() * 2.0F * bonus);
+        float extraSaturation = (float) (food.saturation() * bonus);
         if (extraSaturation > 0.0F) {
-            int foodLevel = player.getFoodData().getFoodLevel();
-            float saturation = player.getFoodData().getSaturationLevel();
-            player.getFoodData().setSaturation(Math.min(foodLevel, saturation + extraSaturation));
-            player.getFoodData().setFoodLevel(foodLevel);
+            FoodData foodData = player.getFoodData();
+            int foodLevel = foodData.getFoodLevel();
+            float saturation = foodData.getSaturationLevel();
+            foodData.setSaturation(Math.min(foodLevel, saturation + extraSaturation));
+            foodData.setFoodLevel(foodLevel);
         }
     }
 
@@ -232,6 +238,7 @@ public final class NaturePerks {
         updateDruidLeafPerk(player);
         updateAvatarCrouchSpeed(player);
         updateGreenHeart(player);
+        updateGuardianNatural(player);
         applyLongNatureEffects(player);
         updateNatureMobTargets(player);
         updateBeastMaster(player);
@@ -239,6 +246,48 @@ public final class NaturePerks {
         accelerateNearbyCrops(player);
         accelerateNearbyAnimals(player);
         pruneRetaliation(player);
+    }
+
+    public static boolean farmerDexterityActive(ServerPlayer player) {
+        return has(player, "herbolario") && player.getMainHandItem().getItem() instanceof HoeItem;
+    }
+
+    public static int greenHeartClimateHud(ServerPlayer player) {
+        if (!has(player, "espiritu_del_bosque")) {
+            return -1;
+        }
+        return switch (greenHeartClimate(player)) {
+            case CLEAR -> 1;
+            case RAIN -> 2;
+            case STORM -> 3;
+            case SNOW -> 4;
+        };
+    }
+
+    public static boolean felineSensesActive(ServerPlayer player) {
+        return has(player, "apex_predator") && isNaturalGround(player);
+    }
+
+    public static int guardianAlliesCovered(ServerPlayer player) {
+        if (!has(player, "guardian_natural")) {
+            return -1;
+        }
+        return nearbyPartyAllies(player, AscendantConfig.natureGuardianRadius());
+    }
+
+    public static int guardianMaxAllies() {
+        return Math.max(1, AscendantConfig.maxPartySize() - 1);
+    }
+
+    public static int beastMasterNearbyPets(ServerPlayer player) {
+        if (!has(player, "senor_de_las_bestias")) {
+            return -1;
+        }
+        return countOwnedPetsNearby(player, AscendantConfig.natureBeastMasterPackRadius());
+    }
+
+    public static int beastMasterMaxStacks() {
+        return AscendantConfig.natureBeastMasterPackMaxStacks();
     }
 
     private static void updateForestSoul(ServerPlayer player) {
@@ -268,7 +317,7 @@ public final class NaturePerks {
     }
 
     private static void applyLongNatureEffects(ServerPlayer player) {
-        if (player.tickCount % AscendantConfig.natureLongEffectRefreshTicks() != 0) {
+        if (player.tickCount % AscendantConfig.natureDetectionIntervalTicks() != 0) {
             return;
         }
 
@@ -287,7 +336,7 @@ public final class NaturePerks {
     }
 
     private static void updateGreenHeart(ServerPlayer player) {
-        if (player.tickCount % AscendantConfig.natureLongEffectRefreshTicks() != 0) {
+        if (player.tickCount % AscendantConfig.natureDetectionIntervalTicks() != 0) {
             return;
         }
 
@@ -371,6 +420,69 @@ public final class NaturePerks {
         removeModifier(player, AscendantAttributes.GLOBAL_DAMAGE, GREEN_HEART_STORM_DAMAGE);
     }
 
+    private static void updateGuardianNatural(ServerPlayer player) {
+        if (player.tickCount % AscendantConfig.natureDetectionIntervalTicks() != 0) {
+            return;
+        }
+
+        if (guardianSourcesFor(player) > 0) {
+            applyModifier(player, AscendantAttributes.GLOBAL_RESISTANCE, GUARDIAN_RESISTANCE,
+                    AscendantConfig.natureGuardianResistance(), AttributeModifier.Operation.ADD_VALUE);
+            applyModifier(player, AscendantAttributes.PASSIVE_REGEN_HEALTH, GUARDIAN_REGEN,
+                    AscendantConfig.natureGuardianRegen(), AttributeModifier.Operation.ADD_VALUE);
+            applyModifier(player, AscendantAttributes.PASSIVE_REGEN_INTERVAL, GUARDIAN_REGEN_INTERVAL,
+                    -AscendantConfig.natureGuardianRegenIntervalReduction(), AttributeModifier.Operation.ADD_VALUE);
+        } else {
+            removeModifier(player, AscendantAttributes.GLOBAL_RESISTANCE, GUARDIAN_RESISTANCE);
+            removeModifier(player, AscendantAttributes.PASSIVE_REGEN_HEALTH, GUARDIAN_REGEN);
+            removeModifier(player, AscendantAttributes.PASSIVE_REGEN_INTERVAL, GUARDIAN_REGEN_INTERVAL);
+        }
+    }
+
+    private static int guardianSourcesFor(ServerPlayer player) {
+        AscendantData.Party party = AscendantData.get(player.server).partyOf(player.getUUID()).orElse(null);
+        if (party == null) {
+            return 0;
+        }
+        int sources = 0;
+        double radiusSqr = AscendantConfig.natureGuardianRadius() * AscendantConfig.natureGuardianRadius();
+        for (UUID memberId : party.members) {
+            if (memberId.equals(player.getUUID())) {
+                continue;
+            }
+            ServerPlayer guardian = player.server.getPlayerList().getPlayer(memberId);
+            if (guardian == null || !has(guardian, "guardian_natural") || !guardian.level().dimension().equals(player.level().dimension())) {
+                continue;
+            }
+            if (guardian.distanceToSqr(player) <= radiusSqr) {
+                sources++;
+            }
+        }
+        return sources;
+    }
+
+    private static int nearbyPartyAllies(ServerPlayer player, double radius) {
+        AscendantData.Party party = AscendantData.get(player.server).partyOf(player.getUUID()).orElse(null);
+        if (party == null) {
+            return 0;
+        }
+        int allies = 0;
+        double radiusSqr = radius * radius;
+        for (UUID memberId : party.members) {
+            if (memberId.equals(player.getUUID())) {
+                continue;
+            }
+            ServerPlayer ally = player.server.getPlayerList().getPlayer(memberId);
+            if (ally == null || !ally.level().dimension().equals(player.level().dimension())) {
+                continue;
+            }
+            if (ally.distanceToSqr(player) <= radiusSqr) {
+                allies++;
+            }
+        }
+        return Math.min(guardianMaxAllies(), allies);
+    }
+
     private static void updateBeastMaster(ServerPlayer player) {
         int scanTicks = AscendantConfig.natureAnimalScanIntervalTicks();
         if (player.tickCount % scanTicks != 0) {
@@ -379,11 +491,12 @@ public final class NaturePerks {
 
         if (!has(player, "senor_de_las_bestias")) {
             removeBeastPackModifiers(player);
-            removeNearbyBeastPetBuffs(player, AscendantConfig.natureBeastMasterPackRadius() + 16.0D);
+            removeInvalidBeastPetBuffs(player);
             return;
         }
 
         double radius = AscendantConfig.natureBeastMasterPackRadius();
+        removeInvalidBeastPetBuffs(player);
         int ownedNearby = 0;
         for (LivingEntity entity : player.level().getEntitiesOfClass(LivingEntity.class, player.getBoundingBox().inflate(radius))) {
             if (!isOwnedBy(entity, player) || entity.distanceToSqr(player) > radius * radius) {
@@ -417,15 +530,32 @@ public final class NaturePerks {
         applyModifier(entity, Attributes.ARMOR, BEAST_PET_ARMOR, AscendantConfig.natureBeastMasterPetArmor(), AttributeModifier.Operation.ADD_VALUE);
         applyModifier(entity, Attributes.ARMOR_TOUGHNESS, BEAST_PET_TOUGHNESS, AscendantConfig.natureBeastMasterPetToughness(), AttributeModifier.Operation.ADD_VALUE);
         BEAST_BUFFED_PETS.put(entity.getUUID(), healthBonus);
+        UUID owner = entity instanceof OwnableEntity ownable ? ownable.getOwnerUUID() : null;
+        if (owner != null) {
+            BEAST_PET_OWNERS.put(entity.getUUID(), owner);
+        }
         if (previousHealthBonus <= 0.0D && healthBonus > 0.0D) {
             entity.setHealth(Math.min(entity.getMaxHealth(), entity.getHealth() + (float) healthBonus));
         }
     }
 
-    private static void removeNearbyBeastPetBuffs(ServerPlayer player, double radius) {
-        for (LivingEntity entity : player.level().getEntitiesOfClass(LivingEntity.class, player.getBoundingBox().inflate(radius))) {
-            if (BEAST_BUFFED_PETS.containsKey(entity.getUUID())) {
-                removeBeastPetBuff(entity);
+    private static void removeInvalidBeastPetBuffs(ServerPlayer player) {
+        double radiusSqr = AscendantConfig.natureBeastMasterPackRadius() * AscendantConfig.natureBeastMasterPackRadius();
+        for (ServerLevel level : player.server.getAllLevels()) {
+            for (UUID petId : List.copyOf(BEAST_BUFFED_PETS.keySet())) {
+                if (!player.getUUID().equals(BEAST_PET_OWNERS.get(petId))) {
+                    continue;
+                }
+                Entity entity = level.getEntity(petId);
+                if (!(entity instanceof LivingEntity pet)) {
+                    continue;
+                }
+                if (!has(player, "senor_de_las_bestias")
+                        || !pet.level().dimension().equals(player.level().dimension())
+                        || !isOwnedBy(pet, player)
+                        || pet.distanceToSqr(player) > radiusSqr) {
+                    removeBeastPetBuff(pet);
+                }
             }
         }
     }
@@ -436,6 +566,7 @@ public final class NaturePerks {
         removeModifier(entity, Attributes.ARMOR, BEAST_PET_ARMOR);
         removeModifier(entity, Attributes.ARMOR_TOUGHNESS, BEAST_PET_TOUGHNESS);
         BEAST_BUFFED_PETS.remove(entity.getUUID());
+        BEAST_PET_OWNERS.remove(entity.getUUID());
         if (entity.getHealth() > entity.getMaxHealth()) {
             entity.setHealth(entity.getMaxHealth());
         }
@@ -604,6 +735,17 @@ public final class NaturePerks {
         return entity instanceof OwnableEntity ownable
                 && player.getUUID().equals(ownable.getOwnerUUID())
                 && entity.isAlive();
+    }
+
+    private static int countOwnedPetsNearby(ServerPlayer player, double radius) {
+        double radiusSqr = radius * radius;
+        int count = 0;
+        for (LivingEntity entity : player.level().getEntitiesOfClass(LivingEntity.class, player.getBoundingBox().inflate(radius))) {
+            if (isOwnedBy(entity, player) && entity.distanceToSqr(player) <= radiusSqr) {
+                count++;
+            }
+        }
+        return Math.min(AscendantConfig.natureBeastMasterPackMaxStacks(), count);
     }
 
     private static void rememberRetaliation(ServerPlayer player, LivingEntity entity) {

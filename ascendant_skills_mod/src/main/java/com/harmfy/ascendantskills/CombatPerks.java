@@ -1268,7 +1268,14 @@ public final class CombatPerks {
                 has(player, "bastion_absoluto") ? remainingTicks(player, ABSOLUTE_BASTION_COOLDOWNS.getOrDefault(player.getUUID(), 0L)) : -1,
                 has(player, "provocador"),
                 has(player, "titan") ? titanStacks(player) : -1,
-                AscendantConfig.titanMaxStacks()
+                AscendantConfig.titanMaxStacks(),
+                NaturePerks.farmerDexterityActive(player),
+                NaturePerks.greenHeartClimateHud(player),
+                NaturePerks.felineSensesActive(player),
+                NaturePerks.guardianAlliesCovered(player),
+                NaturePerks.guardianMaxAllies(),
+                NaturePerks.beastMasterNearbyPets(player),
+                NaturePerks.beastMasterMaxStacks()
         ));
     }
 

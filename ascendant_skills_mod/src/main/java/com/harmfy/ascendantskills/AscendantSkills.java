@@ -61,5 +61,9 @@ public final class AscendantSkills {
         } else {
             LOGGER.warn("Puffish Skills was not found. Ascendant commands and boss progress will work, but skill purchase integration is disabled.");
         }
+
+        if (ModList.get().isLoaded("appleskin")) {
+            AppleSkinCompat.register();
+        }
     }
 }

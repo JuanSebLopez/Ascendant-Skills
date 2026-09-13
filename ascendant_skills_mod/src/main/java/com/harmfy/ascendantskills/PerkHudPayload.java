@@ -35,7 +35,14 @@ public record PerkHudPayload(
         int absoluteBastionCooldownTicks,
         boolean provocadorActive,
         int titanStacks,
-        int titanMaxStacks
+        int titanMaxStacks,
+        boolean farmerDexterityActive,
+        int greenHeartClimate,
+        boolean felineSensesActive,
+        int guardianAllies,
+        int guardianMaxAllies,
+        int beastMasterPets,
+        int beastMasterMaxPets
 ) implements CustomPacketPayload {
     public static final CustomPacketPayload.Type<PerkHudPayload> TYPE = new CustomPacketPayload.Type<>(
             ResourceLocation.fromNamespaceAndPath(AscendantSkills.MOD_ID, "perk_hud")
@@ -76,6 +83,13 @@ public record PerkHudPayload(
                 buffer.readVarInt(),
                 buffer.readBoolean(),
                 buffer.readVarInt(),
+                buffer.readVarInt(),
+                buffer.readBoolean(),
+                buffer.readVarInt(),
+                buffer.readBoolean(),
+                buffer.readVarInt(),
+                buffer.readVarInt(),
+                buffer.readVarInt(),
                 buffer.readVarInt()
         );
     }
@@ -111,6 +125,13 @@ public record PerkHudPayload(
         buffer.writeBoolean(payload.provocadorActive());
         buffer.writeVarInt(payload.titanStacks());
         buffer.writeVarInt(payload.titanMaxStacks());
+        buffer.writeBoolean(payload.farmerDexterityActive());
+        buffer.writeVarInt(payload.greenHeartClimate());
+        buffer.writeBoolean(payload.felineSensesActive());
+        buffer.writeVarInt(payload.guardianAllies());
+        buffer.writeVarInt(payload.guardianMaxAllies());
+        buffer.writeVarInt(payload.beastMasterPets());
+        buffer.writeVarInt(payload.beastMasterMaxPets());
     }
 
     @Override

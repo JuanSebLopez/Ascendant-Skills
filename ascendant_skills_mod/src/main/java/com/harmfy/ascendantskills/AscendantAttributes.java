@@ -86,7 +86,7 @@ public final class AscendantAttributes {
     );
     public static final DeferredHolder<Attribute, Attribute> PASSIVE_REGEN_INTERVAL = ATTRIBUTES.register(
             "passive_regen_interval",
-            () -> new RangedAttribute("attribute.ascendant_skills.passive_regen_interval", 10.0D, 1.0D, 120.0D).setSyncable(true)
+            () -> new RangedAttribute("attribute.ascendant_skills.passive_regen_interval", 20.0D, 1.0D, 120.0D).setSyncable(true)
     );
     public static final DeferredHolder<Attribute, Attribute> AGGRO_REACH = ATTRIBUTES.register(
             "aggro_reach",
