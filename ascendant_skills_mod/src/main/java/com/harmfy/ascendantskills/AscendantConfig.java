@@ -39,6 +39,7 @@ public final class AscendantConfig {
             requirements = loadOrWriteDefaultRequirements();
             gameplay = sanitize(loadOrWriteDefault(GAMEPLAY_PATH, GameplayFile.class, defaultGameplay()), defaultGameplay());
             nature = sanitizeNature(loadOrWriteDefault(NATURE_PATH, NatureFile.class, defaultNature()), defaultNature());
+            writeConfig(NATURE_PATH, nature);
             AscendantSkills.LOGGER.info("Loaded Ascendant Skills config from {}", CONFIG_DIR);
         } catch (IOException | RuntimeException ex) {
             AscendantSkills.LOGGER.error("Failed to load Ascendant Skills config. Using in-memory defaults.", ex);
@@ -241,6 +242,78 @@ public final class AscendantConfig {
         return Math.max(20, nature.retaliationTicks);
     }
 
+    public static double natureGreenHeartClearMoveSpeed() {
+        return nature.greenHeartClearMoveSpeed;
+    }
+
+    public static double natureGreenHeartClearStepHeight() {
+        return nature.greenHeartClearStepHeight;
+    }
+
+    public static double natureGreenHeartRainRegen() {
+        return nature.greenHeartRainRegen;
+    }
+
+    public static double natureGreenHeartRainRegenIntervalReduction() {
+        return Math.max(0.0D, nature.greenHeartRainRegenIntervalReduction);
+    }
+
+    public static double natureGreenHeartSnowToughness() {
+        return nature.greenHeartSnowToughness;
+    }
+
+    public static double natureGreenHeartSnowArmor() {
+        return nature.greenHeartSnowArmor;
+    }
+
+    public static double natureGreenHeartStormAttackSpeed() {
+        return nature.greenHeartStormAttackSpeed;
+    }
+
+    public static double natureGreenHeartStormDamage() {
+        return nature.greenHeartStormDamage;
+    }
+
+    public static double natureBeastMasterPackRadius() {
+        return Math.max(1.0D, nature.beastMasterPackRadius);
+    }
+
+    public static int natureBeastMasterPackMaxStacks() {
+        return Math.max(1, nature.beastMasterPackMaxStacks);
+    }
+
+    public static double natureBeastMasterGlobalDamagePerStack() {
+        return nature.beastMasterGlobalDamagePerStack;
+    }
+
+    public static double natureBeastMasterArmorPerStack() {
+        return nature.beastMasterArmorPerStack;
+    }
+
+    public static double natureBeastMasterMoveSpeedPerStack() {
+        return nature.beastMasterMoveSpeedPerStack;
+    }
+
+    public static double natureBeastMasterAttackSpeedPerStack() {
+        return nature.beastMasterAttackSpeedPerStack;
+    }
+
+    public static double natureBeastMasterPetHealth() {
+        return Math.max(0.0D, nature.beastMasterPetHealth);
+    }
+
+    public static double natureBeastMasterPetDamage() {
+        return nature.beastMasterPetDamage;
+    }
+
+    public static double natureBeastMasterPetArmor() {
+        return nature.beastMasterPetArmor;
+    }
+
+    public static double natureBeastMasterPetToughness() {
+        return nature.beastMasterPetToughness;
+    }
+
     private static <T> T loadOrWriteDefault(Path path, Class<T> type, T defaultValue) throws IOException {
         if (!Files.exists(path)) {
             try (Writer writer = Files.newBufferedWriter(path)) {
@@ -251,6 +324,12 @@ public final class AscendantConfig {
         try (Reader reader = Files.newBufferedReader(path)) {
             T loaded = GSON.fromJson(reader, type);
             return loaded == null ? defaultValue : loaded;
+        }
+    }
+
+    private static void writeConfig(Path path, Object value) throws IOException {
+        try (Writer writer = Files.newBufferedWriter(path)) {
+            GSON.toJson(value, writer);
         }
     }
 
@@ -310,6 +389,24 @@ public final class AscendantConfig {
         if (loaded.breedingSpeedScale < 0.0D) loaded.breedingSpeedScale = fallback.breedingSpeedScale;
         if (loaded.longEffectRefreshTicks <= 0) loaded.longEffectRefreshTicks = fallback.longEffectRefreshTicks;
         if (loaded.retaliationTicks <= 0) loaded.retaliationTicks = fallback.retaliationTicks;
+        if (loaded.greenHeartClearMoveSpeed == 0.0D) loaded.greenHeartClearMoveSpeed = fallback.greenHeartClearMoveSpeed;
+        if (loaded.greenHeartClearStepHeight == 0.0D) loaded.greenHeartClearStepHeight = fallback.greenHeartClearStepHeight;
+        if (loaded.greenHeartRainRegen == 0.0D) loaded.greenHeartRainRegen = fallback.greenHeartRainRegen;
+        if (loaded.greenHeartRainRegenIntervalReduction == 0.0D) loaded.greenHeartRainRegenIntervalReduction = fallback.greenHeartRainRegenIntervalReduction;
+        if (loaded.greenHeartSnowToughness == 0.0D) loaded.greenHeartSnowToughness = fallback.greenHeartSnowToughness;
+        if (loaded.greenHeartSnowArmor == 0.0D) loaded.greenHeartSnowArmor = fallback.greenHeartSnowArmor;
+        if (loaded.greenHeartStormAttackSpeed == 0.0D) loaded.greenHeartStormAttackSpeed = fallback.greenHeartStormAttackSpeed;
+        if (loaded.greenHeartStormDamage == 0.0D) loaded.greenHeartStormDamage = fallback.greenHeartStormDamage;
+        if (loaded.beastMasterPackRadius <= 0.0D) loaded.beastMasterPackRadius = fallback.beastMasterPackRadius;
+        if (loaded.beastMasterPackMaxStacks <= 0) loaded.beastMasterPackMaxStacks = fallback.beastMasterPackMaxStacks;
+        if (loaded.beastMasterGlobalDamagePerStack == 0.0D) loaded.beastMasterGlobalDamagePerStack = fallback.beastMasterGlobalDamagePerStack;
+        if (loaded.beastMasterArmorPerStack == 0.0D) loaded.beastMasterArmorPerStack = fallback.beastMasterArmorPerStack;
+        if (loaded.beastMasterMoveSpeedPerStack == 0.0D) loaded.beastMasterMoveSpeedPerStack = fallback.beastMasterMoveSpeedPerStack;
+        if (loaded.beastMasterAttackSpeedPerStack == 0.0D) loaded.beastMasterAttackSpeedPerStack = fallback.beastMasterAttackSpeedPerStack;
+        if (loaded.beastMasterPetHealth == 0.0D) loaded.beastMasterPetHealth = fallback.beastMasterPetHealth;
+        if (loaded.beastMasterPetDamage == 0.0D) loaded.beastMasterPetDamage = fallback.beastMasterPetDamage;
+        if (loaded.beastMasterPetArmor == 0.0D) loaded.beastMasterPetArmor = fallback.beastMasterPetArmor;
+        if (loaded.beastMasterPetToughness == 0.0D) loaded.beastMasterPetToughness = fallback.beastMasterPetToughness;
         return loaded;
     }
 
@@ -470,6 +567,24 @@ public final class AscendantConfig {
         file.avatarCrouchSpeed = 0.25D;
         file.longEffectRefreshTicks = 200;
         file.retaliationTicks = 600;
+        file.greenHeartClearMoveSpeed = 0.05D;
+        file.greenHeartClearStepHeight = 1.0D;
+        file.greenHeartRainRegen = 0.5D;
+        file.greenHeartRainRegenIntervalReduction = 2.0D;
+        file.greenHeartSnowToughness = 1.0D;
+        file.greenHeartSnowArmor = 2.0D;
+        file.greenHeartStormAttackSpeed = 0.05D;
+        file.greenHeartStormDamage = 0.05D;
+        file.beastMasterPackRadius = 15.0D;
+        file.beastMasterPackMaxStacks = 10;
+        file.beastMasterGlobalDamagePerStack = 0.01D;
+        file.beastMasterArmorPerStack = 0.25D;
+        file.beastMasterMoveSpeedPerStack = 0.005D;
+        file.beastMasterAttackSpeedPerStack = 0.01D;
+        file.beastMasterPetHealth = 12.0D;
+        file.beastMasterPetDamage = 0.30D;
+        file.beastMasterPetArmor = 6.0D;
+        file.beastMasterPetToughness = 2.0D;
         return file;
     }
 
@@ -588,5 +703,41 @@ public final class AscendantConfig {
         private int longEffectRefreshTicks;
         @SerializedName(value = "retaliation_ticks", alternate = "retaliationTicks")
         private int retaliationTicks;
+        @SerializedName(value = "green_heart_clear_move_speed", alternate = "greenHeartClearMoveSpeed")
+        private double greenHeartClearMoveSpeed;
+        @SerializedName(value = "green_heart_clear_step_height", alternate = "greenHeartClearStepHeight")
+        private double greenHeartClearStepHeight;
+        @SerializedName(value = "green_heart_rain_regen", alternate = "greenHeartRainRegen")
+        private double greenHeartRainRegen;
+        @SerializedName(value = "green_heart_rain_regen_interval_reduction", alternate = "greenHeartRainRegenIntervalReduction")
+        private double greenHeartRainRegenIntervalReduction;
+        @SerializedName(value = "green_heart_snow_toughness", alternate = "greenHeartSnowToughness")
+        private double greenHeartSnowToughness;
+        @SerializedName(value = "green_heart_snow_armor", alternate = "greenHeartSnowArmor")
+        private double greenHeartSnowArmor;
+        @SerializedName(value = "green_heart_storm_attack_speed", alternate = "greenHeartStormAttackSpeed")
+        private double greenHeartStormAttackSpeed;
+        @SerializedName(value = "green_heart_storm_damage", alternate = "greenHeartStormDamage")
+        private double greenHeartStormDamage;
+        @SerializedName(value = "beast_master_pack_radius", alternate = "beastMasterPackRadius")
+        private double beastMasterPackRadius;
+        @SerializedName(value = "beast_master_pack_max_stacks", alternate = "beastMasterPackMaxStacks")
+        private int beastMasterPackMaxStacks;
+        @SerializedName(value = "beast_master_global_damage_per_stack", alternate = "beastMasterGlobalDamagePerStack")
+        private double beastMasterGlobalDamagePerStack;
+        @SerializedName(value = "beast_master_armor_per_stack", alternate = "beastMasterArmorPerStack")
+        private double beastMasterArmorPerStack;
+        @SerializedName(value = "beast_master_move_speed_per_stack", alternate = "beastMasterMoveSpeedPerStack")
+        private double beastMasterMoveSpeedPerStack;
+        @SerializedName(value = "beast_master_attack_speed_per_stack", alternate = "beastMasterAttackSpeedPerStack")
+        private double beastMasterAttackSpeedPerStack;
+        @SerializedName(value = "beast_master_pet_health", alternate = "beastMasterPetHealth")
+        private double beastMasterPetHealth;
+        @SerializedName(value = "beast_master_pet_damage", alternate = "beastMasterPetDamage")
+        private double beastMasterPetDamage;
+        @SerializedName(value = "beast_master_pet_armor", alternate = "beastMasterPetArmor")
+        private double beastMasterPetArmor;
+        @SerializedName(value = "beast_master_pet_toughness", alternate = "beastMasterPetToughness")
+        private double beastMasterPetToughness;
     }
 }

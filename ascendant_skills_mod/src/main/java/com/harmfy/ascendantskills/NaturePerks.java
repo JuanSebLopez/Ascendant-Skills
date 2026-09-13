@@ -19,6 +19,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -32,6 +33,7 @@ import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
@@ -59,10 +61,30 @@ public final class NaturePerks {
     private static final ResourceLocation DRUID_LEAF_SPEED = id("druid_leaf_speed");
     private static final ResourceLocation DRUID_LEAF_JUMP = id("druid_leaf_jump");
     private static final ResourceLocation AVATAR_CROUCH_SPEED = id("avatar_crouch_speed");
+    private static final ResourceLocation GREEN_HEART_CLEAR_SPEED = id("green_heart_clear_speed");
+    private static final ResourceLocation GREEN_HEART_CLEAR_STEP = id("green_heart_clear_step");
+    private static final ResourceLocation GREEN_HEART_RAIN_REGEN = id("green_heart_rain_regen");
+    private static final ResourceLocation GREEN_HEART_RAIN_INTERVAL = id("green_heart_rain_interval");
+    private static final ResourceLocation GREEN_HEART_SNOW_TOUGHNESS = id("green_heart_snow_toughness");
+    private static final ResourceLocation GREEN_HEART_SNOW_ARMOR = id("green_heart_snow_armor");
+    private static final ResourceLocation GREEN_HEART_STORM_ATTACK_SPEED = id("green_heart_storm_attack_speed");
+    private static final ResourceLocation GREEN_HEART_STORM_DAMAGE = id("green_heart_storm_damage");
+    private static final ResourceLocation BEAST_PACK_GLOBAL_DAMAGE = id("beast_pack_global_damage");
+    private static final ResourceLocation BEAST_PACK_ARMOR = id("beast_pack_armor");
+    private static final ResourceLocation BEAST_PACK_MOVE_SPEED = id("beast_pack_move_speed");
+    private static final ResourceLocation BEAST_PACK_ATTACK_SPEED = id("beast_pack_attack_speed");
+    private static final ResourceLocation BEAST_PET_HEALTH = id("beast_pet_health");
+    private static final ResourceLocation BEAST_PET_DAMAGE = id("beast_pet_damage");
+    private static final ResourceLocation BEAST_PET_ARMOR = id("beast_pet_armor");
+    private static final ResourceLocation BEAST_PET_TOUGHNESS = id("beast_pet_toughness");
+    private static final ResourceLocation TAN_CLIMATE_CLEMENCY = ResourceLocation.fromNamespaceAndPath("toughasnails", "climate_clemency");
     private static final Set<Holder<MobEffect>> RATEL_BLOCKED_EFFECTS = Set.of(MobEffects.POISON, MobEffects.HUNGER);
     private static final Map<UUID, Map<UUID, Long>> NATURE_RETALIATION = new HashMap<>();
     private static final Map<String, Double> CROP_GROWTH_PROGRESS = new HashMap<>();
     private static final Set<UUID> PLAYERS_UNDERWATER = new java.util.HashSet<>();
+    private static final Set<UUID> APEX_NIGHT_VISION_PLAYERS = new java.util.HashSet<>();
+    private static final Set<UUID> GREEN_HEART_CLEMENCY_PLAYERS = new java.util.HashSet<>();
+    private static final Map<UUID, Double> BEAST_BUFFED_PETS = new HashMap<>();
 
     private NaturePerks() {
     }
@@ -209,8 +231,10 @@ public final class NaturePerks {
         updateForestSoul(player);
         updateDruidLeafPerk(player);
         updateAvatarCrouchSpeed(player);
+        updateGreenHeart(player);
         applyLongNatureEffects(player);
         updateNatureMobTargets(player);
+        updateBeastMaster(player);
         updateUnderwaterBreath(player);
         accelerateNearbyCrops(player);
         accelerateNearbyAnimals(player);
@@ -254,9 +278,174 @@ public final class NaturePerks {
             }
         }
 
-        if (has(player, "apex_predator")) {
+        if (has(player, "apex_predator") && isNaturalGround(player)) {
             player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, MobEffectInstance.INFINITE_DURATION, 0, true, false, true));
+            APEX_NIGHT_VISION_PLAYERS.add(player.getUUID());
+        } else if (APEX_NIGHT_VISION_PLAYERS.remove(player.getUUID())) {
+            player.removeEffect(MobEffects.NIGHT_VISION);
         }
+    }
+
+    private static void updateGreenHeart(ServerPlayer player) {
+        if (player.tickCount % AscendantConfig.natureLongEffectRefreshTicks() != 0) {
+            return;
+        }
+
+        if (!has(player, "espiritu_del_bosque")) {
+            removeGreenHeartModifiers(player);
+            removeGreenHeartClemency(player);
+            return;
+        }
+
+        applyGreenHeartClemency(player);
+        GreenHeartClimate climate = greenHeartClimate(player);
+        removeGreenHeartModifiers(player);
+        switch (climate) {
+            case CLEAR -> {
+                applyModifier(player, Attributes.MOVEMENT_SPEED, GREEN_HEART_CLEAR_SPEED,
+                        AscendantConfig.natureGreenHeartClearMoveSpeed(), AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+                applyModifier(player, Attributes.STEP_HEIGHT, GREEN_HEART_CLEAR_STEP,
+                        AscendantConfig.natureGreenHeartClearStepHeight(), AttributeModifier.Operation.ADD_VALUE);
+            }
+            case RAIN -> {
+                applyModifier(player, AscendantAttributes.PASSIVE_REGEN_HEALTH, GREEN_HEART_RAIN_REGEN,
+                        AscendantConfig.natureGreenHeartRainRegen(), AttributeModifier.Operation.ADD_VALUE);
+                applyModifier(player, AscendantAttributes.PASSIVE_REGEN_INTERVAL, GREEN_HEART_RAIN_INTERVAL,
+                        -AscendantConfig.natureGreenHeartRainRegenIntervalReduction(), AttributeModifier.Operation.ADD_VALUE);
+            }
+            case SNOW -> {
+                applyModifier(player, Attributes.ARMOR_TOUGHNESS, GREEN_HEART_SNOW_TOUGHNESS,
+                        AscendantConfig.natureGreenHeartSnowToughness(), AttributeModifier.Operation.ADD_VALUE);
+                applyModifier(player, Attributes.ARMOR, GREEN_HEART_SNOW_ARMOR,
+                        AscendantConfig.natureGreenHeartSnowArmor(), AttributeModifier.Operation.ADD_VALUE);
+            }
+            case STORM -> {
+                applyModifier(player, AscendantAttributes.GLOBAL_ATTACK_SPEED, GREEN_HEART_STORM_ATTACK_SPEED,
+                        AscendantConfig.natureGreenHeartStormAttackSpeed(), AttributeModifier.Operation.ADD_VALUE);
+                applyModifier(player, AscendantAttributes.GLOBAL_DAMAGE, GREEN_HEART_STORM_DAMAGE,
+                        AscendantConfig.natureGreenHeartStormDamage(), AttributeModifier.Operation.ADD_VALUE);
+            }
+        }
+    }
+
+    private static void applyGreenHeartClemency(ServerPlayer player) {
+        Holder.Reference<MobEffect> effect = BuiltInRegistries.MOB_EFFECT.getHolder(TAN_CLIMATE_CLEMENCY).orElse(null);
+        if (effect == null) {
+            return;
+        }
+        player.addEffect(new MobEffectInstance(effect, MobEffectInstance.INFINITE_DURATION, 0, true, false, false));
+        GREEN_HEART_CLEMENCY_PLAYERS.add(player.getUUID());
+    }
+
+    private static void removeGreenHeartClemency(ServerPlayer player) {
+        if (!GREEN_HEART_CLEMENCY_PLAYERS.remove(player.getUUID())) {
+            return;
+        }
+        BuiltInRegistries.MOB_EFFECT.getHolder(TAN_CLIMATE_CLEMENCY).ifPresent(player::removeEffect);
+    }
+
+    private static GreenHeartClimate greenHeartClimate(ServerPlayer player) {
+        Level level = player.level();
+        BlockPos pos = player.blockPosition();
+        Biome biome = level.getBiome(pos).value();
+        if (level.isThundering() && level.isRainingAt(pos)) {
+            return GreenHeartClimate.STORM;
+        }
+        if (biome.getPrecipitationAt(pos) == Biome.Precipitation.SNOW || biome.coldEnoughToSnow(pos)) {
+            return GreenHeartClimate.SNOW;
+        }
+        if (level.isRainingAt(pos)) {
+            return GreenHeartClimate.RAIN;
+        }
+        return GreenHeartClimate.CLEAR;
+    }
+
+    private static void removeGreenHeartModifiers(ServerPlayer player) {
+        removeModifier(player, Attributes.MOVEMENT_SPEED, GREEN_HEART_CLEAR_SPEED);
+        removeModifier(player, Attributes.STEP_HEIGHT, GREEN_HEART_CLEAR_STEP);
+        removeModifier(player, AscendantAttributes.PASSIVE_REGEN_HEALTH, GREEN_HEART_RAIN_REGEN);
+        removeModifier(player, AscendantAttributes.PASSIVE_REGEN_INTERVAL, GREEN_HEART_RAIN_INTERVAL);
+        removeModifier(player, Attributes.ARMOR_TOUGHNESS, GREEN_HEART_SNOW_TOUGHNESS);
+        removeModifier(player, Attributes.ARMOR, GREEN_HEART_SNOW_ARMOR);
+        removeModifier(player, AscendantAttributes.GLOBAL_ATTACK_SPEED, GREEN_HEART_STORM_ATTACK_SPEED);
+        removeModifier(player, AscendantAttributes.GLOBAL_DAMAGE, GREEN_HEART_STORM_DAMAGE);
+    }
+
+    private static void updateBeastMaster(ServerPlayer player) {
+        int scanTicks = AscendantConfig.natureAnimalScanIntervalTicks();
+        if (player.tickCount % scanTicks != 0) {
+            return;
+        }
+
+        if (!has(player, "senor_de_las_bestias")) {
+            removeBeastPackModifiers(player);
+            removeNearbyBeastPetBuffs(player, AscendantConfig.natureBeastMasterPackRadius() + 16.0D);
+            return;
+        }
+
+        double radius = AscendantConfig.natureBeastMasterPackRadius();
+        int ownedNearby = 0;
+        for (LivingEntity entity : player.level().getEntitiesOfClass(LivingEntity.class, player.getBoundingBox().inflate(radius))) {
+            if (!isOwnedBy(entity, player) || entity.distanceToSqr(player) > radius * radius) {
+                continue;
+            }
+            ownedNearby++;
+            applyBeastPetBuff(entity);
+        }
+
+        int stacks = Math.min(AscendantConfig.natureBeastMasterPackMaxStacks(), ownedNearby);
+        if (stacks <= 0) {
+            removeBeastPackModifiers(player);
+            return;
+        }
+
+        applyModifier(player, AscendantAttributes.GLOBAL_DAMAGE, BEAST_PACK_GLOBAL_DAMAGE,
+                stacks * AscendantConfig.natureBeastMasterGlobalDamagePerStack(), AttributeModifier.Operation.ADD_VALUE);
+        applyModifier(player, Attributes.ARMOR, BEAST_PACK_ARMOR,
+                stacks * AscendantConfig.natureBeastMasterArmorPerStack(), AttributeModifier.Operation.ADD_VALUE);
+        applyModifier(player, Attributes.MOVEMENT_SPEED, BEAST_PACK_MOVE_SPEED,
+                stacks * AscendantConfig.natureBeastMasterMoveSpeedPerStack(), AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+        applyModifier(player, AscendantAttributes.GLOBAL_ATTACK_SPEED, BEAST_PACK_ATTACK_SPEED,
+                stacks * AscendantConfig.natureBeastMasterAttackSpeedPerStack(), AttributeModifier.Operation.ADD_VALUE);
+    }
+
+    private static void applyBeastPetBuff(LivingEntity entity) {
+        double previousHealthBonus = BEAST_BUFFED_PETS.getOrDefault(entity.getUUID(), 0.0D);
+        double healthBonus = AscendantConfig.natureBeastMasterPetHealth();
+        applyModifier(entity, Attributes.MAX_HEALTH, BEAST_PET_HEALTH, healthBonus, AttributeModifier.Operation.ADD_VALUE);
+        applyModifier(entity, Attributes.ATTACK_DAMAGE, BEAST_PET_DAMAGE, AscendantConfig.natureBeastMasterPetDamage(), AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+        applyModifier(entity, Attributes.ARMOR, BEAST_PET_ARMOR, AscendantConfig.natureBeastMasterPetArmor(), AttributeModifier.Operation.ADD_VALUE);
+        applyModifier(entity, Attributes.ARMOR_TOUGHNESS, BEAST_PET_TOUGHNESS, AscendantConfig.natureBeastMasterPetToughness(), AttributeModifier.Operation.ADD_VALUE);
+        BEAST_BUFFED_PETS.put(entity.getUUID(), healthBonus);
+        if (previousHealthBonus <= 0.0D && healthBonus > 0.0D) {
+            entity.setHealth(Math.min(entity.getMaxHealth(), entity.getHealth() + (float) healthBonus));
+        }
+    }
+
+    private static void removeNearbyBeastPetBuffs(ServerPlayer player, double radius) {
+        for (LivingEntity entity : player.level().getEntitiesOfClass(LivingEntity.class, player.getBoundingBox().inflate(radius))) {
+            if (BEAST_BUFFED_PETS.containsKey(entity.getUUID())) {
+                removeBeastPetBuff(entity);
+            }
+        }
+    }
+
+    private static void removeBeastPetBuff(LivingEntity entity) {
+        removeModifier(entity, Attributes.MAX_HEALTH, BEAST_PET_HEALTH);
+        removeModifier(entity, Attributes.ATTACK_DAMAGE, BEAST_PET_DAMAGE);
+        removeModifier(entity, Attributes.ARMOR, BEAST_PET_ARMOR);
+        removeModifier(entity, Attributes.ARMOR_TOUGHNESS, BEAST_PET_TOUGHNESS);
+        BEAST_BUFFED_PETS.remove(entity.getUUID());
+        if (entity.getHealth() > entity.getMaxHealth()) {
+            entity.setHealth(entity.getMaxHealth());
+        }
+    }
+
+    private static void removeBeastPackModifiers(ServerPlayer player) {
+        removeModifier(player, AscendantAttributes.GLOBAL_DAMAGE, BEAST_PACK_GLOBAL_DAMAGE);
+        removeModifier(player, Attributes.ARMOR, BEAST_PACK_ARMOR);
+        removeModifier(player, Attributes.MOVEMENT_SPEED, BEAST_PACK_MOVE_SPEED);
+        removeModifier(player, AscendantAttributes.GLOBAL_ATTACK_SPEED, BEAST_PACK_ATTACK_SPEED);
     }
 
     private static void accelerateNearbyAnimals(ServerPlayer player) {
@@ -408,7 +597,13 @@ public final class NaturePerks {
 
     private static boolean isProtectedByNature(ServerPlayer player, LivingEntity attacker) {
         return has(player, "ganadero") && isNatureNeutral(attacker)
-                || has(player, "apex_predator") && isApexAvoidMob(attacker);
+                || has(player, "apex_predator") && isNaturalGround(player) && isApexAvoidMob(attacker);
+    }
+
+    private static boolean isOwnedBy(LivingEntity entity, ServerPlayer player) {
+        return entity instanceof OwnableEntity ownable
+                && player.getUUID().equals(ownable.getOwnerUUID())
+                && entity.isAlive();
     }
 
     private static void rememberRetaliation(ServerPlayer player, LivingEntity entity) {
@@ -557,5 +752,12 @@ public final class NaturePerks {
 
     private static ResourceLocation id(String path) {
         return ResourceLocation.fromNamespaceAndPath(AscendantSkills.MOD_ID, path);
+    }
+
+    private enum GreenHeartClimate {
+        CLEAR,
+        RAIN,
+        SNOW,
+        STORM
     }
 }
