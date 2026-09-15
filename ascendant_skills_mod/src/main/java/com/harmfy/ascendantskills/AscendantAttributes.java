@@ -132,6 +132,30 @@ public final class AscendantAttributes {
             "underwater_breath_seconds",
             () -> new RangedAttribute("attribute.ascendant_skills.underwater_breath_seconds", 0.0D, 0.0D, 300.0D).setSyncable(true)
     );
+    public static final DeferredHolder<Attribute, Attribute> MINING_SPEED = ATTRIBUTES.register(
+            "mining_speed",
+            () -> new RangedAttribute("attribute.ascendant_skills.mining_speed", 0.0D, 0.0D, 100.0D).setSyncable(true)
+    );
+    public static final DeferredHolder<Attribute, Attribute> PICKAXE_MINING_SPEED = ATTRIBUTES.register(
+            "pickaxe_mining_speed",
+            () -> new RangedAttribute("attribute.ascendant_skills.pickaxe_mining_speed", 0.0D, 0.0D, 100.0D).setSyncable(true)
+    );
+    public static final DeferredHolder<Attribute, Attribute> PICKAXE_INTERACTION_RANGE = ATTRIBUTES.register(
+            "pickaxe_interaction_range",
+            () -> new RangedAttribute("attribute.ascendant_skills.pickaxe_interaction_range", 0.0D, 0.0D, 64.0D).setSyncable(true)
+    );
+    public static final DeferredHolder<Attribute, Attribute> VIRTUAL_FORTUNE = ATTRIBUTES.register(
+            "virtual_fortune",
+            () -> new RangedAttribute("attribute.ascendant_skills.virtual_fortune", 0.0D, 0.0D, 16.0D).setSyncable(true)
+    );
+    public static final DeferredHolder<Attribute, Attribute> OBSIDIAN_MINING_SPEED = ATTRIBUTES.register(
+            "obsidian_mining_speed",
+            () -> new RangedAttribute("attribute.ascendant_skills.obsidian_mining_speed", 0.0D, 0.0D, 100.0D).setSyncable(true)
+    );
+    public static final DeferredHolder<Attribute, Attribute> PICKAXE_DURABILITY_PRESERVATION = ATTRIBUTES.register(
+            "pickaxe_durability_preservation",
+            () -> new RangedAttribute("attribute.ascendant_skills.pickaxe_durability_preservation", 0.0D, 0.0D, 1.0D).setSyncable(true)
+    );
 
     private AscendantAttributes() {
     }
@@ -167,6 +191,12 @@ public final class AscendantAttributes {
         event.add(EntityType.PLAYER, HOE_DAMAGE);
         event.add(EntityType.PLAYER, GLOBAL_LIFE_STEAL);
         event.add(EntityType.PLAYER, UNDERWATER_BREATH_SECONDS);
+        event.add(EntityType.PLAYER, MINING_SPEED);
+        event.add(EntityType.PLAYER, PICKAXE_MINING_SPEED);
+        event.add(EntityType.PLAYER, PICKAXE_INTERACTION_RANGE);
+        event.add(EntityType.PLAYER, VIRTUAL_FORTUNE);
+        event.add(EntityType.PLAYER, OBSIDIAN_MINING_SPEED);
+        event.add(EntityType.PLAYER, PICKAXE_DURABILITY_PRESERVATION);
     }
 
     public static int resetAscendantBaseValues(ServerPlayer player) {
@@ -201,6 +231,12 @@ public final class AscendantAttributes {
         changed += reset(player, HOE_DAMAGE);
         changed += reset(player, GLOBAL_LIFE_STEAL);
         changed += reset(player, UNDERWATER_BREATH_SECONDS);
+        changed += reset(player, MINING_SPEED);
+        changed += reset(player, PICKAXE_MINING_SPEED);
+        changed += reset(player, PICKAXE_INTERACTION_RANGE);
+        changed += reset(player, VIRTUAL_FORTUNE);
+        changed += reset(player, OBSIDIAN_MINING_SPEED);
+        changed += reset(player, PICKAXE_DURABILITY_PRESERVATION);
         return changed;
     }
 

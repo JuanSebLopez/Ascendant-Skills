@@ -26,9 +26,11 @@ public final class AscendantConfig {
     private static final Path REQUIREMENTS_PATH = CONFIG_DIR.resolve("requirements.json");
     private static final Path GAMEPLAY_PATH = CONFIG_DIR.resolve("gameplay.json");
     private static final Path NATURE_PATH = CONFIG_DIR.resolve("nature.json");
+    private static final Path MINING_PATH = CONFIG_DIR.resolve("mining.json");
     private static Map<String, RequirementEntry> requirements = defaultRequirements();
     private static GameplayFile gameplay = defaultGameplay();
     private static NatureFile nature = defaultNature();
+    private static MiningFile mining = defaultMining();
 
     private AscendantConfig() {
     }
@@ -39,13 +41,17 @@ public final class AscendantConfig {
             requirements = loadOrWriteDefaultRequirements();
             gameplay = sanitize(loadOrWriteDefault(GAMEPLAY_PATH, GameplayFile.class, defaultGameplay()), defaultGameplay());
             nature = sanitizeNature(loadOrWriteDefault(NATURE_PATH, NatureFile.class, defaultNature()), defaultNature());
+            mining = sanitizeMining(loadOrWriteDefault(MINING_PATH, MiningFile.class, defaultMining()), defaultMining());
+            writeConfig(REQUIREMENTS_PATH, requirements);
             writeConfig(NATURE_PATH, nature);
+            writeConfig(MINING_PATH, mining);
             AscendantSkills.LOGGER.info("Loaded Ascendant Skills config from {}", CONFIG_DIR);
         } catch (IOException | RuntimeException ex) {
             AscendantSkills.LOGGER.error("Failed to load Ascendant Skills config. Using in-memory defaults.", ex);
             requirements = defaultRequirements();
             gameplay = defaultGameplay();
             nature = defaultNature();
+            mining = defaultMining();
         }
     }
 
@@ -334,6 +340,90 @@ public final class AscendantConfig {
         return Math.max(0.0D, nature.guardianRegenIntervalReduction);
     }
 
+    public static int miningTunnelersY() {
+        return mining.tunnelersY;
+    }
+
+    public static int miningUndergroundAdaptationY() {
+        return mining.undergroundAdaptationY;
+    }
+
+    public static int miningInfernalY() {
+        return mining.infernalY;
+    }
+
+    public static int miningDetectionIntervalTicks() {
+        return Math.max(1, mining.detectionIntervalTicks);
+    }
+
+    public static int miningLongEffectRefreshTicks() {
+        return Math.max(20, mining.longEffectRefreshTicks);
+    }
+
+    public static double miningTunnelersMoveSpeed() {
+        return mining.tunnelersMoveSpeed;
+    }
+
+    public static double miningQuarryRhythmPerStack() {
+        return Math.max(0.0D, mining.quarryRhythmPerStack);
+    }
+
+    public static int miningQuarryRhythmMaxStacks() {
+        return Math.max(1, mining.quarryRhythmMaxStacks);
+    }
+
+    public static int miningQuarryRhythmDecayTicks() {
+        return Math.max(1, mining.quarryRhythmDecaySeconds) * 20;
+    }
+
+    public static double miningRockHeartKnockbackResistance() {
+        return mining.rockHeartKnockbackResistance;
+    }
+
+    public static double miningRockHeartArmor() {
+        return mining.rockHeartArmor;
+    }
+
+    public static double miningRockHeartToughness() {
+        return mining.rockHeartToughness;
+    }
+
+    public static double miningRockHeartStepHeight() {
+        return mining.rockHeartStepHeight;
+    }
+
+    public static int miningRockHeartGraceTicks() {
+        return Math.max(0, mining.rockHeartGraceSeconds) * 20;
+    }
+
+    public static double miningOreSenseRadius() {
+        return Math.max(1.0D, mining.oreSenseRadius);
+    }
+
+    public static List<MineralEntry> miningDetectableMinerals() {
+        return List.copyOf(mining.detectableMinerals);
+    }
+
+    public static Set<String> miningRockyBlocks() {
+        return Set.copyOf(mining.rockyBlocks);
+    }
+
+    public static Set<String> miningObsidianLikeBlocks() {
+        return Set.copyOf(mining.obsidianLikeBlocks);
+    }
+
+    public static Set<String> miningFortuneOres() {
+        return Set.copyOf(mining.fortuneOres);
+    }
+
+    public static Set<String> miningUniversalBreakableBlocks() {
+        return Set.copyOf(mining.universalBreakableBlocks);
+    }
+
+    public static double miningBedrockHardness() {
+        return Math.max(1.0D, mining.bedrockHardness);
+    }
+
     private static <T> T loadOrWriteDefault(Path path, Class<T> type, T defaultValue) throws IOException {
         if (!Files.exists(path)) {
             try (Writer writer = Files.newBufferedWriter(path)) {
@@ -382,7 +472,12 @@ public final class AscendantConfig {
                     }
                 }
             }
-            return loaded.isEmpty() ? defaultRequirements() : loaded;
+            if (loaded.isEmpty()) {
+                return defaultRequirements();
+            }
+            Map<String, RequirementEntry> defaults = defaultRequirements();
+            defaults.forEach(loaded::putIfAbsent);
+            return loaded;
         }
     }
 
@@ -435,6 +530,26 @@ public final class AscendantConfig {
         return loaded;
     }
 
+    private static MiningFile sanitizeMining(MiningFile loaded, MiningFile fallback) {
+        if (loaded == null) {
+            return fallback;
+        }
+        if (loaded.rockyBlocks == null || loaded.rockyBlocks.isEmpty()) loaded.rockyBlocks = fallback.rockyBlocks;
+        if (loaded.obsidianLikeBlocks == null || loaded.obsidianLikeBlocks.isEmpty()) loaded.obsidianLikeBlocks = fallback.obsidianLikeBlocks;
+        if (loaded.fortuneOres == null || loaded.fortuneOres.isEmpty()) loaded.fortuneOres = fallback.fortuneOres;
+        if (loaded.universalBreakableBlocks == null || loaded.universalBreakableBlocks.isEmpty()) loaded.universalBreakableBlocks = fallback.universalBreakableBlocks;
+        if (loaded.detectableMinerals == null || loaded.detectableMinerals.isEmpty()) loaded.detectableMinerals = fallback.detectableMinerals;
+        if (loaded.detectionIntervalTicks <= 0) loaded.detectionIntervalTicks = fallback.detectionIntervalTicks;
+        if (loaded.longEffectRefreshTicks <= 0) loaded.longEffectRefreshTicks = fallback.longEffectRefreshTicks;
+        if (loaded.quarryRhythmPerStack <= 0.0D) loaded.quarryRhythmPerStack = fallback.quarryRhythmPerStack;
+        if (loaded.quarryRhythmMaxStacks <= 0) loaded.quarryRhythmMaxStacks = fallback.quarryRhythmMaxStacks;
+        if (loaded.quarryRhythmDecaySeconds <= 0) loaded.quarryRhythmDecaySeconds = fallback.quarryRhythmDecaySeconds;
+        if (loaded.oreSenseRadius <= 0.0D || Math.abs(loaded.oreSenseRadius - 5.0D) < 0.0001D) loaded.oreSenseRadius = fallback.oreSenseRadius;
+        if (loaded.bedrockHardness <= 0.0D) loaded.bedrockHardness = fallback.bedrockHardness;
+        if (loaded.quarryRhythmMaxStacks == 30 && fallback.quarryRhythmMaxStacks == 20) loaded.quarryRhythmMaxStacks = fallback.quarryRhythmMaxStacks;
+        return loaded;
+    }
+
     private static String blankToNull(String value) {
         return value == null || value.isBlank() ? null : value;
     }
@@ -443,6 +558,17 @@ public final class AscendantConfig {
         Map<String, RequirementEntry> file = new LinkedHashMap<>();
         put(file, "inicio", 0);
         put(file, "combate", 3);
+        put(file, "minerales", 3);
+        put(file, "instinto_minero", 7);
+        put(file, "excavador", 10);
+        put(file, "prospector", 10);
+        put(file, "maestro_de_cantera", 15);
+        put(file, "ojo_del_minero", 15);
+        put(file, "adaptacion_subterranea", 20);
+        put(file, "corazon_de_piedra", 25, "cataclysm:netherite_monstrosity");
+        put(file, "minero_infernal", 30, "cataclysm:ignis");
+        put(file, "pico_universal", 35, "minecraft:ender_dragon");
+
         put(file, "cazador", 5);
         put(file, "bastion", 7);
 
@@ -618,6 +744,77 @@ public final class AscendantConfig {
         return file;
     }
 
+    private static MiningFile defaultMining() {
+        MiningFile file = new MiningFile();
+        file.tunnelersY = 0;
+        file.undergroundAdaptationY = 20;
+        file.infernalY = 30;
+        file.detectionIntervalTicks = 5;
+        file.longEffectRefreshTicks = 200;
+        file.tunnelersMoveSpeed = 0.10D;
+        file.quarryRhythmPerStack = 0.005D;
+        file.quarryRhythmMaxStacks = 20;
+        file.quarryRhythmDecaySeconds = 5;
+        file.rockHeartKnockbackResistance = 0.15D;
+        file.rockHeartArmor = 4.0D;
+        file.rockHeartToughness = 1.0D;
+        file.rockHeartStepHeight = 0.5D;
+        file.rockHeartGraceSeconds = 5;
+        file.oreSenseRadius = 10.0D;
+        file.bedrockHardness = 250.0D;
+        file.rockyBlocks = List.of(
+                "minecraft:stone",
+                "minecraft:deepslate",
+                "minecraft:granite",
+                "minecraft:diorite",
+                "minecraft:andesite",
+                "minecraft:tuff",
+                "minecraft:calcite",
+                "minecraft:basalt",
+                "minecraft:blackstone",
+                "minecraft:netherrack",
+                "minecraft:end_stone"
+        );
+        file.obsidianLikeBlocks = List.of(
+                "minecraft:obsidian",
+                "minecraft:crying_obsidian",
+                "minecraft:respawn_anchor"
+        );
+        file.fortuneOres = List.of(
+                "minecraft:coal_ore",
+                "minecraft:deepslate_coal_ore",
+                "minecraft:copper_ore",
+                "minecraft:deepslate_copper_ore",
+                "minecraft:iron_ore",
+                "minecraft:deepslate_iron_ore",
+                "minecraft:gold_ore",
+                "minecraft:deepslate_gold_ore",
+                "minecraft:redstone_ore",
+                "minecraft:deepslate_redstone_ore",
+                "minecraft:lapis_ore",
+                "minecraft:deepslate_lapis_ore",
+                "minecraft:diamond_ore",
+                "minecraft:deepslate_diamond_ore",
+                "minecraft:emerald_ore",
+                "minecraft:deepslate_emerald_ore",
+                "minecraft:nether_gold_ore",
+                "minecraft:nether_quartz_ore"
+        );
+        file.universalBreakableBlocks = List.of("minecraft:bedrock");
+        file.detectableMinerals = List.of(
+                new MineralEntry("carbon", List.of("minecraft:coal_ore", "minecraft:deepslate_coal_ore"), 0x222222),
+                new MineralEntry("cobre", List.of("minecraft:copper_ore", "minecraft:deepslate_copper_ore"), 0xD98244),
+                new MineralEntry("hierro", List.of("minecraft:iron_ore", "minecraft:deepslate_iron_ore"), 0xD8C4A8),
+                new MineralEntry("oro", List.of("minecraft:gold_ore", "minecraft:deepslate_gold_ore", "minecraft:nether_gold_ore"), 0xFFD451),
+                new MineralEntry("redstone", List.of("minecraft:redstone_ore", "minecraft:deepslate_redstone_ore"), 0xE02B2B),
+                new MineralEntry("lapis", List.of("minecraft:lapis_ore", "minecraft:deepslate_lapis_ore"), 0x2F62D6),
+                new MineralEntry("diamante", List.of("minecraft:diamond_ore", "minecraft:deepslate_diamond_ore"), 0x55E6FF),
+                new MineralEntry("esmeralda", List.of("minecraft:emerald_ore", "minecraft:deepslate_emerald_ore"), 0x42E66B),
+                new MineralEntry("cuarzo", List.of("minecraft:nether_quartz_ore"), 0xF2F2E8)
+        );
+        return file;
+    }
+
     private static void put(Map<String, RequirementEntry> file, String skillId, int levels) {
         file.put(skillId, new RequirementEntry(levels, null));
     }
@@ -779,5 +976,68 @@ public final class AscendantConfig {
         private double guardianRegen;
         @SerializedName(value = "guardian_regen_interval_reduction", alternate = "guardianRegenIntervalReduction")
         private double guardianRegenIntervalReduction;
+    }
+
+    public static final class MineralEntry {
+        @SerializedName(value = "name", alternate = "nombre")
+        public String name;
+        @SerializedName(value = "blocks", alternate = {"bloques", "blockIds"})
+        public List<String> blocks;
+        @SerializedName(value = "color", alternate = "colorRgb")
+        public int color;
+
+        private MineralEntry() {
+        }
+
+        private MineralEntry(String name, List<String> blocks, int color) {
+            this.name = name;
+            this.blocks = blocks;
+            this.color = color;
+        }
+    }
+
+    private static final class MiningFile {
+        @SerializedName(value = "tunnelers_y", alternate = "tunnelersY")
+        private int tunnelersY;
+        @SerializedName(value = "underground_adaptation_y", alternate = "undergroundAdaptationY")
+        private int undergroundAdaptationY;
+        @SerializedName(value = "infernal_y", alternate = "infernalY")
+        private int infernalY;
+        @SerializedName(value = "detection_interval_ticks", alternate = "detectionIntervalTicks")
+        private int detectionIntervalTicks;
+        @SerializedName(value = "long_effect_refresh_ticks", alternate = "longEffectRefreshTicks")
+        private int longEffectRefreshTicks;
+        @SerializedName(value = "tunnelers_move_speed", alternate = "tunnelersMoveSpeed")
+        private double tunnelersMoveSpeed;
+        @SerializedName(value = "quarry_rhythm_per_stack", alternate = "quarryRhythmPerStack")
+        private double quarryRhythmPerStack;
+        @SerializedName(value = "quarry_rhythm_max_stacks", alternate = "quarryRhythmMaxStacks")
+        private int quarryRhythmMaxStacks;
+        @SerializedName(value = "quarry_rhythm_decay_seconds", alternate = "quarryRhythmDecaySeconds")
+        private int quarryRhythmDecaySeconds;
+        @SerializedName(value = "rock_heart_knockback_resistance", alternate = "rockHeartKnockbackResistance")
+        private double rockHeartKnockbackResistance;
+        @SerializedName(value = "rock_heart_armor", alternate = "rockHeartArmor")
+        private double rockHeartArmor;
+        @SerializedName(value = "rock_heart_toughness", alternate = "rockHeartToughness")
+        private double rockHeartToughness;
+        @SerializedName(value = "rock_heart_step_height", alternate = "rockHeartStepHeight")
+        private double rockHeartStepHeight;
+        @SerializedName(value = "rock_heart_grace_seconds", alternate = "rockHeartGraceSeconds")
+        private int rockHeartGraceSeconds;
+        @SerializedName(value = "ore_sense_radius", alternate = "oreSenseRadius")
+        private double oreSenseRadius;
+        @SerializedName(value = "rocky_blocks", alternate = "rockyBlocks")
+        private List<String> rockyBlocks;
+        @SerializedName(value = "obsidian_like_blocks", alternate = "obsidianLikeBlocks")
+        private List<String> obsidianLikeBlocks;
+        @SerializedName(value = "fortune_ores", alternate = "fortuneOres")
+        private List<String> fortuneOres;
+        @SerializedName(value = "universal_breakable_blocks", alternate = "universalBreakableBlocks")
+        private List<String> universalBreakableBlocks;
+        @SerializedName(value = "bedrock_hardness", alternate = {"bedrockHardness", "universalBreakTicks", "universal_break_ticks"})
+        private double bedrockHardness;
+        @SerializedName(value = "detectable_minerals", alternate = "detectableMinerals")
+        private List<MineralEntry> detectableMinerals;
     }
 }

@@ -130,6 +130,22 @@ public final class AscendantClientHud {
             boxes.add(new HudBox("SB", stackColor(state.beastMasterPets(), state.beastMasterMaxPets()),
                     Integer.toString(state.beastMasterPets())));
         }
+        if (state.minerTunnelersActive()) {
+            boxes.add(new HudBox("AT", 0xFF8A8F98, ""));
+        }
+        if (state.minerUndergroundAdaptationActive()) {
+            boxes.add(new HudBox("AS", 0xFF77A7FF, ""));
+        }
+        if (state.minerRockHeartActive()) {
+            boxes.add(new HudBox("R", 0xFF9B9B8C, ""));
+        }
+        if (state.minerInfernalActive()) {
+            boxes.add(new HudBox("MI", 0xFFD86F45, ""));
+        }
+        if (state.minerQuarryStacks() > 0) {
+            boxes.add(new HudBox("MC", stackColor(state.minerQuarryStacks(), state.minerQuarryMaxStacks()),
+                    Integer.toString(state.minerQuarryStacks())));
+        }
         if (state.conquerorStacks() >= 0) {
             boxes.add(new HudBox("Q", stackColor(state.conquerorStacks(), state.conquerorMaxStacks()),
                     state.conquerorStacks() > 0 ? Integer.toString(state.conquerorStacks()) : ""));

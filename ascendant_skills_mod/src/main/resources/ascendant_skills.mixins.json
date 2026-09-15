@@ -6,7 +6,8 @@
   "plugin": "com.harmfy.ascendantskills.mixin.AscendantMixinPlugin",
   "mixins": [
     "AbstractArrowAccessor",
-    "InfernalMobsCoreMixin"
+    "InfernalMobsCoreMixin",
+    "UniversalBedrockMiningMixin"
   ],
   "injectors": {
     "defaultRequire": 1

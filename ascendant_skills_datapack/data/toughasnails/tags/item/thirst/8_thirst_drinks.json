@@ -1,0 +1,31 @@
+{
+  "replace": false,
+  "values": [
+    "toughasnails:apple_juice",
+    "minecraft:enchanted_golden_apple",
+    {
+      "id": "beachparty:coconut_cocktail",
+      "required": false
+    },
+    {
+      "id": "beachparty:sweetberries_cocktail",
+      "required": false
+    },
+    {
+      "id": "beachparty:cocoa_cocktail",
+      "required": false
+    },
+    {
+      "id": "beachparty:melon_cocktail",
+      "required": false
+    },
+    {
+      "id": "beachparty:honey_cocktail",
+      "required": false
+    },
+    {
+      "id": "beachparty:pumpkin_cocktail",
+      "required": false
+    }
+  ]
+}

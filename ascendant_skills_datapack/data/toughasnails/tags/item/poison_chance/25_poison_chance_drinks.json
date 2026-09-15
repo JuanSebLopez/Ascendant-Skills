@@ -1,0 +1,44 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:potion",
+    "toughasnails:leather_water_canteen",
+    "toughasnails:copper_water_canteen",
+    "toughasnails:iron_water_canteen",
+    "toughasnails:gold_water_canteen",
+    "toughasnails:diamond_water_canteen",
+    "toughasnails:netherite_water_canteen",
+    {
+      "id": "brewery:beer_wheat",
+      "required": false
+    },
+    {
+      "id": "brewery:beer_barley",
+      "required": false
+    },
+    {
+      "id": "brewery:beer_hops",
+      "required": false
+    },
+    {
+      "id": "brewery:beer_oat",
+      "required": false
+    },
+    {
+      "id": "brewery:beer_haley",
+      "required": false
+    },
+    {
+      "id": "brewery:beer_nettle",
+      "required": false
+    },
+    {
+      "id": "vinery:apple_cider",
+      "required": false
+    },
+    {
+      "id": "vinery:kelp_cider",
+      "required": false
+    }
+  ]
+}

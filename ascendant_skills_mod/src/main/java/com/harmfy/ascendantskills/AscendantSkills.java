@@ -1,11 +1,13 @@
 package com.harmfy.ascendantskills;
 
 import com.mojang.logging.LogUtils;
+import net.neoforged.api.distmarker.Dist;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
 import org.slf4j.Logger;
 
@@ -39,13 +41,17 @@ public final class AscendantSkills {
         NeoForge.EVENT_BUS.addListener(CombatPerks::onPlayerTick);
         NeoForge.EVENT_BUS.addListener(NaturePerks::onFarmlandTrample);
         NeoForge.EVENT_BUS.addListener(NaturePerks::onEntityInteract);
-        NeoForge.EVENT_BUS.addListener(NaturePerks::onLivingUseItemFinish);
+        NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, NaturePerks::onLivingUseItemFinish);
         NeoForge.EVENT_BUS.addListener(NaturePerks::onMobEffectApplicable);
         NeoForge.EVENT_BUS.addListener(NaturePerks::onLivingChangeTarget);
         NeoForge.EVENT_BUS.addListener(NaturePerks::onBlockBreak);
         NeoForge.EVENT_BUS.addListener(NaturePerks::onLivingDamagePre);
         NeoForge.EVENT_BUS.addListener(NaturePerks::onLivingDamagePost);
         NeoForge.EVENT_BUS.addListener(NaturePerks::onPlayerTick);
+        NeoForge.EVENT_BUS.addListener(MiningPerks::onBreakSpeed);
+        NeoForge.EVENT_BUS.addListener(MiningPerks::onHarvestCheck);
+        NeoForge.EVENT_BUS.addListener(MiningPerks::onBlockBreak);
+        NeoForge.EVENT_BUS.addListener(MiningPerks::onPlayerTick);
         NeoForge.EVENT_BUS.addListener(AscendantPotions::registerBrewingRecipes);
         NeoForge.EVENT_BUS.addListener(AscendantPotions::onPotionBrewPost);
         NeoForge.EVENT_BUS.addListener(AscendantPotions::onUseItemFinish);
@@ -62,7 +68,7 @@ public final class AscendantSkills {
             LOGGER.warn("Puffish Skills was not found. Ascendant commands and boss progress will work, but skill purchase integration is disabled.");
         }
 
-        if (ModList.get().isLoaded("appleskin")) {
+        if (FMLEnvironment.dist == Dist.CLIENT && ModList.get().isLoaded("appleskin")) {
             AppleSkinCompat.register();
         }
     }

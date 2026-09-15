@@ -1,0 +1,91 @@
+{
+  "replace": false,
+  "values": [
+    "toughasnails:dirty_water_bottle",
+    "toughasnails:leather_dirty_water_canteen",
+    "toughasnails:copper_dirty_water_canteen",
+    "toughasnails:iron_dirty_water_canteen",
+    "toughasnails:gold_dirty_water_canteen",
+    "toughasnails:diamond_dirty_water_canteen",
+    "toughasnails:netherite_dirty_water_canteen",
+    "minecraft:ominous_bottle",
+    "minecraft:sweet_berries",
+    "minecraft:glow_berries",
+    {
+      "id": "brewery:potato_salad",
+      "required": false
+    },
+    {
+      "id": "candlelight:tomato_soup",
+      "required": false
+    },
+    {
+      "id": "candlelight:mushroom_soup",
+      "required": false
+    },
+    {
+      "id": "candlelight:fresh_garden_salad",
+      "required": false
+    },
+    {
+      "id": "candlelight:tomato_mozzarella_salad",
+      "required": false
+    },
+    {
+      "id": "candlelight:salad",
+      "required": false
+    },
+    {
+      "id": "candlelight:beetroot_salad",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:farmer_salad",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:oatmeal_with_strawberries",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:strawberry",
+      "required": false
+    },
+    {
+      "id": "vinery:cherry",
+      "required": false
+    },
+    {
+      "id": "vinery:red_grape",
+      "required": false
+    },
+    {
+      "id": "vinery:savanna_grapes_red",
+      "required": false
+    },
+    {
+      "id": "vinery:taiga_grapes_red",
+      "required": false
+    },
+    {
+      "id": "vinery:jungle_grapes_red",
+      "required": false
+    },
+    {
+      "id": "vinery:white_grape",
+      "required": false
+    },
+    {
+      "id": "vinery:savanna_grapes_white",
+      "required": false
+    },
+    {
+      "id": "vinery:taiga_grapes_white",
+      "required": false
+    },
+    {
+      "id": "vinery:jungle_grapes_white",
+      "required": false
+    }
+  ]
+}

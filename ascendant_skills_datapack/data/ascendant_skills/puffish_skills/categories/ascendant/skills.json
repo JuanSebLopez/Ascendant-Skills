@@ -230,14 +230,54 @@
     "y": 300,
     "definition": "minerales"
   },
-  "minero": {
-    "x": 0,
-    "y": 330,
-    "definition": "minero"
-  },
   "exploracion": {
     "x": -120,
     "y": 180,
     "definition": "exploracion"
+  },
+  "instinto_minero": {
+    "x": 0,
+    "y": 360,
+    "definition": "instinto_minero"
+  },
+  "excavador": {
+    "x": -65,
+    "y": 375,
+    "definition": "excavador"
+  },
+  "prospector": {
+    "x": 65,
+    "y": 375,
+    "definition": "prospector"
+  },
+  "maestro_de_cantera": {
+    "x": -130,
+    "y": 390,
+    "definition": "maestro_de_cantera"
+  },
+  "ojo_del_minero": {
+    "x": 130,
+    "y": 390,
+    "definition": "ojo_del_minero"
+  },
+  "adaptacion_subterranea": {
+    "x": 0,
+    "y": 420,
+    "definition": "adaptacion_subterranea"
+  },
+  "corazon_de_piedra": {
+    "x": 0,
+    "y": 480,
+    "definition": "corazon_de_piedra"
+  },
+  "minero_infernal": {
+    "x": 0,
+    "y": 540,
+    "definition": "minero_infernal"
+  },
+  "pico_universal": {
+    "x": 0,
+    "y": 600,
+    "definition": "pico_universal"
   }
 }

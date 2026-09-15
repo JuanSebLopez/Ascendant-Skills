@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "toughasnails:ice_cream",
+    {
+      "id": "vinery:eiswein",
+      "required": false
+    }
+  ]
+}

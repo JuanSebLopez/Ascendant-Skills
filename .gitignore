@@ -28,4 +28,5 @@ ascendant_skills_mod/libs/*.jar
 
 # Built mod jars should be published as releases, not committed.
 *.jar
+*.rar
 !ascendant_skills_mod/gradle/wrapper/gradle-wrapper.jar

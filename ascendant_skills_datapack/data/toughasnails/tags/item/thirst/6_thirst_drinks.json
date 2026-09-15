@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+    "toughasnails:glow_berry_juice",
+    "toughasnails:pumpkin_juice",
+    "toughasnails:sweet_berry_juice",
+    {
+      "id": "beachparty:coconut_open",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:nettle_tea",
+      "required": false
+    }
+  ]
+}

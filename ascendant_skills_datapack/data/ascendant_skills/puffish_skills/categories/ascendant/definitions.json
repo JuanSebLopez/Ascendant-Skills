@@ -2321,7 +2321,7 @@
           "color": "aqua"
         },
         {
-          "text": "Intercepcion: si estas en party, reduces 30% el daño final del siguiente golpe/proyectil que recibe el aliado mas cercano en 10 bloques. CD 10 seg.",
+          "text": "Intercepcion: si estas en party, reduces 30% el daño final del siguiente golpe/proyectil que recibe el aliado más cercano en 10 bloques. CD 10 seg.",
           "color": "gray"
         }
       ]
@@ -3996,65 +3996,6 @@
     }
   },
   "minerales": {
-    "title": "Minerales",
-    "description": {
-      "text": "",
-      "extra": [
-        {
-          "text": "Stats: ",
-          "color": "green"
-        },
-        {
-          "text": "",
-          "color": "gray"
-        }
-      ]
-    },
-    "icon": {
-      "type": "item",
-      "data": {
-        "item": "minecraft:coal"
-      }
-    },
-    "frame": {
-      "type": "advancement",
-      "data": {
-        "frame": "task"
-      }
-    },
-    "cost": 3,
-    "rewards": [],
-    "extra_description": {
-      "text": "",
-      "extra": [
-        {
-          "text": "Costo: ",
-          "color": "gold"
-        },
-        {
-          "text": "3 niveles de XP\n",
-          "color": "yellow"
-        },
-        {
-          "text": "Requisito: ",
-          "color": "dark_purple"
-        },
-        {
-          "text": "-\n",
-          "color": "gray"
-        },
-        {
-          "text": "Perk: ",
-          "color": "aqua"
-        },
-        {
-          "text": "-",
-          "color": "dark_gray"
-        }
-      ]
-    }
-  },
-  "minero": {
     "title": "Minero",
     "description": {
       "text": "",
@@ -4064,7 +4005,7 @@
           "color": "green"
         },
         {
-          "text": "+5% velocidad al minar con picos, +0.5 rango de interacción con picos",
+          "text": "+5% velocidad de minería con picos, +0.5 rango de interacción con pico.",
           "color": "gray"
         }
       ]
@@ -4078,11 +4019,34 @@
     "frame": {
       "type": "advancement",
       "data": {
-        "frame": "task"
+        "frame": "goal"
       }
     },
     "cost": 3,
-    "rewards": [],
+    "rewards": [
+      {
+        "type": "puffish_skills:tag",
+        "data": {
+          "tag": "ascendant_miner_minerales"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:pickaxe_mining_speed",
+          "value": 0.05,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:pickaxe_interaction_range",
+          "value": 0.5,
+          "operation": "addition"
+        }
+      }
+    ],
     "extra_description": {
       "text": "",
       "extra": [
@@ -4091,7 +4055,7 @@
           "color": "gold"
         },
         {
-          "text": "7 niveles de XP\n",
+          "text": "3 niveles de XP\n",
           "color": "yellow"
         },
         {
@@ -4168,6 +4132,728 @@
         {
           "text": "-",
           "color": "dark_gray"
+        }
+      ]
+    }
+  },
+  "instinto_minero": {
+    "title": "Instinto Minero",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+5% velocidad de minería con picos.",
+          "color": "gray"
+        }
+      ]
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:iron_pickaxe"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "task"
+      }
+    },
+    "cost": 7,
+    "rewards": [
+      {
+        "type": "puffish_skills:tag",
+        "data": {
+          "tag": "ascendant_miner_instinto_minero"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:pickaxe_mining_speed",
+          "value": 0.05,
+          "operation": "addition"
+        }
+      }
+    ],
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "7 niveles de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "Stone Age\n",
+          "color": "light_purple"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Ancestros Tuneleros: bajo Y=0 en el Overworld obtienes +10% velocidad de movimiento.",
+          "color": "gray"
+        }
+      ]
+    }
+  },
+  "excavador": {
+    "title": "Excavador",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+10% velocidad de minería, +10% conservación de durabilidad de picos.",
+          "color": "gray"
+        }
+      ]
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:deepslate"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "task"
+      }
+    },
+    "cost": 10,
+    "rewards": [
+      {
+        "type": "puffish_skills:tag",
+        "data": {
+          "tag": "ascendant_miner_excavador"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:mining_speed",
+          "value": 0.1,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:pickaxe_durability_preservation",
+          "value": 0.1,
+          "operation": "addition"
+        }
+      }
+    ],
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "10 niveles de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "Minar 1.000 bloques con pico\n",
+          "color": "light_purple"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "-",
+          "color": "dark_gray"
+        }
+      ]
+    }
+  },
+  "prospector": {
+    "title": "Prospector",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+1 fortuna virtual, +0.25 alcance con pico.",
+          "color": "gray"
+        }
+      ]
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:raw_iron"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "task"
+      }
+    },
+    "cost": 10,
+    "rewards": [
+      {
+        "type": "puffish_skills:tag",
+        "data": {
+          "tag": "ascendant_miner_prospector"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:virtual_fortune",
+          "value": 1,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:pickaxe_interaction_range",
+          "value": 0.25,
+          "operation": "addition"
+        }
+      }
+    ],
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "10 niveles de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "Acquire Hardware\n",
+          "color": "light_purple"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "-",
+          "color": "dark_gray"
+        }
+      ]
+    }
+  },
+  "maestro_de_cantera": {
+    "title": "Maestro de Cantera",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+10% velocidad de minería, +15% conservación de durabilidad de picos.",
+          "color": "gray"
+        }
+      ]
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:diamond_pickaxe"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "task"
+      }
+    },
+    "cost": 15,
+    "rewards": [
+      {
+        "type": "puffish_skills:tag",
+        "data": {
+          "tag": "ascendant_miner_maestro_de_cantera"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:mining_speed",
+          "value": 0.1,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:pickaxe_durability_preservation",
+          "value": 0.15,
+          "operation": "addition"
+        }
+      }
+    ],
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "15 niveles de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "Minar 5.000 bloques con pico\n",
+          "color": "light_purple"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Ritmo de Excavación: minar con pico acumula +0.5% velocidad con picos por carga, hasta +10%. Pierdes las cargas tras 5 s sin minar.",
+          "color": "gray"
+        }
+      ]
+    }
+  },
+  "ojo_del_minero": {
+    "title": "Ojo del Minero",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+1 fortuna virtual, +3 HP.",
+          "color": "gray"
+        }
+      ]
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:diamond_ore"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "task"
+      }
+    },
+    "cost": 15,
+    "rewards": [
+      {
+        "type": "puffish_skills:tag",
+        "data": {
+          "tag": "ascendant_miner_ojo_del_minero"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:virtual_fortune",
+          "value": 1,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "generic.max_health",
+          "value": 3,
+          "operation": "addition"
+        }
+      }
+    ],
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "15 niveles de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "Minar con un pico al menos 20 Diamond Ores\n",
+          "color": "light_purple"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Ojo del Minero: pulsa C para elegir un mineral y detectar señales cercanas en un radio de 10 bloques.",
+          "color": "gray"
+        }
+      ]
+    }
+  },
+  "adaptacion_subterranea": {
+    "title": "Adaptación Subterránea",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+4 HP, +1 tenacidad.",
+          "color": "gray"
+        }
+      ]
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:sculk_sensor"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "task"
+      }
+    },
+    "cost": 20,
+    "rewards": [
+      {
+        "type": "puffish_skills:tag",
+        "data": {
+          "tag": "ascendant_miner_adaptacion_subterranea"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "generic.max_health",
+          "value": 4,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "generic.armor_toughness",
+          "value": 1,
+          "operation": "addition"
+        }
+      }
+    ],
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "20 niveles de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "Alcanzar Y≤-60 en el Overworld\n",
+          "color": "light_purple"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Adaptación Subterránea: bajo Y=20 en el Overworld obtienes visión nocturna.",
+          "color": "gray"
+        }
+      ]
+    }
+  },
+  "corazon_de_piedra": {
+    "title": "Corazón de Piedra",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+5 HP, +5% resistencia global.",
+          "color": "gray"
+        }
+      ]
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:stone"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "task"
+      }
+    },
+    "cost": 25,
+    "rewards": [
+      {
+        "type": "puffish_skills:tag",
+        "data": {
+          "tag": "ascendant_miner_corazon_de_piedra"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "generic.max_health",
+          "value": 5,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:global_resistance",
+          "value": 0.05,
+          "operation": "addition"
+        }
+      }
+    ],
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "25 niveles de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "Participar en matar al Netherite Monstrosity\n",
+          "color": "light_purple"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Como una Roca: sobre bloques rocosos obtienes resistencia al empuje, armadura, tenacidad y altura de pisada. Persiste 5 s al salir.",
+          "color": "gray"
+        }
+      ]
+    }
+  },
+  "minero_infernal": {
+    "title": "Minero Infernal",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+50% velocidad de minería contra obsidiana, obsidiana llorosa y bloques similares.",
+          "color": "gray"
+        }
+      ]
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:crying_obsidian"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "task"
+      }
+    },
+    "cost": 30,
+    "rewards": [
+      {
+        "type": "puffish_skills:tag",
+        "data": {
+          "tag": "ascendant_miner_minero_infernal"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:obsidian_mining_speed",
+          "value": 0.5,
+          "operation": "addition"
+        }
+      }
+    ],
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "30 niveles de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "Participar en matar a Ignis\n",
+          "color": "light_purple"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Minero Infernal: bajo Y=30 en el Nether obtienes resistencia al fuego.",
+          "color": "gray"
+        }
+      ]
+    }
+  },
+  "pico_universal": {
+    "title": "Pico Universal",
+    "description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Stats: ",
+          "color": "green"
+        },
+        {
+          "text": "+5 HP, +30% preservación de durabilidad de picos.",
+          "color": "gray"
+        }
+      ]
+    },
+    "icon": {
+      "type": "item",
+      "data": {
+        "item": "minecraft:netherite_pickaxe"
+      }
+    },
+    "frame": {
+      "type": "advancement",
+      "data": {
+        "frame": "challenge"
+      }
+    },
+    "cost": 35,
+    "rewards": [
+      {
+        "type": "puffish_skills:tag",
+        "data": {
+          "tag": "ascendant_miner_pico_universal"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "generic.max_health",
+          "value": 5,
+          "operation": "addition"
+        }
+      },
+      {
+        "type": "puffish_skills:attribute",
+        "data": {
+          "attribute": "ascendant_skills:pickaxe_durability_preservation",
+          "value": 0.3,
+          "operation": "addition"
+        }
+      }
+    ],
+    "extra_description": {
+      "text": "",
+      "extra": [
+        {
+          "text": "Costo: ",
+          "color": "gold"
+        },
+        {
+          "text": "35 niveles de XP\n",
+          "color": "yellow"
+        },
+        {
+          "text": "Requisito: ",
+          "color": "dark_purple"
+        },
+        {
+          "text": "Participar en matar al Ender Dragon\n",
+          "color": "light_purple"
+        },
+        {
+          "text": "Perk: ",
+          "color": "aqua"
+        },
+        {
+          "text": "Pico Universal: la Bedrock se vuelve minable con un pico válido y cae como bloque.",
+          "color": "gray"
         }
       ]
     }

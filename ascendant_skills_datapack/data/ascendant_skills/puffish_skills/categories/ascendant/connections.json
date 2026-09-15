@@ -49,7 +49,16 @@
       ["guardian_natural", "avatar_de_la_naturaleza"],
       ["avatar_de_la_naturaleza", "senor_de_las_bestias"],
       ["avatar_de_la_naturaleza", "espiritu_del_bosque"],
-      ["minerales", "minero"]
+      ["inicio", "minerales"],
+      ["minerales", "instinto_minero"],
+      ["instinto_minero", "excavador"],
+      ["instinto_minero", "prospector"],
+      ["excavador", "maestro_de_cantera"],
+      ["prospector", "ojo_del_minero"],
+      ["instinto_minero", "adaptacion_subterranea"],
+      ["adaptacion_subterranea", "corazon_de_piedra"],
+      ["corazon_de_piedra", "minero_infernal"],
+      ["minero_infernal", "pico_universal"]
     ]
   },
   "exclusive": {
@@ -71,7 +80,12 @@
       ["naturaleza", "exploracion"],
       ["el_buen_vaquero", "el_don_del_ratel"],
       ["apex_predator", "druida"],
-      ["senor_de_las_bestias", "espiritu_del_bosque"]
+      ["senor_de_las_bestias", "espiritu_del_bosque"],
+      ["combate", "minerales"],
+      ["minerales", "exploracion"],
+      ["combate", "exploracion"],
+      ["excavador", "prospector"],
+      ["maestro_de_cantera", "ojo_del_minero"]
     ]
   }
 }

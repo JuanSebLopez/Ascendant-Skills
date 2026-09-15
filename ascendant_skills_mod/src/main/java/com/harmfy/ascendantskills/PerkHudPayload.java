@@ -42,7 +42,16 @@ public record PerkHudPayload(
         int guardianAllies,
         int guardianMaxAllies,
         int beastMasterPets,
-        int beastMasterMaxPets
+        int beastMasterMaxPets,
+        boolean minerTunnelersActive,
+        boolean minerUndergroundAdaptationActive,
+        boolean minerRockHeartActive,
+        boolean minerInfernalActive,
+        int minerQuarryStacks,
+        int minerQuarryMaxStacks,
+        int minerSelectedMineral,
+        double minerQuarryPerStack,
+        boolean universalPickaxe
 ) implements CustomPacketPayload {
     public static final CustomPacketPayload.Type<PerkHudPayload> TYPE = new CustomPacketPayload.Type<>(
             ResourceLocation.fromNamespaceAndPath(AscendantSkills.MOD_ID, "perk_hud")
@@ -90,7 +99,16 @@ public record PerkHudPayload(
                 buffer.readVarInt(),
                 buffer.readVarInt(),
                 buffer.readVarInt(),
-                buffer.readVarInt()
+                buffer.readVarInt(),
+                buffer.readBoolean(),
+                buffer.readBoolean(),
+                buffer.readBoolean(),
+                buffer.readBoolean(),
+                buffer.readVarInt(),
+                buffer.readVarInt(),
+                buffer.readVarInt(),
+                buffer.readDouble(),
+                buffer.readBoolean()
         );
     }
 
@@ -132,6 +150,15 @@ public record PerkHudPayload(
         buffer.writeVarInt(payload.guardianMaxAllies());
         buffer.writeVarInt(payload.beastMasterPets());
         buffer.writeVarInt(payload.beastMasterMaxPets());
+        buffer.writeBoolean(payload.minerTunnelersActive());
+        buffer.writeBoolean(payload.minerUndergroundAdaptationActive());
+        buffer.writeBoolean(payload.minerRockHeartActive());
+        buffer.writeBoolean(payload.minerInfernalActive());
+        buffer.writeVarInt(payload.minerQuarryStacks());
+        buffer.writeVarInt(payload.minerQuarryMaxStacks());
+        buffer.writeVarInt(payload.minerSelectedMineral());
+        buffer.writeDouble(payload.minerQuarryPerStack());
+        buffer.writeBoolean(payload.universalPickaxe());
     }
 
     @Override

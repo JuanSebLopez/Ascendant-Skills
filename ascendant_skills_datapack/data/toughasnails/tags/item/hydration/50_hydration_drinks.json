@@ -1,0 +1,30 @@
+{
+  "replace": false,
+  "values": [
+    "toughasnails:melon_juice",
+    {
+      "id": "farm_and_charm:nettle_tea",
+      "required": false
+    },
+    {
+      "id": "herbalbrews:hibiscus_tea",
+      "required": false
+    },
+    {
+      "id": "herbalbrews:lavender_tea",
+      "required": false
+    },
+    {
+      "id": "herbalbrews:rooibos_tea",
+      "required": false
+    },
+    {
+      "id": "herbalbrews:green_tea",
+      "required": false
+    },
+    {
+      "id": "herbalbrews:oolong_tea",
+      "required": false
+    }
+  ]
+}

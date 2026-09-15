@@ -1,0 +1,138 @@
+{
+  "replace": false,
+  "values": [
+    "toughasnails:charc_os",
+    {
+      "id": "candlelight:tomato_soup",
+      "required": false
+    },
+    {
+      "id": "candlelight:mushroom_soup",
+      "required": false
+    },
+    {
+      "id": "candlelight:beef_with_mushroom_in_wine_and_potatoes",
+      "required": false
+    },
+    {
+      "id": "candlelight:roastbeef_with_glazed_carrots",
+      "required": false
+    },
+    {
+      "id": "candlelight:roasted_lamb_with_lettuce",
+      "required": false
+    },
+    {
+      "id": "candlelight:chicken_alfredo",
+      "required": false
+    },
+    {
+      "id": "candlelight:khinkali",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:strawberry_tea_cup",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:strawberry_tea",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:nettle_tea",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:nettle_tea_cup",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:ribwort_tea",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:ribwort_tea_cup",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:goulash",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:simple_tomato_soup",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:barley_soup",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:onion_soup",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:potato_soup",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:oatmeal_with_strawberries",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:corn_grits",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:potato_with_roast_meat",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:farmers_breakfast",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:lamb_with_corn",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:bacon_with_eggs",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:roasted_chicken",
+      "required": false
+    },
+    {
+      "id": "herbalbrews:coffee",
+      "required": false
+    },
+    {
+      "id": "herbalbrews:hibiscus_tea",
+      "required": false
+    },
+    {
+      "id": "herbalbrews:lavender_tea",
+      "required": false
+    },
+    {
+      "id": "herbalbrews:rooibos_tea",
+      "required": false
+    },
+    {
+      "id": "herbalbrews:yerba_mate_tea",
+      "required": false
+    },
+    {
+      "id": "herbalbrews:green_tea",
+      "required": false
+    },
+    {
+      "id": "herbalbrews:black_tea",
+      "required": false
+    },
+    {
+      "id": "herbalbrews:oolong_tea",
+      "required": false
+    }
+  ]
+}

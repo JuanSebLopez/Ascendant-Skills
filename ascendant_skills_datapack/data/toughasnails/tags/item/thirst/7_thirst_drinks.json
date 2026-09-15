@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "toughasnails:cactus_juice",
+    "toughasnails:melon_juice",
+    {
+      "id": "farm_and_charm:strawberry_tea",
+      "required": false
+    }
+  ]
+}

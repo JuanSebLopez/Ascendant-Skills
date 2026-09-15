@@ -1,0 +1,87 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:melon_slice",
+    "minecraft:milk_bucket",
+    {
+      "id": "brewery:beer_wheat",
+      "required": false
+    },
+    {
+      "id": "brewery:beer_barley",
+      "required": false
+    },
+    {
+      "id": "brewery:beer_hops",
+      "required": false
+    },
+    {
+      "id": "brewery:beer_oat",
+      "required": false
+    },
+    {
+      "id": "brewery:beer_haley",
+      "required": false
+    },
+    {
+      "id": "brewery:beer_nettle",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:nettle_tea_cup",
+      "required": false
+    },
+    {
+      "id": "herbalbrews:hibiscus_tea",
+      "required": false
+    },
+    {
+      "id": "herbalbrews:rooibos_tea",
+      "required": false
+    },
+    {
+      "id": "herbalbrews:yerba_mate_tea",
+      "required": false
+    },
+    {
+      "id": "herbalbrews:green_tea",
+      "required": false
+    },
+    {
+      "id": "herbalbrews:black_tea",
+      "required": false
+    },
+    {
+      "id": "herbalbrews:oolong_tea",
+      "required": false
+    },
+    {
+      "id": "meadow:wooden_milk_bucket",
+      "required": false
+    },
+    {
+      "id": "meadow:wooden_buffalo_milk_bucket",
+      "required": false
+    },
+    {
+      "id": "meadow:wooden_goat_milk_bucket",
+      "required": false
+    },
+    {
+      "id": "meadow:wooden_sheep_milk_bucket",
+      "required": false
+    },
+    {
+      "id": "meadow:wooden_grain_milk_bucket",
+      "required": false
+    },
+    {
+      "id": "meadow:wooden_warped_milk_bucket",
+      "required": false
+    },
+    {
+      "id": "meadow:wooden_water_bucket",
+      "required": false
+    }
+  ]
+}

@@ -58,7 +58,7 @@ public final class AppleSkinCompat {
     }
 
     private static <T extends Event> void registerFoodValuesListener(Class<T> eventClass) {
-        NeoForge.EVENT_BUS.addListener(EventPriority.NORMAL, eventClass, (Consumer<T>) AppleSkinCompat::onFoodValues);
+        NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, eventClass, (Consumer<T>) AppleSkinCompat::onFoodValues);
     }
 
     private static boolean isRawNatureFood(ItemStack stack) {

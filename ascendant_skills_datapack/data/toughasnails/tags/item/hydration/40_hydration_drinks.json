@@ -1,0 +1,32 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:potion",
+    "toughasnails:leather_water_canteen",
+    "toughasnails:copper_water_canteen",
+    "toughasnails:iron_water_canteen",
+    "toughasnails:gold_water_canteen",
+    "toughasnails:diamond_water_canteen",
+    "toughasnails:netherite_water_canteen",
+    {
+      "id": "farm_and_charm:strawberry_tea_cup",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:ribwort_tea",
+      "required": false
+    },
+    {
+      "id": "herbalbrews:yerba_mate_tea",
+      "required": false
+    },
+    {
+      "id": "herbalbrews:black_tea",
+      "required": false
+    },
+    {
+      "id": "meadow:wooden_water_bucket",
+      "required": false
+    }
+  ]
+}

@@ -31,5 +31,13 @@
   "attribute.ascendant_skills.raw_food_saturation": "Raw Food Saturation",
   "attribute.ascendant_skills.hoe_damage": "Hoe Damage",
   "attribute.ascendant_skills.global_life_steal": "Global Life Steal",
-  "attribute.ascendant_skills.underwater_breath_seconds": "Underwater Breath Seconds"
+  "attribute.ascendant_skills.underwater_breath_seconds": "Underwater Breath Seconds",
+  "attribute.ascendant_skills.mining_speed": "Mining Speed",
+  "attribute.ascendant_skills.pickaxe_mining_speed": "Pickaxe Mining Speed",
+  "attribute.ascendant_skills.pickaxe_interaction_range": "Pickaxe Interaction Range",
+  "attribute.ascendant_skills.virtual_fortune": "Virtual Fortune",
+  "attribute.ascendant_skills.obsidian_mining_speed": "Obsidian Mining Speed",
+  "attribute.ascendant_skills.pickaxe_durability_preservation": "Pickaxe Durability Preservation",
+  "key.categories.ascendant_skills": "Ascendant Skills",
+  "key.ascendant_skills.cycle_ore": "Cycle Miner Eye Ore"
 }

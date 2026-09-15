@@ -1275,7 +1275,16 @@ public final class CombatPerks {
                 NaturePerks.guardianAlliesCovered(player),
                 NaturePerks.guardianMaxAllies(),
                 NaturePerks.beastMasterNearbyPets(player),
-                NaturePerks.beastMasterMaxStacks()
+                NaturePerks.beastMasterMaxStacks(),
+                MiningPerks.tunnelersActive(player),
+                MiningPerks.undergroundAdaptationActive(player),
+                MiningPerks.rockHeartActive(player),
+                MiningPerks.infernalMinerActive(player),
+                has(player, "maestro_de_cantera") ? MiningPerks.quarryRhythmStacks(player) : -1,
+                MiningPerks.quarryRhythmMaxStacks(),
+                -1,
+                AscendantConfig.miningQuarryRhythmPerStack(),
+                has(player, "pico_universal")
         ));
     }
 

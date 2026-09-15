@@ -1,0 +1,34 @@
+{
+  "replace": false,
+  "values": [
+    "toughasnails:pumpkin_juice",
+    {
+      "id": "beachparty:coconut_cocktail",
+      "required": false
+    },
+    {
+      "id": "beachparty:sweetberries_cocktail",
+      "required": false
+    },
+    {
+      "id": "beachparty:cocoa_cocktail",
+      "required": false
+    },
+    {
+      "id": "beachparty:melon_cocktail",
+      "required": false
+    },
+    {
+      "id": "beachparty:honey_cocktail",
+      "required": false
+    },
+    {
+      "id": "beachparty:pumpkin_cocktail",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:strawberry_tea",
+      "required": false
+    }
+  ]
+}
